@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>Bienvenue dans votre interface d'administration personnalisée</h1>
+<div class="custom-dashboard">
+    <p>Bienvenue dans l'interface d'administration personnalisée. Utilisez le menu de navigation pour accéder aux différentes sections.</p>
+
+    <!-- Lien vers l'arbre de parrainage -->
+    <a href="{% url 'admin:referral_tree' %}">Voir l'arbre de parrainage</a>
+<div class="stage-selector">
+        <a href="{% url 'admin:referral_tree_stage' 2 %}">Stade 2</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 3 %}">Stade 3</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 4 %}">Stade 4</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 5 %}">Stade 5</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 6 %}">Stade 6</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 7 %}">Stade 7</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 8 %}">Stade 8</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 9 %}">Stade 9</a><br>
+        <a href="{% url 'admin:referral_tree_stage' 10 %}">Stade 10</a><br>
+    </div>
+    <!-- Ou inclure directement l'arbre de parrainage -->
+    <h2>Arbre de Parrainage</h2>
+    <div id="referral-tree">
+        <ul>
+            {% for referrer in referrals|dictsort:"referrer.username" %}
+                <li>
+                    <span>{{ referrer.referrer.username }}</span>
+                    <ul>
+                        {% for referral in referrals %}
+                            {% if referral.referrer == referrer.referrer %}
+                                <li>{{ referral.referred.username }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Styles intégrés -->
+<style>
+    .custom-dashboard {
+        margin: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .custom-dashboard h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    .custom-dashboard p {
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    #referral-tree ul {
+        list-style-type: none;
+    }
+
+    #referral-tree ul ul {
+        margin-left: 20px;
+        border-left: 1px solid #ccc;
+        padding-left: 20px;
+    }
+
+    #referral-tree li {
+        margin: 5px 0;
+        padding: 5px 10px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+
+    #referral-tree span {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

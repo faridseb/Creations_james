@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>LeaderShip</title>
+  {% load static %}
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mb-4 text-center leading-relaxed">
+      LE LEADERSHIP FÉMININ / LE LEADERSHIP MASCULIN / <br />
+      LES RELATIONS FAMILIALES / LES RELATIONS AMICALES ET LES RELATIONS AMOUREUSES 🧡
+    </h2>
+
+    <!-- Introduction -->
+    <p class="text-gray-700 text-lg leading-relaxed mb-6 text-justify">
+      Ce programme a été conçu pour explorer les dimensions profondes du leadership, qu'il soit féminin ou masculin,
+      et pour améliorer la qualité des relations humaines dans toutes leurs formes. À travers des thématiques riches
+      et variées, nous vous invitons à réfléchir, à apprendre et à évoluer personnellement et collectivement.
+      Découvrez comment renforcer vos liens familiaux, entretenir des amitiés sincères, et bâtir des relations amoureuses
+      saines et équilibrées. Le leadership commence par la connaissance de soi et des autres.
+    </p>
+
+    <div class="text-center mt-6">
+      <button
+        id="openAudioBtn"
+        class="inline-flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v16l-12-3z" />
+        </svg>
+        Écouter l'audio
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal audio -->
+  <div
+    id="audioModal"
+    class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+  >
+    <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md relative mx-4">
+      <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
+      <audio controls class="w-full mb-4">
+        <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
+      <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
+      <audio controls class="w-full">
+        <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
+      <button
+        id="closeAudioBtn"
+        class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold"
+        aria-label="Fermer le modal"
+      >&times;</button>
+    </div>
+  </div>
+
+  <script>
+    const openAudioBtn = document.getElementById('openAudioBtn');
+    const closeAudioBtn = document.getElementById('closeAudioBtn');
+    const audioModal = document.getElementById('audioModal');
+
+    openAudioBtn.addEventListener('click', () => {
+      audioModal.classList.remove('hidden');
+      audioModal.classList.add('flex');
+    });
+
+    closeAudioBtn.addEventListener('click', () => {
+      audioModal.classList.add('hidden');
+      audioModal.classList.remove('flex');
+    });
+
+    audioMo

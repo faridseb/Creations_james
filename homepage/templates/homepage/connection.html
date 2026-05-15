@@ -1,0 +1,102 @@
+{% block content %}
+<!-- Inclusion de Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+    /* Fond dégradé */
+    body {
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    /* Conteneur du formulaire */
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        text-align: center;
+    }
+
+    /* Icône utilisateur */
+    .user-icon {
+        font-size: 60px;
+        color: #6a11cb;
+        margin-bottom: 10px;
+    }
+
+    /* Champs de formulaire */
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+
+    /* Bouton stylisé */
+    .btn-primary {
+        background: #6a11cb;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+        background: #2575fc;
+    }
+
+    /* Lien d'inscription */
+    .register-link a {
+        text-decoration: none;
+        color: #6a11cb;
+        font-weight: bold;
+    }
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- Conteneur du formulaire -->
+<div class="login-container">
+    <i class="fas fa-user-circle user-icon"></i>
+    <h3 class="mb-4">Connexion</h3>
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Formulaire -->
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.password.id_for_label }}" class="form-label">Mot de passe</label>
+            {{ form.password }}
+        </div>
+        <input type="hidden" name="app_name" value="homepage">
+        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+    </form>
+    <div class="register-link mt-3">
+        <p>Pas encore de compte ? <a href="{% url 'homepage:inscription' %}">Inscrivez-vous</a></p>
+    </div>
+</div>
+
+{% endblock %}

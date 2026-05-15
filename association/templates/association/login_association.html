@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Association</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Connexion Association</h2>
+        <form method="POST" action="{% url 'association:login_association' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_association">ID Association</label>
+                <input type="text" name="id_association" id="id_association" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password_association">Mot de passe</label>
+                <input type="password" name="password_association" id="password_association" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+        </form>
+    </div>
+</body>
+</html>

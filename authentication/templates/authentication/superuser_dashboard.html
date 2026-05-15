@@ -1,0 +1,206 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Tableau de bord administrateur{% endblock %}
+
+{% block header_title %}Tableau de bord administrateur{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Tableau de bord administrateur</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Nombre total de fieuls</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_fieuls }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Nombre total d'utilisateurs</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_users }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Fieuls actifs</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ active_fieuls }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Fieuls inactifs</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ inactive_fieuls }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">Statistiques des utilisateurs</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Nombre de fieuls</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_stats %}
+                                <tr>
+                                    <td>{{ user.pseudo }}</td>
+                                    <td>{{ user.fieul_count }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">Grande Caisse</div>
+                <div class="card-body">
+                    <h5 class="card-title">Montant total : {{ grande_caisse.total_amount }} €</h5>
+                    <p class="card-text">Ce montant représente la somme totale disponible dans la grande caisse.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">Arbre des Stades</div>
+                <div class="card-body">
+                    <div class="tree">
+                        <ul>
+                            <li>
+                                <a href="#">Parrain (Stade 1)</a>
+                                <ul>
+                                    {% for stage in stages %}
+                                        <li>
+                                            <a href="#">Stade {{ stage.number }}</a>
+                                            <ul>
+                                                {% for user in stage.users %}
+                                                    <li>
+                                                        <a href="#">{{ user.pseudo }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tree ul {
+        padding-top: 20px;
+        position: relative;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+
+    .tree li {
+        float: left;
+        text-align: center;
+        list-style-type: none;
+        position: relative;
+        padding: 20px 5px 0 5px;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+
+    .tree li::before, .tree li::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: 1px solid #ccc;
+        width: 50%;
+        height: 20px;
+    }
+    .tree li::after {
+        right: auto;
+        left: 50%;
+        border-left: 1px solid #ccc;
+    }
+
+    .tree li:only-child::after, .tree li:only-child::before {
+        display: none;
+    }
+
+    .tree li:only-child {
+        padding-top: 0;
+    }
+
+    .tree li:first-child::before, .tree li:last-child::after {
+        border: 0 none;
+    }
+
+    .tree li:last-child::before {
+        border-right: 1px solid #ccc;
+        border-radius: 0 5px 0 0;
+    }
+
+    .tree li:first-child::after {
+        border-radius: 5px 0 0 0;
+    }
+
+    .tree ul ul::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid #ccc;
+        width: 0;
+        height: 20px;
+    }
+
+    .tree li a {
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #666;
+        font-family: arial, verdana, tahoma;
+        font-size: 11px;
+        display: inline-block;
+        border-radius: 5px;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+
+    .tree li a:hover, .tree li a:hover + ul li a {
+        background: #c8e4f8;
+        color: #000;
+        border: 1px solid #94a0b4;
+    }
+
+    .tree li a:hover + ul li::after,
+    .tree li a:hover + ul li::before,
+    .tree li a:hover + ul::before,
+    .tree li a:hover + ul ul::before {
+        border-color: #94a0b4;
+    }
+</style>
+
+{% endblock %}

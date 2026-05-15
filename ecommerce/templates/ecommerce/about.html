@@ -1,0 +1,140 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>À propos de nous</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- CSS -->
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+<!-- NAVBAR -->
+<nav class="bg-gray-900 text-white">
+  <div class="container mx-auto flex items-center justify-between flex-wrap p-4">
+    <!-- Logo -->
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
+      <a href="{% url 'ecommerce:product_list' %}" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
+    </div>
+
+    <!-- Hamburger bouton (mobile) -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu desktop -->
+    <div class="hidden md:flex md:items-center space-x-6">
+      <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class="hover:text-gray-300 font-semibold">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="text-yellow-400">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
+
+      <a href="#" class="hover:text-gray-300 ml-4">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <div id="menu" class="hidden md:hidden bg-gray-800">
+    <a href="{% url 'ecommerce:product_list' %}" class="block px-4 py-2 hover:bg-gray-700">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block px-4 py-2 hover:bg-gray-700">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block px-4 py-2 bg-yellow-400 text-gray-900 font-semibold ">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}" class="block px-4 py-2 hover:bg-gray-700">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block px-4 py-2 hover:bg-gray-700">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block px-4 py-2 hover:bg-gray-700">Contactez-nous</a>
+    <div class="flex space-x-6 px-4 py-2 border-t border-gray-700">
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</nav>
+<!-- FIN NAVBAR -->
+
+<!-- SECTION HERO -->
+<section class="hero bg-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+      <div class="lg:w-5/12">
+        <h1 class="text-4xl font-bold mb-4">À propos de nous</h1>
+        <p class="mb-6 text-gray-700">Nous sommes une entreprise artisanale qui offre des produits locaux pour le design de votre intérieur comme extérieur.</p>
+        <div class="space-x-4">
+          <a href="{% url 'ecommerce:shop' %}" class="inline-block bg-gray-700 text-white py-2 px-5 rounded hover:bg-gray-800 transition">Achetez maintenant</a>
+          <a href="{% url 'ecommerce:shop' %}" class="inline-block border border-gray-700 text-gray-700 py-2 px-5 rounded hover:bg-gray-100 transition">Explorer</a>
+        </div>
+      </div>
+      <div class="lg:w-4/12">
+        <img src="{% static 'images/table.png' %}" alt="Canapé" class="w-full" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POURQUOI NOUS CHOISIR -->
+<section class="py-16 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+      <div class="lg:w-6/12">
+        <h2 class="text-3xl font-semibold mb-4">Pourquoi nous choisir</h2>
+        <p class="mb-10 text-gray-700">Nous vous offrons des produits locaux de qualité avec un service exceptionnel.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div class="flex items-center space-x-4">
+            <img src="{% static 'images/truck.svg' %}" alt="Livraison" class="w-12 h-12" />
+            <h3 class="text-xl font-medium">Livraison rapide et gratuite</h3>
+          </div>
+          <div class="flex items-center space-x-4">
+            <img src="{% static 'images/bag.svg' %}" alt="Shopping" class="w-12 h-12" />
+            <h3 class="text-xl font-medium">Achat facile</h3>
+          </div>
+          <div class="flex items-center space-x-4">
+            <img src="{% static 'images/support.svg' %}" alt="Support" class="w-12 h-12" />
+            <h3 class="text-xl font-medium">Support 24/7</h3>
+          </div>
+          <div class="flex items-center space-x-4">
+            <img src="{% static 'images/return.svg' %}" alt="Retours" class="w-12 h-12" />
+            <h3 class="text-xl font-medium">Retours sans tracas</h3>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-5/12">
+        <img src="{% static 'images/filet.png' %}" alt="Image" class="w-full" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-300 py-6 mt-12">
+  <div class="container mx-auto text-center">
+    &copy; 2025 Creationjames. Tous droits réservés.
+  </div>
+</footer>
+
+<!-- SCRIPT HAMBURGER -->
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('menu');
+  menuBtn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
+
+</body>
+</html>

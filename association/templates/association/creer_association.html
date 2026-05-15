@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une Association</title>
+    <style>
+        /* Styles globaux */
+        body {
+            background-color: #0a2673; /* Couleur de fond claire */
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Conteneur du formulaire */
+        .form-container {
+            background-color: #0a6673; /* Fond blanc */
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            margin: 100px auto; /* Centre horizontalement */
+            width: 90%; /* Largeur de 90% */
+            max-width: 600px; /* Largeur maximum de 600px */
+        }
+
+        /* Styles pour le titre */
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #ffe604; /* Couleur du titre */
+        }
+
+        /* Styles pour les groupes de formulaires */
+        .form-group {
+            margin-bottom: 15px; /* Espacement entre les champs */
+        }
+
+        .form-group label {
+            font-weight: bold; /* Mettre les labels en gras */
+            display: block; /* Affiche le label sur une nouvelle ligne */
+            margin-bottom: 5px; /* Espacement en dessous du label */
+        }
+
+        .form-group input {
+            width: 100%; /* Largeur complète */
+            padding: 10px; /* Espacement interne */
+            border: 1px solid #ddd; /* Bordure grise */
+            border-radius: 5px; /* Coins arrondis */
+            box-sizing: border-box; /* Inclut la bordure et le padding dans la largeur totale */
+        }
+
+        /* Style pour le bouton */
+        .btn {
+            width: 100%; /* Bouton plein largeur */
+            padding: 10px; /* Ajout de padding */
+            background-color: #007bff; /* Couleur de fond du bouton */
+            color: white; /* Couleur du texte */
+            border: none; /* Pas de bordure */
+            border-radius: 5px; /* Coins arrondis */
+            cursor: pointer; /* Changer le curseur au survol */
+            font-size: 16px; /* Taille de la police */
+            transition: background-color 0.3s ease; /* Transition pour la couleur de fond */
+        }
+
+        /* Couleur de survol du bouton */
+        .btn:hover {
+            background-color: #0056b3; /* Couleur de survol */
+        }
+
+        /* Message d'erreur */
+        .error {
+            color: red; /* Couleur rouge pour les erreurs */
+            font-size: 12px;
+            margin-top: 5px; /* Espacement en haut du message d'erreur */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        {% block content %}
+        <h2>Créer une Association</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}  <!-- Champ de saisie -->
+                    {% if field.errors %}
+                        <div class="error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn">Créer</button>
+        </form>
+        {% endblock %}
+    </div>
+</body>
+</html>

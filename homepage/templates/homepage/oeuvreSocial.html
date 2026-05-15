@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donateurs et Bienfaiteurs</title>
+
+    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+    <!-- Header -->
+    <div class="bg-green-600 text-white text-center py-6 shadow">
+        <h1 class="text-3xl font-bold">Donateurs, Sponsors et Bienfaiteurs</h1>
+        <p class="mt-2">Soutenez nos œuvres sociales et découvrez nos partenaires généreux.</p>
+    </div>
+
+    <!-- Container -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Donateurs & Sponsors -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
+                <h2 class="text-2xl font-bold text-green-600 mb-4">Les Donateurs : {{ donateurs_count }}</h2>
+                <a href="{% url 'homepage:donateurs_list' %}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
+                <h2 class="text-2xl font-bold text-green-600 mb-4">Les Sponsors : {{ sponsors_count }}</h2>
+                <a href="{% url 'homepage:sponsors_list' %}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
+            </div>
+        </div>
+
+        <!-- Bienfaiteurs & Torpilleurs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
+                <h2 class="text-2xl font-bold text-green-600 mb-4">Les Bienfaiteurs : {{ bienfaiteurs_count }}</h2>
+                <a href="{% url 'homepage:bienfaiteurs_list' %}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
+                <h2 class="text-2xl font-bold text-red-600 mb-4">Les Torpilleurs : {{ torpilleurs_count }}</h2>
+                <a href="{% url 'homepage:torpilleurs_list' %}" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
+            </div>
+        </div>
+
+        <!-- Projets -->
+        <div class="mb-12">
+            <h2 class="text-center text-2xl font-bold text-green-600 mb-6">Nos Œuvres Sociales en Images et Vidéo</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {% for projet in projets %}
+                    <div class="bg-white rounded-lg shadow p-4 hover:scale-105 transform transition">
+                        <h3 class="text-xl font-semibold mb-2">{{ projet.titre }}</h3>
+                        <p class="text-gray-600 mb-4">{{ projet.description|slice:":100" }}...</p>
+                        <a href="{% url 'homepage:projet_detail' projet.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded inline-block">Voir le projet</a>
+                    </div>
+                {% empty %}
+                    <p>Aucun projet n'a été encore réalisé.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Signalement -->
+        <div class="mb-12">
+            <h2 class="text-center text-2xl font-bold text-green-600 mb-4">Signaler les failles & Poser des questions</h2>
+            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-6 rounded">
+                <p class="mb-2">Si vous avez trouvé une faille dans le système ou si vous avez des questions, n'hésitez pas à nous en faire part en remplissant le formulaire ci-dessous.</p>
+                <h5 class="font-semibold">Pas encore disponible</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p>Total d'action sur le site : <strong>{{ total_global_users }}</strong></p>
+            <p>Adresse : AGOE CAMPS GP LOME-TOGO</p>
+            <p>Téléphone : +228 90121764</p>
+            <p>Email : creationjames@gmail.com</p>
+        </div>
+    </footer>
+
+</body>
+</html>

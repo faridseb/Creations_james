@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Accueil - {{ association.nom }}</title>
+    <style>
+        /* Permet de positionner le footer en bas de la page */
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Responsivité pour petits écrans */
+    @media (max-width: 768px) {
+        footer {
+            font-size: 14px; /* Exemple de réduction de la taille du texte pour petits écrans */
+            padding: 5px; /* Réduction de l'espace de padding */
+        }
+
+        main {
+            padding: 20px; /* Ajout de padding pour les petits écrans */
+             width: 100%; /* Assurer que main prend toute la largeur */
+            overflow-x: hidden; /* Empêcher le débordement horizontal */
+        }
+    }
+
+    /* Responsivité pour très petits écrans (mobiles portrait) */
+    @media (max-width: 480px) {
+        body {
+            font-size: 14px; /* Réduction de la taille de la police sur les très petits écrans */
+        }
+    }
+    </style>
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <img src="{{ association.logo.url }}" alt="Logo de {{ association.nom }}" class="img-fluid" style="max-height: 100px;">
+            <h1>{{ association.nom }}</h1>
+            <p class="lead">{{ association.description }}</p>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+    <h2 style="text-align:center;">Membres de l'Association : {{ association.nom }}</h2>
+
+    <div class="row mb-4">
+        <!-- Tableau des Membres du Comité -->
+        <div class="col-md-6 table-responsive">
+
+            <h3 style=" background-color: gold; heigth:80px; height:80px; text-align:center;margin-bottom: 20px; padding-top:25px;margin-top: 50px;">Membres du Comité</h3>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Adresse</th>
+                        <th>Poste</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for membre in membres_comite %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ membre.last_name }}</td>
+                        <td>{{ membre.first_name }}</td>
+                        <td>{{ membre.adresse }}</td>
+                        <td>{{ membre.get_role_display }}</td>  <!-- Affiche le nom du rôle -->
+                        <td>{{ membre.contact }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucun membre dans le comité pour le moment.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+             <div class="total-membres">
+            <p style="display: inline-block; margin-right: 10px;">Total membres comité :</p>
+            <span style="width: 50px; display: inline-block; border: 1px solid #ddd; padding: 5px; text-align: center;">{{ total_membres_comite }}</span>
+        </div>
+        </div>
+
+
+        <!-- Tableau des Membres de l'Association -->
+        <div class="col-md-6 table-responsive">
+            <h3 style=" background-color: gold; height:80px;padding-top:25px; text-align:center; margin-top: 50px;margin-bottom: 20px;">Membres de l'Association</h3>
+            <table class="table table-bordered table-striped ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Adresse</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for membre in membres_association %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ membre.last_name }}</td>
+                        <td>{{ membre.first_name }}</td>
+                        <td>{{ membre.adresse }}</td>
+                        <td>{{ membre.contact }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucun membre dans l'association pour le moment.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Affichage total membres sous le tableau du Comité -->
+        <div class="total-membres">
+            <p style="display: inline-block; margin-right: 10px;">Total membres association:</p>
+            <span style="width: 50px; display: inline-block; border: 1px solid #ddd; padding: 5px; text-align: center;">{{ total_membres_association }}</span>
+        </div>
+        </div>
+    </div>
+   <div class="container-fluide">
+    <!-- Message d'erreur pour l'Association -->
+    {% if error_message_association %}
+        <div class="alert alert-danger">{{ error_message_association }}</div>
+    {% endif %}
+
+    <!-- Message d'erreur pour le Comité -->
+    {% if error_message_comite %}
+        <div class="alert alert-danger">{{ error_message_comite }}</div>
+    {% endif %}
+
+    <div class="row">
+    <!-- Section de connexion pour le Comité -->
+    <div class="col-md-6">
+        <h3 class="h5">Connexion Comité</h3> <!-- Réduire la taille du titre -->
+        <form action="" target="_blank" method="POST" class="form-group d-flex align-items-center mb-4">
+            {% csrf_token %}
+            <label for="id_comite" class="mr-2 small">ID :</label> <!-- Réduire la taille du texte -->
+            <input type="text" name="id_comite" class="form-control form-control-sm" id="id_comite" placeholder="ID du membre" style="width: 120px;" required /> <!-- Champ réduit -->
+            <label for="password_comite" class="mr-2 ml-3 small">Mot de passe :</label> <!-- Réduire la taille du texte -->
+            <input type="password" name="password_comite" class="form-control form-control-sm" id="password_comite" placeholder="Mot de passe" style="width: 120px;" required /> <!-- Champ réduit -->
+            <button type="submit" class="btn btn-sm btn-primary ml-2">Se connecter</button> <!-- Bouton réduit -->
+        </form>
+    </div>
+
+    <!-- Section de connexion pour l'Association -->
+    <div class="col-md-6">
+        <h3 class="h5">Connexion Association</h3> <!-- Réduire la taille du titre -->
+        <form action="" target="_blank" method="POST" class="form-group d-flex align-items-center mb-4">
+            {% csrf_token %}
+            <label for="id_association" class="mr-2 small">ID :</label> <!-- Réduire la taille du texte -->
+            <input type="text" name="id_association" class="form-control form-control-sm" id="id_association" placeholder="ID du membre" style="width: 120px;" required /> <!-- Champ réduit -->
+            <label for="password_association" class="mr-2 ml-3 small">Mot de passe :</label> <!-- Réduire la taille du texte -->
+            <input type="password" name="password_association" class="form-control form-control-sm" id="password_association" placeholder="Mot de passe" style="width: 120px;" required /> <!-- Champ réduit -->
+            <button type="submit" class="btn btn-sm btn-primary ml-2" >Se connecter</button> <!-- Bouton réduit -->
+        </form>
+    </div>
+</div>
+
+
+
+        <br>
+
+    <div class="col-md-6">
+    <p style="display: inline-block; margin-right: 10px;">Total membres :</p>
+    <span style="width: 50px; display: inline-block; border: 1px solid #ddd; padding: 5px; text-align: center;">{{ total_membres }}</span>
+</div>
+
+
+</div>
+
+        <div class="mb-4">
+            <h4>Informations Supplémentaires</h4>
+            <h4>Règlement Intérieur</h4>
+            <p>{{ reglement_interieur }}</p>
+        </div>
+</main>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p>Contact : contact@association.org</p>
+        <p>© 2024 {{ association.nom }}. Tous droits réservés.</p>
+    </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Assurer que la sidebar soit bien fixe et occupe toute la hauteur de l'écran */
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <!-- Button for small screens -->
+                    <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse d-md-block" id="sidebarMenu">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'homepage:user_dashboard' %}">
+                                    <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-project-diagram"></i> Mes Projets
+                                </a>
+                            </li>
+                             <li class="nav-item">
+                                <a class="nav-link" href="{% url 'homepage:connection' %}">
+                                    <i class="fas fa-project-diagram"></i> Me Deconnecter
+                                </a>
+                            </li>
+
+                            <!-- Donateur, Sponsor, Bienfaiteur - Liens spécifiques -->
+                            {% if user.role == 'donateur' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'homepage:faire_don' %}">
+                                    <i class="fas fa-donate"></i> Faire un Don
+                                </a>
+                            </li>
+                            {% elif user.role == 'sponsor' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'homepage:sponsoriser_projet' %}">
+                                    <i class="fas fa-hand-holding-usd"></i> Sponsoriser un Projet
+                                </a>
+                            </li>
+                            {% elif user.role == 'bienfaiteur' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'homepage:etre_bienfaiteur' %}">
+                                    <i class="fas fa-heart"></i> Être Bienfaiteur
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-4">
+                <h1 class="my-4">Bienvenue, {{ user.username }}</h1>
+
+                {% block content %}
+                <!-- Le contenu spécifique de chaque vue sera ajouté ici -->
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

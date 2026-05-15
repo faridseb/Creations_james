@@ -1,0 +1,17 @@
+<!-- sent_messages.html -->
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Messages Envoyés</h1>
+<ul style="list-style: none; padding: 0;">
+    {% for message in messages %}
+        <li style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
+            <p><strong>Sujet : </strong>{{ message.subject }}</p>
+            <p><strong>Destinataire : </strong>{{ message.receiver.username }}</p>
+            <p><strong>Contenu : </strong>{{ message.body }}</p>
+            <p><strong>Date : </strong>{{ message.timestamp }}</p>
+        </li>
+    {% empty %}
+        <li>Aucun message envoyé.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

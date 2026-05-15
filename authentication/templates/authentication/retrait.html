@@ -1,0 +1,98 @@
+{% extends 'use.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Affichage des messages de succès/erreur -->
+{% if messages %}
+  <div class="mt-4">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert"
+           style="
+             font-weight: bold;
+             font-size: 1.2rem;
+             border-left: 10px solid {% if message.tags == 'error' %}#dc3545{% else %}#198754{% endif %};
+             background-color: {% if message.tags == 'error' %}#ffe6e6{% else %}#e6ffed{% endif %};
+             color: {% if message.tags == 'error' %}#b00020{% else %}#0f5132{% endif %};
+             padding: 20px;
+             box-shadow: 0 0 15px rgba(0,0,0,0.2);
+           ">
+        {% if message.tags == 'error' %}
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {% else %}
+          <i class="bi bi-check-circle-fill me-2"></i>
+        {% endif %}
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<!-- Formulaire de Retrait -->
+<div class="card shadow-lg p-4">
+    <h2 class="text-center text-success mb-4">Effectuer un Retrait</h2>
+
+    <form id="retrait-form" method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="montant" class="form-label fw-bold">Montant à retirer</label>
+            <input type="number" class="form-control" id="montant" name="montant" min="2000" placeholder="Min: 2000 FCFA" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="operateur" class="form-label fw-bold">Opérateur</label>
+            <select class="form-select" id="operateur" name="operateur" required onchange="afficherChamp()">
+                <option value="">-- Sélectionnez un opérateur --</option>
+                <option value="T-MONEY">T-Money</option>
+                <option value="FLOOZ">Flooz</option>
+                <option value="VISA">Visa</option>
+            </select>
+        </div>
+
+        <!-- Champ dynamique ici -->
+        <div class="mb-3" id="champ-numero" style="display:none;">
+            <label for="numero" class="form-label fw-bold" id="label-numero"></label>
+            <input type="text" class="form-control" id="numero" name="numero" required>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Demander le Retrait</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function afficherChamp() {
+        const operateur = document.getElementById('operateur').value;
+        const champNumero = document.getElementById('champ-numero');
+        const labelNumero = document.getElementById('label-numero');
+        const inputNumero = document.getElementById('numero');
+        const montantInput = document.getElementById('montant');
+
+        if (operateur === 'T-MONEY' || operateur === 'FLOOZ') {
+            champNumero.style.display = 'block';
+            labelNumero.textContent = "Numéro de téléphone (TMoney ou Flooz)";
+            inputNumero.placeholder = "Ex: 90909090";
+            montantInput.min = 2000;
+            montantInput.placeholder = "Min: 2000 FCFA pour TMoney/Flooz";
+
+        } else if (operateur === 'VISA') {
+            champNumero.style.display = 'block';
+            labelNumero.textContent = "Numéro de carte VISA";
+            inputNumero.placeholder = "Ex: 4000 1234 5678 9010";
+            montantInput.min = 6000;
+            montantInput.placeholder = "Min: 6000 FCFA pour Visa";
+
+        } else {
+            champNumero.style.display = 'none';
+            labelNumero.textContent = "";
+            inputNumero.placeholder = "";
+            montantInput.min = 2000;
+            montantInput.placeholder = "Min: 2000 FCFA";
+        }
+    }
+</script>
+
+{% endblock %}

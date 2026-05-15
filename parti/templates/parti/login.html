@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion PartiUser</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-600 text-white min-h-screen flex items-center justify-center m-0">
+
+  <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-8">
+    <h1 class="text-red-600 text-3xl font-bold mb-8 text-center">Connexion pour PartiUser</h1>
+
+    <!-- Messages d'erreur -->
+    {% for message in messages %}
+    <div class="bg-red-600 text-white rounded-md p-4 mb-6 text-center">
+      {{ message }}
+    </div>
+    {% endfor %}
+
+    <form method="POST" action="{% url 'parti:login' %}" class="space-y-6">
+      {% csrf_token %}
+      <input type="hidden" name="app_name" value="parti" />
+
+      <div>
+        <label for="email" class="block text-blue-700 font-semibold mb-1">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          required
+          class="w-full border border-blue-600 rounded-md px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-700"
+        />
+      </div>
+
+      <div>
+        <label for="password" class="block text-blue-700 font-semibold mb-1">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          required
+          class="w-full border border-blue-600 rounded-md px-4 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-700"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-800 transition-colors text-white font-semibold rounded-md py-3 cursor-pointer"
+      >
+        Se connecter
+      </button>
+    </form>
+
+    <div class="mt-6 text-center">
+      <a href="{% url 'parti:parti_signup' %}" class="text-blue-600 hover:text-blue-800 font-semibold">
+        Créer un compte
+      </a>
+    </div>
+
+    <!-- Section texte + audio -->
+    <div class="mt-10 text-black">
+      <p class="mb-4 text-lg">
+        Bienvenue sur PartiUser ! Connectez-vous pour accéder à votre espace membre et profiter pleinement de nos services.
+      </p>
+      <audio controls class="w-full rounded-md shadow-md outline-none">
+        <source src="{% static 'audio/welcome_message.mp3' %}" type="audio/mpeg" />
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
+    </div>
+  </div>
+  
+</body>
+</html>

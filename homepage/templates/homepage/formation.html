@@ -1,0 +1,861 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos formations et informations</title>
+    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #1d4ed8;
+            --blue-light: #3b82f6;
+            --blue-dark: #1e3a8a;
+            --cyan: #0891b2;
+            --cyan-light: #06b6d4;
+            --cyan-dark: #0e7490;
+            --orange: #f97316;
+            --bg: #f0f4ff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            font-family: 'DM Sans', sans-serif;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* ── Hero banner ── */
+        .hero {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 50%, var(--cyan) 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 60px 24px 50px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(255,255,255,.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(6,182,212,.25) 0%, transparent 50%);
+        }
+
+        .hero-dot-grid {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.12) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .hero-title {
+            position: relative;
+            font-size: clamp(1.6rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .hero-title span { color: var(--orange); }
+
+        .hero-subtitle {
+            position: relative;
+            max-width: 760px;
+            margin: 18px auto 0;
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.2);
+            backdrop-filter: blur(8px);
+            border-radius: 14px;
+            padding: 20px 28px;
+            color: rgba(255,255,255,.92);
+            font-size: .93rem;
+            line-height: 1.75;
+            text-align: justify;
+        }
+
+        /* ── CTA cards ── */
+        .cta-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 36px 24px;
+        }
+
+        .cta-card {
+            flex: 1 1 300px;
+            max-width: 440px;
+            border-radius: 20px;
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .cta-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.18); }
+
+        .cta-card.blue {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+            box-shadow: 0 8px 30px rgba(29,78,216,.35);
+        }
+
+        .cta-card.cyan {
+            background: linear-gradient(135deg, var(--cyan-dark), var(--cyan-light));
+            box-shadow: 0 8px 30px rgba(8,145,178,.35);
+        }
+
+        .cta-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.08);
+        }
+
+        .cta-card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 18px;
+        }
+
+        .cta-btns { display: flex; gap: 12px; }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 22px;
+            border-radius: 50px;
+            background: rgba(255,255,255,.18);
+            border: 1.5px solid rgba(255,255,255,.4);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s, transform .15s;
+            letter-spacing: .03em;
+        }
+
+        .cta-btn:hover {
+            background: rgba(255,255,255,.32);
+            transform: scale(1.04);
+        }
+
+        .cta-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        /* ── Tables section ── */
+        .tables-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            padding: 0 24px 40px;
+        }
+
+        .tables-col { flex: 1 1 340px; display: flex; flex-direction: column; gap: 24px; }
+
+        .table-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(30,58,138,.08);
+            border: 1px solid rgba(30,58,138,.07);
+        }
+
+        .table-header {
+            padding: 14px 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: .85rem;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-header.blue { background: linear-gradient(90deg, var(--blue-dark), var(--blue-light)); }
+        .table-header.cyan { background: linear-gradient(90deg, var(--cyan-dark), var(--cyan-light)); }
+
+        .table-header-icon {
+            width: 28px; height: 28px;
+            background: rgba(255,255,255,.2);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead { background: #f8fafc; }
+
+        thead th {
+            padding: 10px 14px;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr { transition: background .15s; }
+        tbody tr:hover { background: #f1f5ff; }
+        tbody tr + tr { border-top: 1px solid #f1f5f9; }
+
+        tbody td {
+            padding: 10px 14px;
+            font-size: .83rem;
+            color: #334155;
+        }
+
+        .empty-row td {
+            text-align: center;
+            color: #f97316;
+            font-size: .82rem;
+            padding: 18px;
+            font-style: italic;
+        }
+
+        /* ── Modals ── */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15,23,42,.65);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .modal-box {
+            background: #fff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 36px 32px 32px;
+            animation: slideUp .25s ease;
+            box-shadow: 0 25px 60px rgba(0,0,0,.2);
+        }
+
+        @keyframes slideUp {
+            from { opacity:0; transform:translateY(30px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute; top: 16px; right: 18px;
+            width: 32px; height: 32px;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: #64748b;
+            transition: background .2s, color .2s;
+        }
+
+        .modal-close:hover { background: #fee2e2; color: #ef4444; }
+
+        .modal-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0f172a;
+            border-bottom: 3px solid var(--blue-light);
+            padding-bottom: 10px;
+        }
+
+        .modal-title.cyan-accent { border-color: var(--cyan); }
+
+        .modal-body { font-size: .9rem; line-height: 1.8; color: #334155; }
+
+        .modal-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--blue-light);
+        }
+
+        .modal-item.cyan { border-color: var(--cyan); }
+
+        .modal-item-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+        .audio-label {
+            font-family: 'Syne', sans-serif;
+            font-size: .82rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin: 18px 0 8px;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 10px;
+            accent-color: var(--blue);
+        }
+
+        /* ── Footer ── */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 48px 24px 32px;
+        }
+
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 36px;
+        }
+
+        .footer-logo-img { width: 56px; border-radius: 10px; margin-bottom: 10px; }
+        .footer-tagline { font-style: italic; color: var(--orange); font-size: .88rem; }
+
+        .footer-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li + li { margin-top: 8px; }
+        .footer-links a { color: #94a3b8; text-decoration: none; font-size: .88rem; transition: color .2s; }
+        .footer-links a:hover { color: var(--cyan-light); }
+
+        .footer-input {
+            width: 100%;
+            padding: 10px 14px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: #e2e8f0;
+            font-size: .88rem;
+            margin-bottom: 10px;
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        .footer-input:focus { border-color: var(--cyan); }
+
+        .footer-submit {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .88rem;
+            cursor: pointer;
+            letter-spacing: .05em;
+            transition: opacity .2s;
+        }
+
+        .footer-submit:hover { opacity: .85; }
+
+        .footer-contact { font-size: .85rem; margin-top: 12px; }
+        .footer-contact p + p { margin-top: 6px; }
+        .footer-contact strong { color: #e2e8f0; }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 32px auto 0;
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            font-size: .8rem;
+            text-align: center;
+            color: #475569;
+        }
+
+        /* icons inline svg shorthand */
+        .icon { display:inline-block; vertical-align:middle; }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — Tablet  (≤ 900px)
+        ══════════════════════════════════════ */
+        @media (max-width: 900px) {
+            .tables-wrapper {
+                flex-direction: column;
+                padding: 0 16px 32px;
+            }
+            .tables-col { flex: 1 1 100%; }
+
+            .cta-section { padding: 24px 16px; }
+            .cta-card { max-width: 100%; }
+
+
+            .table-card {
+            width: 390px;
+        }
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — Mobile  (≤ 640px)
+        ══════════════════════════════════════ */
+        @media (max-width: 640px) {
+            /* Hero */
+            .hero { padding: 36px 16px 32px; }
+            .hero-subtitle { padding: 14px 16px; font-size: .85rem; }
+
+            /* CTA cards */
+            .cta-section { padding: 20px 16px; gap: 14px; }
+            .cta-card { padding: 22px 18px; border-radius: 16px; }
+            .cta-card-title { font-size: .9rem; margin-bottom: 14px; }
+            .cta-btns { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+            .cta-btn { flex: 1 1 auto; justify-content: center; padding: 9px 14px; font-size: .8rem; }
+
+            /* Tables — make them horizontally scrollable */
+            .table-card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .table-card table { min-width: 420px; }
+            thead th, tbody td { padding: 8px 10px; font-size: .75rem; }
+            .table-header { font-size: .78rem; padding: 12px 14px; }
+
+            /* Modals — full screen on mobile */
+            .modal-overlay { align-items: flex-end; }
+            .modal-box {
+                border-radius: 20px 20px 0 0;
+                max-width: 100%;
+                max-height: 90vh;
+                padding: 28px 20px 24px;
+                width: 100%;
+            }
+            .modal-title { font-size: 1.1rem; }
+
+            /* Footer */
+            footer { padding: 36px 16px 24px; }
+            .footer-grid { gap: 24px; }
+
+            /* Tables wrapper */
+            .tables-wrapper { padding: 0 12px 28px; gap: 16px; }
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE — Small mobile  (≤ 380px)
+        ══════════════════════════════════════ */
+        @media (max-width: 380px) {
+            .hero-title { font-size: 1.3rem; }
+            .cta-btns { flex-direction: column; }
+            .cta-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+    <div class="hero-dot-grid"></div>
+    <h1 class="hero-title">Nos <span>Formations</span> &amp; Informations</h1>
+    <p class="hero-subtitle">
+        Bien que la spécialité de La structure <strong style="color:#fff;">Création James</strong> soit l'artisanat, elle forme aussi dans d'autres domaines
+        tels que : l'entreprenariat, l'informatique, la programmation web ; et met parfois en location son centre à d'autres formateurs pour leur spécialité.
+        Notre centre est ouvert tous les jours de la semaine de <strong style="color:#fff;">07h à 22h</strong>, avec une souplesse dans la programmation
+        selon la disponibilité des apprenants. Soyez scotché à notre page pour plus d'informations sur les périodes et le lieu des formations.
+    </p>
+</section>
+
+<!-- ════════════════════ CTA CARDS ════════════════════ -->
+<section class="cta-section">
+
+    <div class="cta-card blue">
+        <p class="cta-card-title">
+            <svg class="icon" style="width:18px;height:18px;margin-right:6px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+            Nos Formations
+        </p>
+        <div class="cta-btns">
+            <button class="cta-btn" onclick="openModal('textFormationModal')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-3-3v6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+                Texte
+            </button>
+            <button class="cta-btn" onclick="openModal('audioFormationModal')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
+                Audio
+            </button>
+        </div>
+    </div>
+
+    <div class="cta-card cyan">
+        <p class="cta-card-title">
+            <svg class="icon" style="width:18px;height:18px;margin-right:6px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 21H8M12 17v4"/></svg>
+            Stages &amp; Offres d'Emploi
+        </p>
+        <div class="cta-btns">
+            <button class="cta-btn" onclick="openModal('textModal')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-3-3v6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+                Texte
+            </button>
+            <button class="cta-btn" onclick="openModal('audioModal')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>
+                Audio
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<!-- ════════════════════ TABLES ════════════════════ -->
+<div class="tables-wrapper">
+
+    <!-- COLONNE FORMATIONS -->
+    <div class="tables-col">
+
+        <div class="table-card">
+            <div class="table-header blue">
+                <div class="table-header-icon">
+                    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
+                Formations par semaine
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Formation</th>
+                        <th>Période / Durée</th>
+                        <th>Date</th>
+                        <th>Heures</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for formation in formations_semaine %}
+                    <tr>
+                        <td>{{ formation.nom }}</td>
+                        <td>{{ formation.periode_duree }}</td>
+                        <td>{{ formation.date }}</td>
+                        <td>{{ formation.heures }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="empty-row"><td colspan="4">Aucune formation trouvée</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <div class="table-header blue">
+                <div class="table-header-icon">
+                    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
+                Formations par mois
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Formation</th><th>Période / Durée</th><th>Date</th><th>Heures</th></tr>
+                </thead>
+                <tbody>
+                    {% for formation in formations_mois %}
+                    <tr>
+                        <td>{{ formation.nom }}</td>
+                        <td>{{ formation.periode_duree }}</td>
+                        <td>{{ formation.date }}</td>
+                        <td>{{ formation.heures }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="empty-row"><td colspan="4">Aucune formation trouvée</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <div class="table-header blue">
+                <div class="table-header-icon">
+                    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
+                Formations par année
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Formation</th><th>Période / Durée</th><th>Date</th><th>Heures</th></tr>
+                </thead>
+                <tbody>
+                    {% for formation in formations_annee %}
+                    <tr>
+                        <td>{{ formation.nom }}</td>
+                        <td>{{ formation.periode_duree }}</td>
+                        <td>{{ formation.date }}</td>
+                        <td>{{ formation.heures }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="empty-row"><td colspan="4">Aucune formation trouvée</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- COLONNE INFORMATIONS -->
+    <div class="tables-col">
+
+        <div class="table-card">
+            <div class="table-header cyan">
+                <div class="table-header-icon">
+                    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                Informations par semaine
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Information</th><th>Période / Durée</th><th>Date</th><th>Heures</th></tr>
+                </thead>
+                <tbody>
+                    {% for information in informations_semaine %}
+                    <tr>
+                        <td>{{ information.nom }}</td>
+                        <td>{{ information.periode_duree }}</td>
+                        <td>{{ information.date }}</td>
+                        <td>{{ information.heures }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="empty-row"><td colspan="4">Aucune information trouvée</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <div class="table-header cyan">
+                <div class="table-header-icon">
+                    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                Informations par mois
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Information</th><th>Période / Durée</th><th>Date</th><th>Heures</th></tr>
+                </thead>
+                <tbody>
+                    {% for information in informations_mois %}
+                    <tr>
+                        <td>{{ information.nom }}</td>
+                        <td>{{ information.periode_duree }}</td>
+                        <td>{{ information.date }}</td>
+                        <td>{{ information.heures }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="empty-row"><td colspan="4">Aucune information trouvée</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <div class="table-header cyan">
+                <div class="table-header-icon">
+                    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                </div>
+                Informations par année
+            </div>
+            <table>
+                <thead>
+                    <tr><th>Information</th><th>Période / Durée</th><th>Date</th><th>Heures</th></tr>
+                </thead>
+                <tbody>
+                    {% for information in informations_annee %}
+                    <tr>
+                        <td>{{ information.nom }}</td>
+                        <td>{{ information.periode_duree }}</td>
+                        <td>{{ information.date }}</td>
+                        <td>{{ information.heures }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="empty-row"><td colspan="4">Aucune information trouvée</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- ════════════════════ MODALS ════════════════════ -->
+
+<!-- Modal texte formations -->
+<div id="textFormationModal" class="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('textFormationModal')">&times;</button>
+        <h2 class="modal-title">Nos Formations</h2>
+        <div class="modal-body">
+            <div class="modal-item">
+                <span class="modal-item-icon">💻</span>
+                <span>Développement web — HTML, CSS, JavaScript, Python/Django</span>
+            </div>
+            <div class="modal-item">
+                <span class="modal-item-icon">📱</span>
+                <span>Marketing digital et réseaux sociaux</span>
+            </div>
+            <div class="modal-item">
+                <span class="modal-item-icon">📊</span>
+                <span>Comptabilité et gestion d'entreprise</span>
+            </div>
+            <div class="modal-item">
+                <span class="modal-item-icon">🖥️</span>
+                <span>Initiation à l'informatique pour débutants</span>
+            </div>
+            <div class="modal-item">
+                <span class="modal-item-icon">🎨</span>
+                <span>Artisanat &amp; création manuelle</span>
+            </div>
+            <div class="modal-item" style="border-color:var(--orange)">
+                <span class="modal-item-icon">⏰</span>
+                <span><strong>Durée :</strong> 1 à 3 mois selon le programme</span>
+            </div>
+            <div class="modal-item" style="border-color:var(--orange)">
+                <span class="modal-item-icon">📍</span>
+                <span><strong>Lieu :</strong> Agoè Logopé, Lomé – Togo</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal audio formations -->
+<div id="audioFormationModal" class="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('audioFormationModal')">&times;</button>
+        <h2 class="modal-title">Audio – Formations</h2>
+        <p class="audio-label">🇫🇷 Français</p>
+        <audio controls>
+            <source src="{% static 'audio/formation/Audio_1.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+        <p class="audio-label" style="margin-top:20px">🇬🇧 Anglais</p>
+        <audio controls>
+            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+    </div>
+</div>
+
+<!-- Modal texte stages/emploi -->
+<div id="textModal" class="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('textModal')">&times;</button>
+        <h2 class="modal-title cyan-accent">Stages &amp; Offres d'Emploi</h2>
+        <div class="modal-body">
+            <div class="modal-item cyan">
+                <span class="modal-item-icon">📅</span>
+                <span>Les stages débutent en <strong>juillet</strong> dans les domaines du développement web, marketing et comptabilité.</span>
+            </div>
+            <div class="modal-item cyan">
+                <span class="modal-item-icon">💼</span>
+                <span>Les offres d'emploi sont publiées <strong>chaque semaine</strong> sur notre site.</span>
+            </div>
+            <div class="modal-item cyan">
+                <span class="modal-item-icon">✉️</span>
+                <span>Pour plus de détails, contactez-nous via l'espace <strong>Contact</strong>.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal audio stages/emploi -->
+<div id="audioModal" class="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('audioModal')">&times;</button>
+        <h2 class="modal-title cyan-accent">Audio – Stages &amp; Emploi</h2>
+        <p class="audio-label">🇫🇷 Français</p>
+        <audio controls>
+            <source src="{% static 'audio/formation/Audio2.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+        <p class="audio-label" style="margin-top:20px">🇬🇧 Anglais</p>
+        <audio controls>
+            <source src="{% static 'audios/info_s.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+    </div>
+</div>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <img src="{% static 'images/logo.jpg' %}" class="footer-logo-img" alt="Logo Création James">
+            <p class="footer-tagline">L'art de créer la richesse !</p>
+            <p style="margin-top:12px;font-size:.83rem;">Total d'actions sur le site : <strong style="color:#fff;">0</strong></p>
+        </div>
+        <div>
+            <h4 class="footer-heading">Liens utiles</h4>
+            <ul class="footer-links">
+                <li><a href="{% url 'homepage:home' %}">Accueil</a></li>
+                <li><a href="#">Politique</a></li>
+                <li><a href="#">Comptes</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Boutique en ligne</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="footer-heading">Rester informé</h4>
+            <input type="email" placeholder="Votre adresse e-mail" class="footer-input">
+            <button class="footer-submit">Soumettre</button>
+            <div class="footer-contact">
+                <p>📞 <strong>+228 90 12 17 64</strong></p>
+                <p>✉️ <strong>creationjames9@gmail.com</strong></p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2025 Création James — Tous droits réservés
+    </div>
+</footer>
+
+<script>
+    function openModal(id) {
+        document.getElementById(id).classList.add('open');
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('open');
+    }
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) closeModal(this.id);
+        });
+    });
+    // Escape key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+        }
+    });
+</script>
+
+</body>
+</html>

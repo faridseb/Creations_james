@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accueil des Associations</title>
+    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-6 text-center">
+        <h1 class="text-3xl font-bold">Bienvenue sur la plateforme des Associations</h1>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-1 container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-semibold mb-6 text-center">Associations disponibles</h2>
+
+        <div class="space-y-6">
+            {% for association in associations %}
+                <div class="bg-white rounded-lg shadow-md flex flex-col md:flex-row items-center p-6">
+                    {% if association.logo %}
+                        <img src="{{ association.logo.url }}" alt="Logo de {{ association.nom }}" class="w-24 h-24 object-cover rounded-md mb-4 md:mb-0 md:mr-6">
+                    {% else %}
+                        <div class="w-24 h-24 bg-gray-300 flex items-center justify-center text-gray-600 rounded-md mb-4 md:mb-0 md:mr-6">
+                            <span class="text-sm">Pas de logo</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-xl font-bold">{{ association.nom }}</h3>
+                    </div>
+
+                    <div class="mt-4 md:mt-0 md:ml-6 flex flex-col space-y-2">
+                        <a href="{% url 'association:connexion_association' association.assoc_uuid %}"
+                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-300 text-center">
+                            Se connecter
+                        </a>
+
+                        <!-- Boutons Texte et Audio -->
+                        <button
+                            data-modal-target="modalTexte"
+                            data-modal-toggle="modalTexte"
+                            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-300"
+                            onclick="openModal('modalTexte')"
+                        >
+                            Texte
+                        </button>
+
+                        <button
+                            data-modal-target="modalAudio"
+                            data-modal-toggle="modalAudio"
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition duration-300"
+                            onclick="openModal('modalAudio')"
+                        >
+                            Audio
+                        </button>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-gray-500">Aucune association disponible.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white text-center py-4">
+        <p class="mb-1">Nombre total d'associations : {{ total_associations }}</p>
+        <p>&copy; 2024 Plateforme des Associations. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Modal Texte -->
+    <div id="modalTexte" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg max-w-lg w-full p-6 relative">
+            <button
+                onclick="closeModal('modalTexte')"
+                class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl font-bold"
+                aria-label="Fermer la fenêtre"
+            >&times;</button>
+            <h3 class="text-xl font-semibold mb-4">Informations Textuelles</h3>
+            <p class="text-gray-800">
+                Bienvenue sur la plateforme des Associations. Ici vous pouvez trouver des informations détaillées
+                sur nos services et comment vous engager.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Audio -->
+    <div id="modalAudio" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg max-w-lg w-full p-6 relative">
+            <button
+                onclick="closeModal('modalAudio')"
+                class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl font-bold"
+                aria-label="Fermer la fenêtre"
+            >&times;</button>
+            <h3 class="text-xl font-semibold mb-4">Message Audio</h3>
+            <audio controls class="w-full rounded-md shadow-md outline-none">
+                <source src="{% static 'audio/welcome_message.mp3' %}" type="audio/mpeg" />
+                Votre navigateur ne supporte pas la lecture audio.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Fermer modal au clic hors du contenu
+        window.addEventListener('click', function(event) {
+            ['modalTexte', 'modalAudio'].forEach(id => {
+                const modal = document.getElementById(id);
+                if (modal && !modal.classList.contains('hidden')) {
+                    if (event.target === modal) {
+                        closeModal(id);
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

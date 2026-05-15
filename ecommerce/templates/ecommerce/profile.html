@@ -1,0 +1,48 @@
+{% extends "ecommerce_base.html" %}
+
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h1>Profil Utilisateur</h1>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Informations Personnelles</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Email:</strong>
+                                <p class="text-muted">{{ user.email }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Nom d'utilisateur:</strong>
+                                <p class="text-muted">{{ user.username }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Adresse de livraison:</strong>
+                                <p class="text-muted">{{ user.shipping_address }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Points de fidélité:</strong>
+                                <p class="text-muted">{{ user.loyalty_points }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'ecommerce:edit_profile' %}" class="btn btn-primary">Modifier le Profil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

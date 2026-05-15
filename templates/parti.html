@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACP2A-CJ | Carnet de Membres</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Inclure les fichiers CSS Bootstrap et personnalisés -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Style du menu latéral (sidebar) */
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: white;
+            color: white;
+            padding-top: 30px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: white;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        /* En-tête */
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        /* Pied de page */
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Réduire la taille du tableau pour s'adapter à l'écran */
+        .table {
+            margin-top: 20px;
+        }
+
+        /* Style du bouton */
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* Masquer la sidebar sur petit écran */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #343a40;
+    color: #ffffff;
+    overflow-y: auto;
+    padding-top: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000; /* Ensure sidebar is above other content */
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+/* Afficher le menu hamburger sur mobile */
+.hamburger {
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1100; /* Ensure hamburger is above sidebar */
+}
+ header {
+        text-align: center;
+        padding: 5%;
+        background-color: #f8f9fa;
+        box-sizing: border-box; /* Assure que le padding est inclus dans la largeur totale */
+        width: 100%;
+    }
+    h1 {
+        font-size: 6vw; /* Utilisation de vw pour une taille de police réactive */
+        margin: 0;
+        color: #333;
+    }
+    p {
+        font-size: 4vw; /* Utilisation de vw pour une taille de police réactive */
+        margin: 0;
+        color: #555;
+    }
+    @media (min-width: 480px) {
+        h1 {
+            font-size: 2em; /* Taille de police pour les écrans plus grands */
+        }
+        p {
+            font-size: 1em; /* Taille de police pour les écrans plus grands */
+        }
+
+    }
+/* Afficher le hamburger sur petit écran */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Style pour la sidebar */
+.sidebar .nav-link {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #495057;
+    text-decoration: none;
+}
+
+.sidebar .nav-header {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 10px 15px;
+    color: #bbbbbb;
+}
+.sidebar .nav-link.active {
+    background-color: #007bff; /* Couleur de fond pour indiquer le lien actif */
+    color: #fff;
+}
+
+        /* Styles pour les petits écrans */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        margin-left: 0;
+        padding: 5px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Menu de navigation (sidebar) -->
+    <div class="sidebar">
+        <h3 class="text-center text-white">PARTI CREATIONJAMES</h3>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'parti:parti_dashboard' %}">Carnet de Membres</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Mes Informations</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Faire la cotisation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'parti:login' %}">Deconnexion</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="content">
+        <!-- En-tête -->
+        <header>
+            <h1 style="color:black;">Bienvenue sur le Carnet de Membres</h1>
+            <p>Gestion des membres de l'Association Conscience Professionnelle Aide et Actions</p>
+        </header>
+
+        <!-- Contenu spécifique à chaque page -->
+        <div class="container mt-4">
+            {% block content %}
+            <!-- Le contenu de la page spécifique sera inséré ici -->
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Pied de page -->
+
+
+    <!-- Scripts JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

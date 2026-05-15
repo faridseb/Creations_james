@@ -1,0 +1,185 @@
+{% block content %}
+{% load static %}
+
+<title>Paiement</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+   /* Style général de la page */
+body {
+    background-color: #ffffff; /* Fond blanc */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+/* Titre principal */
+h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #343a40;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Conteneur principal du paiement */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Conteneur des options de paiement */
+.payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.payment-methods button {
+    background: none;
+    border: none;
+    padding: 0; /* Pas de padding */
+    cursor: pointer;
+}
+
+.payment-methods img {
+    width: 120px; /* Taille de l'image */
+    height: auto; /* Garder le ratio d'aspect */
+    transition: none; /* Pas de transformation */
+}
+
+/* Formulaire de paiement */
+.payment-forms {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Champs du formulaire */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-control {
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    width: 100%;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Bouton de paiement */
+button[type="submit"] {
+
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+}
+
+</style>
+
+<div class="container">
+    <h1 style="text-align: center; background-color: gold; padding: 30px; margin-bottom: 90px;">Paiement de votre Adhesion</h1>
+    <div class="payment-methods">
+
+         <form id="tmoney-form" action="{% url 'authentication:initiate_payment_cinet' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_channel" value="tmoney">
+            <button type="submit">
+                <img src="{% static 'images/Tmoney.png' %}" alt="Tmoney" class="payment-img">
+            </button>
+        </form>
+
+        <form id="flooz-form" action="{% url 'authentication:initiate_payment_cinet' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_channel" value="flooz">
+            <button type="submit">
+                <img src="{% static 'images/Moov-money.png' %}" alt="Flooz" class="payment-img">
+            </button>
+        </form>
+
+        <form id="card-form" action="{% url 'authentication:create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_method" value="card">
+            <button type="submit">
+                <img src="{% static 'images/visa.jpg' %}" alt="Visa" class="payment-img">
+            </button>
+        </form>
+
+        <form id="mobile_money-form" action="{% url 'authentication:initiate_payment_cinet' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_channel" value="mobile_money">
+            <button type="submit">
+                <img src="{% static 'images/mastercard-mobile.png' %}" alt="Mastercard" class="payment-img">
+            </button>
+        </form>
+
+        <form id="google-pay-form" action="{% url 'authentication:create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_method" value="google_pay">
+            <button type="submit">
+                <img src="{% static 'images/google-pay.png' %}" alt="Google Pay" class="payment-img">
+            </button>
+        </form>
+
+        <form id="apple-pay-form" action="{% url 'authentication:create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_method" value="apple_pay">
+            <button type="submit">
+                <img src="{% static 'images/apple-pay.jpeg' %}" alt="Apple Pay" class="payment-img">
+            </button>
+        </form>
+
+        <form id="paypal-form" action="{% url 'authentication:create_checkout_session' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="payment_method" value="paypal">
+            <button type="submit">
+                <img src="{% static 'images/paypal_payment.jpg' %}" alt="PayPal" class="payment-img">
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="payment-info">
+    <p>Le montant de votre paiement est de 5000 CFA</p>
+    <p>Veuillez sélectionner une option ci-dessus pour procéder au paiement.</p>
+    <br> <a href="{% url 'authentication:user_dashboard' %}">Confirmer plus tard dans une semaine</a>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

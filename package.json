@@ -1,0 +1,17 @@
+{
+  "name": "creationjames",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD\r # CreationJames\r création de site e-Commerce combiné a une association de parrainage\r =======\r # CreationJames\r >>>>>>> 2355fdee00c8774695559dc46d995d22c68b4138",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^3.4.1"
+  }
+}

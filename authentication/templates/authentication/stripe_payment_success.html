@@ -1,0 +1,110 @@
+{% extends 'use.html' %}
+
+{% block content %}
+    <div class="container mt-5" id="receipt-container">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h1 class="text-success">Paiement Réussi</h1>
+                <p class="lead">Merci pour votre paiement. Voici les détails :</p>
+
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Détail</th>
+                            <th scope="col">Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ID du parrainage</strong></td>
+                            <td>{{ payment_details.session_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email du parrain</strong></td>
+                            <td>{{ payment_details.referrer_email }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email du filleul</strong></td>
+                            <td>{{ payment_details.referred_email }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Méthode de paiement</strong></td>
+                            <td>{{ payment_details.payment_method }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Montant payé</strong></td>
+                            <td>{{ payment_details.amount_paid }} {{ payment_details.currency }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Récompense au parrain</strong></td>
+                            <td>{{ payment_details.reward_to_referrer }} {{ payment_details.currency }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ID de transaction</strong></td>
+                            <td>{{ payment_details.transaction_id }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Statut du paiement</strong></td>
+                            <td>{{ payment_details.payment_status }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+ <div class="mt-4">
+                    <p class="text-center">Nous vous remercions de votre confiance.</p>
+                    <a href="{% url 'authentication:user_dashboard' %}" class="btn btn-primary btn-lg btn-block">Retour au tableau de bord</a>
+                <button class="btn btn-success" onclick="downloadPDF()">Télécharger en PDF</button>
+                </div>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 10px;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+        table td {
+            font-size: 16px;
+        }
+        .btn {
+            font-size: 18px;
+            text-align: center;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    function downloadPDF() {
+        const element = document.getElementById('receipt-container');
+        const opt = {
+            margin:       0.5,
+            filename:     'recu_don.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+{% endblock %}

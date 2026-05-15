@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Faire un don pour le projet : {{ projet.titre }}</h1>
+    <p>{{ projet.description }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="montant">Montant à donner :</label>
+        <input type="number" name="montant" id="montant" required>
+        <button type="submit">Faire un don</button>
+    </form>
+{% endblock %}

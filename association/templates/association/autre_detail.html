@@ -1,0 +1,127 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<style>
+@media (max-width: 768px) {
+    table {
+        font-size: 12px; /* Réduire légèrement la taille du texte */
+    }
+    h5, h6 {
+        font-size: 14px; /* Ajuster les titres */
+    }
+    .table th, .table td {
+        padding: 5px; /* Réduire les espacements */
+    }
+    textarea {
+        font-size: 12px;
+    }
+}
+
+</style>
+<div class="container mt-5">
+    <!-- Autres Détails -->
+    <h5 class="text-center font-weight-bold mb-4">Détails des Semestres et Années</h5>
+    {% with previous_year=None %}
+    {% for detail in details %}
+        {% if previous_year != detail.annee %}
+            {% if not forloop.first %}
+                <hr style="border: 10px solid black;margin-top:55px; width: 100%;">
+            {% endif %}
+            {% with detail.annee as previous_year %}
+            {% endwith %}
+        {% endif %}
+        <h6 class="text-center font-weight-bold mb-4">Année : {{ detail.annee }} - Semestre : {{ detail.semestre }}</h6>
+        <table class="table table-hover table-bordered text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th colspan="5">Autres Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td colspan="2">Nombre total de tes filleuls ici : {{ detail.nombre_filleuls|default:"Non renseigné" }}</td>
+                    <td>Parts Sociaux<br><span class="fw-bold">25% du net</span></td>
+                    <td colspan="2">Parts Lucratifs<br><span class="fw-bold">75% du net</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Ta cotisation des 6 derniers mois</td>
+                    <td colspan="2" class="bg-light">{{ detail.part_sociale|default:"Non renseigné" }}</td>
+                    <td colspan="2" class="bg-light">{{ detail.part_lucrative|default:"Non renseigné" }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Leur intérêt pour vous<br><span class="fw-bold">10%</span></td>
+                    <td class="bg-light">+</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Intérêt sur la division par action</td>
+                    <td class="bg-light">+</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Tes intérêts<br><span class="fw-bold">2% par Semestre 6Mois</span></td>
+                    <td class="bg-light">+</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Pénalités… Retrait (n’est + membre)</td>
+                    <td class="bg-danger text-white">-</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Les Sanctions</td>
+                    <td class="bg-danger text-white">-</td>
+                </tr>
+                <tr>
+                    <td colspan="4">Diminutions chez tous les membres</td>
+                    <td class="bg-danger text-white">-</td>
+                </tr>
+              <tr class="table-warning">
+                    <td colspan="2">Nouveau Solde =</td>
+                    <td colspan="2">{{ detail.part_sociale|default:"Non renseigné" }}</td>
+                    <td colspan="2">{{ detail.part_lucrative|default:"Non renseigné" }}</td>
+                </tr>
+                <tr class="table-warning">
+                    <td colspan="2">Ancien Solde =</td>
+                    <td colspan="2">{{ detail.ancien_total_sociale|default:"Non renseigné" }}</td>
+                    <td colspan="2">{{ detail.ancien_total_lucrative|default:"Non renseigné" }}</td>
+                </tr>
+                <tr class="table-warning">
+                    <td colspan="2">Les Totaux =</td>
+                    <td colspan="2">{{ detail.total_sociale|default:"Non renseigné" }}</td>
+                    <td colspan="2">{{ detail.total_lucrative|default:"Non renseigné" }}</td>
+                </tr>
+
+                <tr class="table-info">
+                    <td rowspan="2">Demande d'assistance</td>
+                    <td colspan="2">En cas de détresse</td>
+                    <td colspan="2">Obtenus : {{ detail.assistance_detresse_obtenue }}<br>Reste : {{ detail.assistance_detresse_reste }}</td>
+                </tr>
+                <tr class="table-info">
+                    <td colspan="2">En cas de joie</td>
+                    <td colspan="2">Obtenus : {{ detail.assistance_joie_obtenue }}<br>Reste : {{ detail.assistance_joie_reste }}</td>
+                </tr>
+                <tr class="table-secondary">
+                    <td colspan="2">Nombres de prêts obtenus</td>
+                    <td>Prêt en cours ……………..</td>
+                    <td colspan="2">Reste à payer ………………</td>
+                </tr>
+                <tr class="table-secondary">
+                    <td colspan="2">Nombre de</td>
+                    <td>Remise à 0 de dû à une assistance</td>
+                    <td colspan="2">Remise à 0 de dû à un prêt</td>
+                </tr>
+            </tbody>
+        </table>
+    <div class="alert alert-success mt-4">
+        <strong>Vos comptes sont-ils Exact ?</strong> OUI…. Non réclamation….
+    </div>
+
+    <!-- Observation et Signature -->
+    <div class="mt-4">
+        <h5 class="text-center font-weight-bold">Observation et Signature du Comité :</h5>
+        <textarea class="form-control mt-3" rows="3" placeholder="…………………………………………….."></textarea>
+        <textarea class="form-control mt-2" rows="3" placeholder="…………………………………………….."></textarea>
+    </div>
+    {% endfor %}
+    {% endwith %}
+
+    <!-- Confirmation des comptes -->
+
+</div>
+{% endblock %}

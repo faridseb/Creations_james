@@ -1,0 +1,27 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion d'Association{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'liste_associations' %}">Associations</a></li>
+            <li><a href="{% url 'liste_membres' %}">Membres</a></li>
+            <li><a href="{% url 'liste_cotisations' %}">Cotisations</a></li>
+            <li><a href="{% url 'liste_penalites' %}">Pénalités</a></li>
+            <li><a href="{% url 'liste_demandes_pret' %}">Demandes de Prêt</a></li>
+            <li><a href="{% url 'liste_demandes_assistance' %}">Demandes d'Assistance</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Gestion d'Association</p>
+    </footer>
+</body>
+</html>

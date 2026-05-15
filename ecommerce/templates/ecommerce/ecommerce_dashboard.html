@@ -1,0 +1,71 @@
+{% extends "ecommerce_base.html" %}
+
+{% block title %}Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>Bienvenue, {{ user.username }}</h1>
+
+    <div class="row">
+        <!-- Points de Fidélité -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ user.loyalty_points }}</h3>
+                    <p>Points de Fidélité</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <a href="{% url 'ecommerce:rewards' %}" class="small-box-footer">Voir plus <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- Parrainages -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ referrals_count }}</h3>
+                    <p>Personnes Parrainées</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <a href="{% url 'ecommerce:referrals' %}" class="small-box-footer">Voir plus <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphique des Ventes -->
+    <div class="row">
+        <div class="col-12">
+            <canvas id="salesChart" style="height: 250px;"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Code pour le graphique
+    var ctx = document.getElementById('salesChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'Ventes',
+                data: [12, 19, 3, 5, 2, 3, 7],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

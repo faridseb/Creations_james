@@ -1,0 +1,36 @@
+{% extends "ecommerce_base.html" %}
+
+{% block title %}Parrainages{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Mes Parrainages</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nom d'utilisateur</th>
+                            <th>Récompenses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for referral in user.referrals_given.all %}
+                            <tr>
+                                <td>{{ referral.referred.username }}</td>
+                                <td>{{ referral.reward }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center">Aucun parrainage trouvé.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

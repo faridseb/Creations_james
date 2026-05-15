@@ -1,0 +1,48 @@
+{% extends 'use.html' %}
+{% block content %}
+<!-- payment_confirmation.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de Paiement</title>
+
+    <style>
+       body {
+    background-color: white !important; /* Couleur de fond noire */
+    color: black !important; /* Couleur du texte en blanc */
+    font-family: Arial, sans-serif; /* Police de caractères */
+    text-align: center; /* Centrer le texte */
+    padding: 50px; /* Espacement intérieur */
+}
+
+h1 {
+    font-size: 2.5em; /* Taille du titre */
+    margin-bottom: 20px; /* Espacement en dessous du titre */
+}
+
+p {
+    font-size: 1.2em; /* Taille du texte */
+    margin-bottom: 30px; /* Espacement en dessous du texte */
+}
+
+a {
+    color: #1e90ff; /* Couleur du lien */
+    text-decoration: none; /* Enlever le soulignement */
+    font-size: 1.1em; /* Taille du lien */
+}
+
+a:hover {
+    text-decoration: underline; /* Souligner le lien au survol */
+}
+    </style>
+</head>
+<body>
+    <h1>Merci pour votre paiement !</h1>
+    <p>Votre paiement a été traité avec succès.</p>
+    <a href="{% url 'authentication:payment' %}">sélection de moyen de paiement</a><br>
+    <a href="{% url 'authentication:user_login' %}">Confirmer plus tard dans une semaine</a>
+</body>
+</html>
+
+{% endblock %}

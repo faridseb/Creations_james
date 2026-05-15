@@ -1,0 +1,137 @@
+{% extends 'use.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        width: 100%;
+
+        margin: auto;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 15px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+<body>
+
+    <h1>{% block title %}Tendances et Graphiques{% endblock %}</h1>
+        <!-- Graphique des Récompenses -->
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Récompenses par Stade
+                </div>
+                <div class="card-body">
+                    <canvas id="rewardsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphique des Transactions -->
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Transactions Mensuelles
+                </div>
+                <div class="card-body">
+                    <canvas id="transactionsChart"></canvas>
+                </div>
+            </div>
+
+
+    <!-- Inclure les scripts pour Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Graphique des Récompenses par Stade
+        const rewardsCtx = document.getElementById('rewardsChart').getContext('2d');
+        const rewardsChart = new Chart(rewardsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Stade 1', 'Stade 2', 'Stade 3', 'Stade 4', 'Stade 5', 'Stade 6', 'Stade 7', 'Stade 8', 'Stade 9', 'Stade 10'],
+                datasets: [{
+                    label: 'Récompenses (CFA)',
+                    data: [1500, 5100, 15300, 45900, 137700, 413100, 1229300, 3717700, 11133700, 33461100], // Exemple de données
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: '#007bff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Récompenses (CFA)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Stades'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Graphique des Transactions Mensuelles
+        const transactionsCtx = document.getElementById('transactionsChart').getContext('2d');
+        const transactionsChart = new Chart(transactionsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                datasets: [{
+                    label: 'Transactions (CFA)',
+                    data: [20000, 25000, 30000, 22000, 27000, 32000, 29000, 35000, 31000, 28000, 33000, 40000], // Exemple de données
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Transactions (CFA)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mois'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+</body>
+{% endblock %}

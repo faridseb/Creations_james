@@ -1,0 +1,120 @@
+{% block content %}
+{% load static %}
+<link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<!-- Section explication + liens texte et audio -->
+<div class="max-w-4xl mx-auto p-4 mb-8 text-center bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Qu’est-ce qu’un Sponsor ?</h2>
+    <p class="text-gray-700 mb-4 text-base sm:text-lg">
+        Un sponsor est une personne ou une organisation qui soutient un projet en apportant des ressources financières ou matérielles, aidant ainsi à la réalisation et au succès du projet.
+    </p>
+    <div class="space-x-6">
+        <a href="#" onclick="openTextModal()" class="text-blue-600 font-semibold hover:underline cursor-pointer text-lg">Texte</a>
+        <a href="#" onclick="openAudioModal()" class="text-blue-600 font-semibold hover:underline cursor-pointer text-lg">
+            <i class="fa-solid fa-headphones mr-1"></i> Audio
+        </a>
+    </div>
+</div>
+
+<!-- Section Sponsors -->
+<div class="auth-section">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mt-10 mb-6">Liste des Sponsors</h1>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        {% for sponsor in sponsors %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="product">
+                <img src="{{ sponsor.avatar.url }}" alt="Avatar de {{ sponsor.name }}">
+                <h3>{{ sponsor.name }}</h3>
+                <p>{{ sponsor.email }}</p>
+                <p>Nombre de projets sponsorisés : {{ sponsor.projets.count }}</p>
+                <h5 class="mt-2">Projets sponsorisés :</h5>
+                <ul class="list-unstyled">
+                    {% for projet in sponsor.projets_sponsories.all %}
+                    <li>
+                        <a href="#project-{{ projet.id }}">Projet {{ projet.id }} - {{ projet.titre|truncatechars:25 }}</a>
+                    </li>
+                    {% empty %}
+                    <li>Aucun projet sponsorisé.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Section Projets -->
+<div class="container">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mt-10 mb-6">Projets nécessitant des Sponsors</h2>
+    <div class="row">
+        {% for projet in projets %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" id="project-{{ projet.id }}">
+            <div class="project">
+                <h4>{{ projet.titre }}</h4>
+                <div class="project-id">ID: {{ projet.id }}</div>
+                <p>{{ projet.description|truncatewords:20 }}</p>
+                <p><strong>Objectif :</strong> <span style="font-weight:bold;">{{ projet.montant_objectif }} CFA</span></p>
+                <p><strong>Recolté :</strong> <span style="font-weight:bold;">{{ projet.montant_recolte }} CFA</span></p>
+                <a href="{% url 'homepage:whatsapp_redirect' %}" class="btn btn-donate mt-2">
+                    <i class="fa-solid fa-hand-holding-heart"></i> Être Sponsor
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal Texte -->
+<div id="textFormationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative mx-4">
+    <h3 class="text-xl font-bold mb-4 text-gray-800">Texte - Sponsor</h3>
+    <p class="text-gray-700 mb-4 text-base">
+      Un sponsor est une personne ou une organisation qui soutient un projet en apportant des ressources financières ou matérielles. Son soutien est crucial pour le succès et la réalisation des projets.
+    </p>
+    <button onclick="closeTextModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+  </div>
+</div>
+
+<!-- Modal Audio -->
+<div id="audioFormationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative mx-4">
+     <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
+        <audio controls class="w-full">
+            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+        <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
+          <audio controls class="w-full">
+            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+    <button onclick="closeAudioModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+  </div>
+</div>
+
+<script>
+  function openTextModal() {
+    document.getElementById("textFormationModal").classList.remove("hidden");
+    document.getElementById("textFormationModal").classList.add("flex");
+  }
+  function closeTextModal() {
+    document.getElementById("textFormationModal").classList.remove("flex");
+    document.getElementById("textFormationModal").classList.add("hidden");
+  }
+  function openAudioModal() {
+    document.getElementById("audioFormationModal").classList.remove("hidden");
+    document.getElementById("audioFormationModal").classList.add("flex");
+  }
+  function closeAudioModal() {
+    document.getElementById("audioFormationModal").classList.remove("flex");
+    document.getElementById("audioFormationModal").classList.add("hidden");
+  }
+</script>
+{% endblock %}

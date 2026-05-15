@@ -1,0 +1,379 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+ <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Shop</title>
+
+  <!-- Tailwind CSS (CDN stable) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  
+  <!-- Ta feuille CSS perso -->
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet" />
+   <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="" />
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+<!-- Navbar -->
+<!-- Navbar -->
+<nav class="bg-gray-800 text-white">
+  <div class="w-full px-4 py-4 flex items-center justify-between max-w-screen-xl mx-auto">
+    <!-- Logo + nom -->
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'images/default.jpg' %}" class="w-12 h-12 md:w-16 md:h-16 rounded-full" alt="Logo" />
+      <a href="{% url 'ecommerce:product_list' %}" class="text-lg md:text-xl font-bold">Creationjames</a>
+    </div>
+
+    <!-- Bouton hamburger mobile -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu principal desktop -->
+    <div id="menu-desktop" class="hidden md:flex space-x-6 items-center">
+      <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class="hover:text-gray-300">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos</a>
+      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
+
+      <a href="#"><img src="{% static 'images/user.svg' %}" alt="User" class="w-6 h-6" /></a>
+      <a href="{% url 'ecommerce:cart' %}"><img src="{% static 'images/cart.svg' %}" alt="Cart" class="w-6 h-6" /></a>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <div id="menu" class="hidden md:hidden bg-gray-700 px-4 py-4 space-y-2">
+    <a href="{% url 'ecommerce:product_list' %}" class="block hover:text-gray-300">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block hover:text-gray-300">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block hover:text-gray-300">À propos</a>
+    <a href="{% url 'ecommerce:services' %}" class="block hover:text-gray-300">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block hover:text-gray-300">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block hover:text-gray-300">Contactez-nous</a>
+    <div class="flex space-x-4 pt-2 border-t border-gray-600">
+      <a href="#"><img src="{% static 'images/user.svg' %}" alt="User" class="w-6 h-6" /></a>
+      <a href="{% url 'ecommerce:cart' %}"><img src="{% static 'images/cart.svg' %}" alt="Cart" class="w-6 h-6" /></a>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- Hero Section -->
+<section class="bg-white py-12">
+  <div class="container mx-auto px-4">
+    <h1 class="text-4xl font-bold">Panier</h1>
+  </div>
+</section>
+{% if not user_is_authenticated %}
+<div class="mb-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">
+  <p class="font-semibold">⚠️ Attention !</p>
+  <p>Votre panier sera perdu si vous quittez ou fermez le navigateur. <br>
+  <a href="{% url 'ecommerce:ecommerce_signup' %}" class="text-blue-700 underline">Créez un compte</a> ou
+  <a href="{% url 'ecommerce:ecommerce_login' %}" class="text-blue-700 underline">connectez-vous</a> pour le sauvegarder.</p>
+</div>
+{% endif %}
+
+<!-- Cart Section -->
+<section class="py-12 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <form method="post" class="bg-white p-6 rounded shadow">
+      {% csrf_token %}
+
+      <!-- Produits Disponibles -->
+      <h2 class="text-2xl font-semibold mb-4">Produits Disponibles</h2>
+      {% if cart.available_products %}
+      <div class="overflow-x-auto mb-10">
+        <table class="min-w-full table-auto text-sm text-left text-gray-700">
+          <thead class="bg-gray-200 text-gray-600 uppercase tracking-wider">
+            <tr>
+              <th class="px-4 py-2">Image</th>
+              <th class="px-4 py-2">Produit</th>
+              <th class="px-4 py-2">Prix</th>
+              <th class="px-4 py-2">Quantité</th>
+              <th class="px-4 py-2">Total</th>
+              <th class="px-4 py-2">Supprimer</th>
+              <th class="px-4 py-2">Ajouter</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            {% for item in cart.available_products %}
+            <tr>
+              <td class="px-4 py-2">
+                <img src="{{ item.product.image_url.url }}" alt="{{ item.product.name }}" class="w-16 h-16 object-contain" />
+              </td>
+              <td class="px-4 py-2 font-semibold">{{ item.product.name }}</td>
+              <td class="px-4 py-2">{{ item.product.price }} CFA</td>
+              <td class="px-4 py-2">
+                <input
+                  type="number"
+                  name="quantity_{{ item.product.id }}"
+                  value="{{ item.quantity }}"
+                  min="1"
+                  class="w-16 text-center border rounded quantity-input"
+                  data-price="{{ item.product.price }}"
+                />
+              </td>
+              <td class="px-4 py-2 total-cell">{{ item.total_price }} CFA</td>
+              <td class="px-4 py-2">
+                <button type="submit" name="remove" value="{{ item.product.id }}" class="text-red-600 hover:text-red-800">X</button>
+              </td>
+              <td class="px-4 py-2 text-center">
+                <input
+                  type="checkbox"
+                  name="product_select"
+                  value="{{ item.product.id }}|{{ item.quantity }}|{{ item.product.name }}|{{ item.product.price }}"
+                  class="product-checkbox"
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="mb-10">Aucun produit disponible dans le panier.</p>
+      {% endif %}
+
+      <!-- Produits Sur Commande -->
+      <h2 class="text-2xl font-semibold mb-4">Produits Disponibles Sur Commande</h2>
+      {% if cart.custom_order_products %}
+      <div class="overflow-x-auto mb-10">
+        <table class="min-w-full table-auto text-sm text-left text-gray-700">
+          <thead class="bg-gray-200 text-gray-600 uppercase tracking-wider">
+            <tr>
+              <th class="px-4 py-2">Image</th>
+              <th class="px-4 py-2">Produit</th>
+              <th class="px-4 py-2">Prix</th>
+              <th class="px-4 py-2">Quantité</th>
+              <th class="px-4 py-2">Total</th>
+              <th class="px-4 py-2">Supprimer</th>
+              <th class="px-4 py-2">Ajouter</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            {% for item in cart.custom_order_products %}
+            <tr>
+              <td class="px-4 py-2">
+                <img src="{{ item.product.image_url.url }}" alt="{{ item.product.name }}" class="w-16 h-16 object-contain" />
+              </td>
+              <td class="px-4 py-2 font-semibold">{{ item.product.name }}</td>
+              <td class="px-4 py-2">{{ item.product.price }} CFA</td>
+              <td class="px-4 py-2">
+                <input
+                  type="number"
+                  name="quantity_{{ item.product.id }}"
+                  value="{{ item.quantity }}"
+                  min="1"
+                  class="w-16 text-center border rounded quantity-input"
+                  data-price="{{ item.product.price }}"
+                />
+              </td>
+              <td class="px-4 py-2 total-cell">{{ item.total_price }} CFA</td>
+              <td class="px-4 py-2">
+                <button type="submit" name="remove" value="{{ item.product.id }}" class="text-red-600 hover:text-red-800">X</button>
+              </td>
+              <td class="px-4 py-2 text-center">
+                <input
+                  type="checkbox"
+                  name="product_select"
+                  value="{{ item.product.id }}|{{ item.quantity }}|{{ item.product.name }}|{{ item.product.price }}"
+                  class="product-checkbox"
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>Aucun produit sur commande dans le panier.</p>
+      {% endif %}
+
+      <!-- Infos livraison à l'intérieur du formulaire -->
+      <div class="mb-6 bg-white p-4 rounded shadow mt-6">
+        <h3 class="text-xl font-semibold mb-4">Informations de livraison</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            id="first_name"
+            placeholder="Prénom"
+            class="border rounded px-3 py-2"
+            required
+          />
+          <input
+            type="text"
+            id="last_name"
+            placeholder="Nom"
+            class="border rounded px-3 py-2"
+            required
+          />
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Numéro de téléphone"
+            class="border rounded px-3 py-2"
+            pattern="[0-9+ ]{6,15}"
+            required
+          />
+          <input
+            type="text"
+            id="address"
+            placeholder="Adresse de livraison"
+            class="border rounded px-3 py-2"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex justify-end gap-4 mt-4">
+        <button type="submit" name="update" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
+          Mettre à jour le panier
+        </button>
+        <button
+          type="button"
+          onclick="envoyerParWhatsApp()"
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
+        >
+          Valider la commande
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-10">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+      <div class="flex items-center space-x-4 mb-6 md:mb-0">
+        <img src="{% static 'images/table.png' %}" class="w-24 h-auto" alt="Sofa" />
+        <p class="text-lg font-semibold">Abonnez-vous à la newsletter</p>
+      </div>
+      <form action="#" class="flex flex-wrap gap-4">
+        <input
+          type="text"
+          placeholder="Votre nom"
+          class="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 placeholder-gray-400"
+        />
+        <input
+          type="email"
+          placeholder="Votre email"
+          class="px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 placeholder-gray-400"
+        />
+        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white">
+          <i class="fa fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+<!-- JS mise à jour totaux -->
+<script>
+document.querySelectorAll('.quantity-input').forEach(input => {
+  input.addEventListener('input', function () {
+    const row = this.closest('tr');
+    const price = parseFloat(this.dataset.price);
+    const qty = parseInt(this.value) || 0;
+    const totalCell = row.querySelector('.total-cell');
+    totalCell.textContent = (price * qty).toLocaleString('fr-FR') + ' CFA';
+  });
+});
+</script>
+
+<!-- JS envoi WhatsApp -->
+<script>
+  // Fonction pour récupérer le token CSRF depuis le cookie (Django standard)
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (const cookie of cookies) {
+        const trimmed = cookie.trim();
+        if (trimmed.startsWith(name + '=')) {
+          cookieValue = decodeURIComponent(trimmed.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+
+  function envoyerParWhatsApp() {
+    const selected = [...document.querySelectorAll('input[name="product_select"]:checked')];
+    if (selected.length === 0) {
+      alert("Veuillez sélectionner au moins un produit.");
+      return;
+    }
+
+    const firstName = document.getElementById("first_name").value.trim();
+    const lastName = document.getElementById("last_name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if (!firstName || !lastName || !phone || !address) {
+      alert("Veuillez remplir toutes les informations.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("phone", phone);
+    formData.append("address", address);
+
+    selected.forEach(input => {
+      formData.append("products[]", input.value);
+    });
+
+    fetch("{% url 'ecommerce:send_whatsapp_order' %}", {
+      method: "POST",
+      headers: {
+        'X-CSRFToken': csrftoken,
+      },
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.whatsapp_url) {
+        window.open(data.whatsapp_url, "_blank");
+      } else if (data.error) {
+        alert("Erreur : " + data.error);
+      } else {
+        alert("Erreur lors de la génération du lien WhatsApp.");
+      }
+    })
+    .catch(error => {
+      console.error("Erreur réseau :", error);
+      alert("Une erreur est survenue.");
+    });
+  }
+</script>
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('menu');
+
+  menuBtn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
+
+
+
+</body>
+</html>

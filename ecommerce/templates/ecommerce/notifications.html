@@ -1,0 +1,20 @@
+{% extends "ecommerce_base.html" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h1>Notifications</h1>
+</div>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                {% for notification in user.notifications.all %}
+                    <li>{{ notification.message }} - {{ notification.date }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'use.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block title %}Mon Wallet{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Mon Wallet</h1>
+
+    <div class="wallet-info card shadow-sm p-4 mb-4">
+        <div class="text-center mb-4">
+            <label class="balance-label">Balance</label>
+            <h2 class="balance text-success">{{ wallet.balance }} {{ country_currency }}</h2>
+        </div>
+
+        <div class="text-center mb-4">
+            <label class="points-label">Points</label>
+            <h2 class="currency">
+                <strong>{{ wallet.points_balance }}</strong>
+            </h2>
+        </div>
+
+        <p class="last-updated text-muted">Dernière mise à jour: {{ wallet.last_updated }}</p>
+    </div>
+
+   <div class="d-flex justify-content-center">
+    <div class="m-2">
+        <a href="{% url 'authentication:user_login' %}" class="btn btn-danger btn-lg">Déconnexion</a>
+    </div>
+    <div class="m-2">
+        <a href="{% url 'authentication:retrait' %}" class="btn btn-success btn-lg">Retirer</a>
+    </div>
+</div>
+<h3>Mes demandes de retrait</h3>
+
+    {% if retraits %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Montant</th>
+                        <th>Numéro / Moyen</th>
+                        <th>Opérateur</th>
+                        <th>Date de demande</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for retrait in retraits %}
+                        <tr>
+                            <td>{{ retrait.montant|intcomma }} FCFA</td>
+                            <td>{{ retrait.numero }}</td>
+                            <td>{{ retrait.operateur }}</td>
+                            <td>{{ retrait.date|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                {% if retrait.statut == "EN_ATTENTE" %}
+                                    <span class="badge bg-warning text-dark">En attente</span>
+                                {% elif retrait.statut == "APPROUVE" %}
+                                    <span class="badge bg-success">Approuvé</span>
+                                {% elif retrait.statut == "REJETE" %}
+                                    <span class="badge bg-danger">Rejeté</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="mt-3">Aucune demande de retrait effectuée pour l'instant.</p>
+    {% endif %}
+</div>
+<style>
+    .wallet-info {
+        background-color: #f9f9f9; /* Couleur de fond */
+        border-radius: 8px; /* Coins arrondis */
+    }
+
+    .balance-label, .points-label {
+        display: block; /* Affichage en bloc */
+        font-size: 1.2rem; /* Taille du texte */
+        font-weight: bold; /* Épaisseur du texte */
+        margin-bottom: 5px; /* Espacement inférieur */
+        color: #555; /* Couleur du texte */
+    }
+
+    .balance {
+        font-size: 2rem; /* Taille du texte pour la balance */
+        font-weight: bold; /* Épaisseur du texte */
+    }
+
+    .currency {
+        font-size: 1.5rem; /* Taille du texte pour les points */
+        color: #007bff; /* Couleur du texte */
+    }
+
+    .last-updated {
+        font-size: 0.9rem; /* Taille du texte */
+    }
+
+    .btn {
+        padding: 10px 20px; /* Espacement interne */
+        border-radius: 50px; /* Coins arrondis */
+        font-weight: bold; /* Épaisseur du texte */
+        transition: background-color 0.3s; /* Transition pour le changement de couleur */
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333; /* Couleur de fond au survol */
+    }
+</style>
+
+{% endblock %}

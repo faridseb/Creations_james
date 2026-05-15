@@ -1,0 +1,424 @@
+{% extends "use.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Parrainages et Gains</title>
+    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        .info-circle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .circle-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            margin-top: 8px;
+        }
+
+        .bg-orange {
+            background-color: #f97316;
+        }
+
+        .bg-bissap {
+            background-color: #8b5cf6;
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .share-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Vue d'ensemble des parrainages et des gains -->
+        <div class="w-full mb-6">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-blue-600 text-white text-center py-4">
+                    <h5 class="text-lg font-semibold mb-0">Vue d'ensemble des parrainages et des gains</h5>
+                </div>
+            <div class="p-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="info-circle">
+                            <p class="text-sm text-gray-600 mb-0">Cases pleines pour tout les stage</p>
+                            <span class="circle-badge bg-orange">{{ filled_slots }} / {{ total_stage_slots }}</span>
+                        </div>
+                        <div class="info-circle">
+                            <p class="text-sm text-gray-600 mb-0">Cases pleines au Stage Actuel</p>
+                            <span class="circle-badge bg-bissap">{{ slot_partage }} / {{ total_slots }}</span>
+                        </div>
+                        <div class="info-circle">
+                            <p class="text-sm text-gray-600 mb-0">Inscriptions Restantes</p>
+                            <span class="circle-badge bg-yellow-400">{{ remaining_registrations }} / 25</span>
+                        </div>
+                        <div class="info-circle">
+                            <p class="text-sm text-gray-600 mb-0">Solde du portefeuille</p>
+                            <span class="circle-badge bg-blue-600">{{ wallet_balance }} CFA  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activité Récente -->
+        <div class="w-full mb-6">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-yellow-400 text-gray-800 py-3 px-4">
+                    <h5 class="text-lg font-semibold mb-0">Activité Récente</h5>
+                </div>
+                <div class="p-0">
+                    <ul class="divide-y divide-gray-200">
+                         {% for activity in recent_activity %}
+                        <li class="flex justify-between items-center py-3 px-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-circle text-blue-600 text-xl mr-2"></i>
+                                <span><strong>{{ activity.referred.username }}</strong> <span class="text-gray-500">a rejoint le</span></span>
+                            </div>
+                            <small class="text-gray-500">{{ activity.date_joined|date:"d/m/Y H:i" }}</small>
+                        </li>
+                       {% empty %}
+                        <li class="list-group-item text-center text-muted">
+                            Aucune activité récente.
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Récentes -->
+        <div class="w-full mb-6">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-blue-600 text-white py-3 px-4">
+                    <h5 class="text-lg font-semibold mb-0">Transactions Récentes</h5>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-800 text-white">
+                            <tr>
+                                <th class="text-left py-3 px-4 font-semibold">Date</th>
+                                <th class="text-left py-3 px-4 font-semibold">Montant</th>
+                                <th class="text-left py-3 px-4 font-semibold">Raison</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
+                                <td>{{ transaction.amount }} CFA</td>
+                                <td>{{ transaction.reason }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">Aucune transaction disponible.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graphiques -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-gray-100 py-3 px-4 border-b">
+                    <h6 class="font-semibold text-gray-800">Slots Remplis (sur 180)</h6>
+                </div>
+                <div class="p-4">
+                    <canvas id="barChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-gray-100 py-3 px-4 border-b">
+                    <h6 class="font-semibold text-gray-800">Inscriptions Restantes (sur 25)</h6>
+                </div>
+                <div class="p-4">
+                    <canvas id="remainingRegistrationsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestion des Parrainages -->
+        <div class="w-full mb-6">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-green-600 text-white py-3 px-4">
+                    <h5 class="text-lg font-semibold mb-0">Gestion des Parrainages</h5>
+                </div>
+                <div class="p-6">
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button onclick="openShareModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors">
+                            <i class="fas fa-share-alt mr-2"></i>Partager mon lien
+                        </button>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors">
+                            <i class="fas fa-users mr-2"></i>Mes filleuls
+                        </button>
+                        <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors">
+                            <i class="fas fa-chart-line mr-2"></i>Statistiques
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="w-full mb-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <a href="{% url 'authentication:notifications' %}" class="flex flex-col items-center justify-center text-center hover:text-blue-600 transition-colors">
+                    <div class="relative">
+                        <i class="fas fa-bell text-4xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">3</span>
+                    </div>
+                    <span class="mt-2 font-medium">Notifications</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale de partage -->
+    <div id="share-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeShareModal()">&times;</span>
+            <h5 class="text-center text-lg font-semibold mb-4">Partager avec :</h5>
+            <div class="share-options">
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-link mr-2"></i> Copier le lien
+                </button>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fab fa-facebook mr-2"></i> Facebook
+                </button>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                </button>
+                <button class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fab fa-twitter mr-2"></i> Twitter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const filledSlots = {{ filled_slots }};
+    const totalStageSlots = {{ total_stage_slots }};
+     const remainingRegistrations = {{ remaining_registrations }};  // nombre d'inscriptions restantes
+    const totalRegistrations = 25;
+    const usedRegistrations = totalRegistrations - remainingRegistrations;
+
+    // ===============================
+    // Graphique 1 : Barres - Progression des Slots
+    // ===============================
+    const slotsData = Array.from({length: totalStageSlots}, (_, i) => (i < filledSlots ? i + 1 : 0));
+    const barChartData = {
+        labels: Array.from({length: totalStageSlots}, (_, i) => `Slot ${i + 1}`),
+        datasets: [{
+            label: 'Progression des Slots',
+            data: slotsData,
+            backgroundColor: '#FF7F50',
+            borderColor: '#FF6347',
+            borderWidth: 1,
+            hoverBackgroundColor: '#FF6347',
+            hoverBorderColor: '#FF4500',
+        }]
+    };
+
+    const barChartConfig = {
+        type: 'bar',
+        data: barChartData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: totalStageSlots
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return `Slot ${tooltipItem.label}: ${tooltipItem.raw} / ${totalStageSlots}`;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    new Chart(document.getElementById('barChart'), barChartConfig);
+
+    // ===============================
+    // Graphique 2 : Inscriptions restantes (Doughnut)
+    // ===============================
+    new Chart(document.getElementById('remainingRegistrationsChart').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Utilisées', 'Restantes'],
+        datasets: [{
+            data: [usedRegistrations, remainingRegistrations],
+            backgroundColor: ['#ef4444', '#10b981'], // Rouge = utilisées, Vert = restantes
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        }
+    }
+});
+
+        // ===============================
+        // Graphique 3 : Évolution des inscriptions par jour (Ligne)
+        // ===============================
+        const registrationsLineData = {
+            labels: Array.from({length: 25}, (_, i) => `Jour ${i + 1}`),
+            datasets: [{
+                label: 'Inscriptions Restantes',
+                data: Array.from({length: 25}, (_, i) => Math.cos(i / 3) * 2 + 15 - i / 2),
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointRadius: 5
+            }]
+        };
+
+        new Chart(document.getElementById('lineChart'), {
+            type: 'line',
+            data: registrationsLineData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 25
+                    }
+                }
+            }
+        });
+
+        // ===============================
+        // Graphique 4 : Parrainages mensuels (Barres)
+        // ===============================
+        const monthlyReferralData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'Nombre de parrainages',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                data: [12, 19, 3, 5, 2, 3, 7],
+            }]
+        };
+
+        new Chart(document.getElementById('myChart'), {
+            type: 'bar',
+            data: monthlyReferralData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+
+    // ===============================
+    // Modale de partage de lien
+    // ===============================
+    const shareButton = document.getElementById('share-button');
+    const modal = document.getElementById('share-modal');
+    const closeModal = document.querySelector('.close');
+    const copyButton = document.getElementById('copy-link');
+    const referralLink = document.getElementById('referral-link')?.innerText || '';
+
+    shareButton?.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
+
+    closeModal?.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    copyButton?.addEventListener('click', () => {
+        navigator.clipboard.writeText(referralLink).then(() => {
+            alert('Lien copié dans le presse-papiers !');
+        }).catch(err => {
+            console.error('Erreur lors de la copie :', err);
+        });
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
+{% endblock %}

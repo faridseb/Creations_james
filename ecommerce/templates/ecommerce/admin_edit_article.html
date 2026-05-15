@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier un Article - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 3rem; font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: auto; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { font-weight: bold; }
+        .form-control { width: 100%; padding: 0.75rem; font-size: 1rem; line-height: 1.5; border: 1px solid #ced4da; border-radius: 0.25rem; }
+        .btn-submit { font-size: 1.25rem; padding: 0.75rem 1.25rem; }
+        .alert { padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem; }
+        .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+        .alert-error { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Modifier un Article</h1>
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form id="article-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title" class="form-label">Titre</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ form.title.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="content" class="form-label">Contenu</label>
+                <textarea class="form-control" id="content" name="content" required>{{ form.content.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="category" class="form-label">Catégorie</label>
+                <select class="form-control" id="category" name="category" required>
+                    <option value="">Sélectionnez une catégorie</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id == form.category.value %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image_url" class="form-label">URL de l'Image</label>
+                <input type="url" class="form-control" id="image_url" name="image_url" value="{{ form.image_url.value }}" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-submit">Modifier</button>
+        </form>
+    </div>
+</body>
+</html>

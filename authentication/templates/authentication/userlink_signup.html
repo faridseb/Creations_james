@@ -1,0 +1,273 @@
+{% load static %}
+
+{% block content %}
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - MLM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css/css/flag-icons.min.css">
+
+<style>
+    body {
+        background-color: ; /* Couleur de fond */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        background-color: #ffffff; /* Couleur de fond du formulaire */
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+        width: 100%;
+        max-width: 450px; /* Largeur augmentée */
+        margin: auto; /* Centrer le formulaire horizontalement */
+    }
+    h1 {
+        text-align: center;
+    }
+    form {
+        margin-top: 20px;
+    }
+    label {
+        margin-bottom: 10px; /* Espacement entre les labels et les champs d'entrée */
+        display: block; /* Permet de décaler les labels */
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select,
+    input[type="date"],
+    input[type="radio"] {
+        width: 100%; /* Remplit la largeur disponible */
+        padding: 10px;
+        margin-bottom: 15px; /* Espacement entre les champs d'entrée */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box; /* Garde la largeur fixée avec le padding */
+    }
+    button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #007bff; /* Couleur du bouton */
+        color: #ffffff; /* Couleur du texte du bouton */
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3; /* Couleur du bouton au survol */
+    }
+    .alert {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 4px;
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+    }
+    .alert ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+    input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select,
+input[type="date"],
+input[type="radio"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+ /* Media Queries pour petits écrans */
+    @media (max-width: 576px) {
+        .container {
+            padding: 5px;
+            margin: 10px; /* Ajout de marges latérales */
+            width: 100%; /* Largeur maximale du formulaire */
+
+        }
+        label {
+            font-size: 14px; /* Réduction de la taille des labels */
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select,
+        input[type="date"],
+        input[type="radio"],
+        textarea,
+        .form-control {
+            padding: 8px;
+            font-size: 14px; /* Réduction de la taille des champs d'entrée */
+        }
+        button[type="submit"] {
+            padding: 8px;
+            font-size: 14px; /* Réduction de la taille du bouton */
+        }
+    }
+    /* Style du footer */
+footer {
+    padding: 20px 0; /* Espace autour du texte */
+    width: 100%; /* Assure que le footer prend toute la largeur */
+    text-align: center; /* Centrer le texte */
+    position: relative; /* Pour le garder au bas de la page */
+    bottom: 0;
+}
+
+/* Responsivité pour les écrans plus petits */
+footer .container {
+    max-width: 1200px; /* Limiter la largeur à 1200px pour les grands écrans */
+    margin: 0 auto; /* Centrer le contenu du footer */
+    padding: 0 15px; /* Espacement latéral */
+}
+
+/* Style des liens du footer */
+footer a {
+
+    text-decoration: none; /* Pas de soulignement */
+    margin: 0 10px; /* Espacement entre les liens */
+    font-weight: 600; /* Style du texte */
+}
+
+/* Changer la couleur des liens au survol */
+footer a:hover {
+
+    text-decoration: underline; /* Souligner les liens au survol */
+}
+
+</style>
+
+<div class="container">
+    <h1>S'inscrire au MLG</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+     {% if form.errors %}
+    <div class="alert">
+        <strong>Veuillez corriger les erreurs suivantes :</strong>
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="{{ form.username.id_for_label }}"> <strong>Pseudo</strong> (Nom d'utilisateur)</label>
+        {{ form.username }}
+
+        <label for="{{ form.email.id_for_label }}">Nom</label>
+        {{ form.nom }}
+        <label for="{{ form.email.id_for_label }}">Prenom</label>
+        {{ form.prenom }}
+        <label for="{{ form.email.id_for_label }}">Nom Populaire</label>
+        {{ form.nompop }}
+
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+
+        <label for="{{ form.nationalite.id_for_label }}">Nationalité</label>
+        {{ form.nationalite }}
+
+        <label for="{{ form.sexe.id_for_label }}">Sexe</label>
+        {{ form.sexe }}
+
+        <label for="{{ form.profession.id_for_label }}">Profession</label>
+        {{ form.profession }}
+
+        <label for="{{ form.lieu_travail.id_for_label }}">Lieu de Travail</label>
+        {{ form.lieu_travail }}
+
+         <label for="{{ form.country.id_for_label }}">Country</label>
+        {{ form.country }}
+
+       <label for="{{ form.ville.id_for_label }}">Ville</label>
+        {{ form.ville }}
+
+
+        <label for="{{ form.quartier.id_for_label }}">Quartier</label>
+        {{ form.quartier }}
+
+        <label for="{{ form.maison_non_loin_de.id_for_label }}">Maison Non Loin De</label>
+        {{ form.maison_non_loin_de }}
+
+        <label for="{{ form.contact.id_for_label }}">Contact</label>
+        {{ form.contact }}
+
+        <label for="{{ form.date_of_birth.id_for_label }}">Date de Naissance</label>
+        {{ form.date_of_birth }}
+
+       <label for="{{ form.referrer.id_for_label }}">Parrain</label>
+    <input type="text" name="referrer" value="{{ form.referrer.initial.username }}" readonly>
+
+
+        <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+        {{ form.password1 }}
+
+        <label for="{{ form.password2.id_for_label }}">Confirmer le mot de passe</label>
+        {{ form.password2 }}
+
+        <button type="submit">Inscrire</button>
+    </form>
+<div class="signup-link">Tu as un compte ? <a href="{% url 'authentication:user_login' %}">Connecte-toi ici !</a></div>
+   
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+    <div class="container">
+        <p>© 2024 - Tous droits réservés |CREATION JAMES </p>
+       <strong> <p>Total des actions pour le MLG : <strong style="font-size: 25px;">{{ total_actions }}</strong></p></strong>
+        <p>
+            <a href="#" class="text-white me-3">Mentions légales</a>
+            <a href="#" class="text-white me-3">Politique de confidentialité</a>
+            <a href="#" class="text-white">Contact</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+
+    // Fonction pour obtenir l'indicatif téléphonique du pays
+    async function fetchCountryCode(countryCode) {
+        const url = `https://restcountries.com/v3.1/alpha/${countryCode}`;
+        const response = await fetch(url);
+        const country = await response.json();
+
+        // Vérifier si l'indicatif existe
+        if (country && country[0].idd && country[0].idd.root) {
+            return country[0].idd.root + country[0].idd.suffixes[0];  // Format du code téléphonique
+        }
+        return null;
+    }
+
+    // Mettre à jour le champ téléphone avec l'indicatif du pays sélectionné
+    document.getElementById('{{ form.country.id_for_label }}').addEventListener('change', async function() {
+        const selectedCountry = this.value;  // Code du pays sélectionné (par exemple, "TG" pour Togo)
+
+        if (selectedCountry) {
+            const phoneCode = await fetchCountryCode(selectedCountry);
+
+            // Si un code est trouvé, mettre à jour le champ du téléphone
+            if (phoneCode) {
+                const phoneField = document.getElementById('{{ form.contact.id_for_label }}');
+                phoneField.value = phoneCode;  // Pré-remplir avec l'indicatif du pays
+            }
+        }
+    });
+</script>
+</div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Devenir bienfaiteur pour le projet : {{ projet.titre }}</h1>
+    <p>{{ projet.description }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Devenir bienfaiteur</button>
+    </form>
+{% endblock %}

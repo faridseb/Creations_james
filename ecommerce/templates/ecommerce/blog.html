@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog</title>
+
+  <!-- Tailwind CSS -->
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="flex flex-col min-h-screen bg-white text-gray-800">
+
+  <!-- Navigation -->
+  <nav class="bg-gray-900 text-white">
+    <div class="container mx-auto flex flex-wrap items-center justify-between p-4">
+      <div class="flex items-center space-x-4">
+        <img src="{% static 'images/default.jpg' %}" alt="Logo"
+             class="rounded-full w-16 h-16 object-cover md:w-24 md:h-24" />
+        <a href="{% url 'ecommerce:product_list' %}" class="text-2xl font-bold hover:text-gray-300">Creationjames</a>
+      </div>
+
+      <!-- Menu Desktop -->
+      <div class="hidden md:flex space-x-6">
+        <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
+        <a href="{% url 'ecommerce:shop' %}" class="hover:text-gray-300">Boutique</a>
+        <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos de nous</a>
+        <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
+        <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+        <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contact</a>
+      </div>
+
+      <!-- Icônes Desktop -->
+      <div class="hidden md:flex space-x-6 items-center ml-6">
+        <a href="#" class="hover:text-gray-300">
+          <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+        </a>
+        <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+          <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+        </a>
+      </div>
+
+      <!-- Bouton mobile -->
+      <button id="menu-btn" class="md:hidden focus:outline-none bg-gray-700 p-2 rounded">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="menu" class="hidden md:hidden bg-gray-800">
+      <a href="{% url 'ecommerce:product_list' %}" class="block px-4 py-2 hover:bg-gray-700">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class="block px-4 py-2 hover:bg-gray-700">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="block px-4 py-2 hover:bg-gray-700">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="block px-4 py-2 hover:bg-gray-700">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="block px-4 py-2 bg-yellow-400 text-gray-900 font-semibold">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="block px-4 py-2 hover:bg-gray-700">Contact</a>
+      <div class="flex space-x-6 px-4 py-2 border-t border-gray-700">
+        <a href="#" class="hover:text-gray-300">
+          <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+        </a>
+        <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+          <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Section principale -->
+  <main class="flex-grow">
+    <!-- Section héros -->
+    <section class="bg-gray-100 py-12">
+      <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div class="lg:w-1/2 space-y-6">
+          <h1 class="text-4xl font-bold text-gray-900">Blog</h1>
+          <p class="text-gray-700">Donec vitae odio quis nisl dapibus malesuada...</p>
+          <div class="flex gap-4">
+            <a href="#" class="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600">Achetez maintenant</a>
+            <a href="#" class="border border-gray-900 text-gray-900 px-6 py-2 rounded hover:bg-gray-900 hover:text-white">Explorer</a>
+          </div>
+        </div>
+        <div class="lg:w-3/12">
+          <img src="{% static 'images/table.png' %}" alt="Canapé" class="w-full h-auto">
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Blog -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <!-- Post 1 -->
+          <div class="bg-white rounded shadow hover:shadow-lg transition">
+            <a href="#"><img src="{% static 'images/sac8.png' %}" alt="Post 1" class="w-full h-76 object-cover rounded-t"></a>
+          </div>
+          <!-- Post 2 -->
+          <div class="bg-white rounded shadow hover:shadow-lg transition">
+            <a href="#"><img src="{% static 'images/sac5.png' %}" alt="Post 2" class="w-full h-76 object-cover rounded-t"></a>
+          </div>
+          <!-- Post 3 -->
+          <div class="bg-white rounded shadow hover:shadow-lg transition">
+            <a href="#"><img src="{% static 'images/sac3.png' %}" alt="Post 3" class="w-full h-76 object-cover rounded-t"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white mt-12">
+    <div class="container mx-auto px-4 py-8">
+      <div class="flex justify-between flex-wrap gap-8">
+        <div>
+          <h2 class="text-xl font-bold mb-4">CreationJames</h2>
+          <p>L'art de Créer la Richesse</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-3">Liens rapides</h3>
+          <ul class="space-y-2 text-gray-300">
+            <li><a href="#" class="hover:text-white">À propos</a></li>
+            <li><a href="#" class="hover:text-white">Services</a></li>
+            <li><a href="#" class="hover:text-white">Blog</a></li>
+            <li><a href="#" class="hover:text-white">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script pour le menu mobile -->
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    menuBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>

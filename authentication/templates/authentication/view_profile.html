@@ -1,0 +1,407 @@
+{% extends "use.html" %}
+{% load static %}
+{% block content %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Utilisateur</title>
+<!-- Inclure jQuery en premier -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Ensuite, inclure Bootstrap -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+<!-- JS Cropper.js -->
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Style personnalisé -->
+  <style>
+    body {
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+    .profile-section {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .profile-image-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 50px;
+    }
+
+    .profile-image-section img {
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+    }
+
+    .profile-info-section {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .profile-info-section .card {
+      width: 45%;
+    }
+
+    h1 {
+      color: black;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+      background-size: cover;
+      padding: 20px;
+      text-align: center;
+    }
+     /* Style pour le lien */
+a {
+    color: white; /* Texte en blanc */
+    background-color: #6EC2E8; /* Fond bleu */
+    padding: 10px 20px; /* Espacement autour du texte */
+    font-size: 18px; /* Taille de la police */
+    text-align: center;
+    text-decoration: none; /* Enlever le soulignement */
+    border-radius: 5px; /* Coins arrondis */
+    transition: all 0.3s ease; /* Transition douce pour l'effet au survol */
+}
+
+/* Effet au survol */
+a:hover {
+    background-color: #0056b3; /* Fond bleu foncé au survol */
+    color: white; /* Texte reste blanc */
+}
+
+    .referral-link {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .profile-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+      .card {
+      border: 2px solid #007bff;
+      border-radius: 10px;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      background: #fff;
+  }
+
+  .card-header {
+      background-color: #CC6CE7;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px 10px 0 0;
+  }
+
+  .card-body {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 0 0 10px 10px;
+  }
+
+  .card-body p {
+      font-size: 15px;  /* Agrandir le texte */
+      font-weight: bold; /* Mettre en gras */
+      text-align: left;  /* Aligner à gauche */
+      display: flex;     /* Utiliser flexbox pour aligner */
+      justify-content: space-between; /* Espacement entre label et valeur */
+      border-bottom: 1px solid #ddd;  /* Ligne séparatrice */
+      padding-bottom: 5px; /* Espacement sous chaque ligne */
+      margin-bottom: 10px; /* Espacement général */
+  }
+
+  .card-body p strong {
+      flex: 1; /* Le label prend une partie de l’espace */
+  }
+
+  .card-body p span {
+      flex: 2; /* La valeur prend plus d’espace */
+      text-align: right; /* Aligner la valeur à droite */
+  }
+      /* 🌟 MEDIA QUERIES POUR RESPONSIVITÉ */
+@media (max-width: 768px) {
+    .profile-info-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info-section .card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .profile-image-section img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    h1 {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    a {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+
+    .card-body p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-image-section img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    h1 {
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    a {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .card-header {
+        font-size: 18px;
+    }
+
+    .card-body p {
+        font-size: 13px;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .card-body p span {
+        text-align: left;
+        display: block;
+    }
+}
+  </style>
+</head>
+<body>
+<!-- Modal de recadrage -->
+<div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cropModalLabel">Recadrer votre photo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="img-container">
+          <img id="imageToCrop" src="" class="img-fluid">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="cropButton">Recadrer & Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="cover-photo" style="background-image: url('{% static "images/perlage.jpg" %}');">
+    <h1 class="cover-title">Mon Profil</h1>
+    <div class="profile-image-section">
+        <img src="{{ profile_picture_url }}" id="profileImage" alt="Image de profil" class="avatar">
+
+        <a href="javascript:void(0);" onclick="document.getElementById('profile_picture_input').click();">
+            Modifier la photo
+        </a>
+        <input type="file" id="profile_picture_input" style="display: none;" onchange="previewAndUploadImage(event)">
+   <div id="upload-status"></div>
+    </div>
+
+</div>
+
+        <div class="profile-info-section">
+          <div class="card">
+            <div class="card-header">Informations du Profil</div>
+            <div class="card-body">
+              <p><strong>Nom:</strong> {{ user.nom }} {{ user.prenom }}</p>
+              <p><strong>Email:</strong> <span style="font-size: 12px;">{{ user.email }}</span></p>
+
+              <p><strong>Téléphone:</strong> {{ user.contact }}</p>
+              <p><strong>Ville:</strong> {{ user.ville }}</p>
+              <p><strong>Quartier:</strong> {{ user.quartier }}</p>
+               <a href="{% url 'authentication:edit_profile' %}" class="btn btn-primary">Modifier le profil</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">Stade et Parrain</div>
+            <div class="card-body">
+                <p><strong>Nom du Stade : </strong>{{ user.get_stage_name }}</p>
+              <p><strong>Stade actuel:</strong> {{ user.stage }}</p>
+              <p><strong>Nom du Parrain:</strong> {{ user.referrer }}</p>
+              <p><strong>Grand Parrain:</strong>
+  {% if user.referrer and user.referrer.referrer %}
+    {{ user.referrer.referrer.username }}
+  {% else %}
+    Aucun grand parrain
+  {% endif %}
+</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="referral-link">
+          <p>Partagez ce lien pour inviter des personnes à s'inscrire avec votre code parrain :</p>
+         <a href="{% url 'authentication:userlink_signup' %}?referrer={{ user.username }}" target="_blank">
+    Lien d'inscription pour {{ user.username }}
+</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+    const profileImage = document.getElementById('profileImage');
+    const fileInput = document.getElementById('profile_picture_input');
+
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profileImage.src = e.target.result;  // Affichage immédiat
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append('profile_picture', file);
+
+            document.getElementById('upload-status').innerHTML = 'Envoi de l\'image...';
+
+            fetch("{% url 'authentication:view_profile' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    profileImage.src = data.file_url;  // Met à jour l’image après enregistrement
+                    document.getElementById('upload-status').innerHTML = 'Image mise à jour!';
+                } else {
+                    document.getElementById('upload-status').innerHTML = 'Erreur lors de la mise à jour.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('upload-status').innerHTML = 'Erreur de connexion.';
+            });
+        }
+    });
+});
+
+  </script>
+<!-- CSS Cropper.js -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+
+<!-- Bootstrap 5 JS & Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  let cropper;
+  let selectedFile;
+
+  document.getElementById('profile_picture_input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      selectedFile = file;
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const image = document.getElementById('imageToCrop');
+        image.src = e.target.result;
+
+        // Ouvrir le modal
+        $('#cropModal').modal('show');
+
+        // Détruire l'ancien Cropper (si existant) et initialiser un nouveau
+        if (cropper) {
+          cropper.destroy();
+        }
+        cropper = new Cropper(image, {
+          aspectRatio: 1, // Recadrage carré
+          viewMode: 2
+        });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.getElementById('cropButton').addEventListener('click', function() {
+    if (cropper) {
+      const canvas = cropper.getCroppedCanvas({
+        width: 200, // Taille finale de l'avatar
+        height: 200
+      });
+
+      // Convertir en URL base64 et afficher l'aperçu
+      const croppedImage = canvas.toDataURL();
+      document.getElementById('profileImage').src = croppedImage;
+
+      // Fermer le modal
+      $('#cropModal').modal('hide');
+
+      // TODO: Envoyer l'image recadrée au serveur ici
+    }
+  });
+</script>
+
+</body>
+</html>
+
+{% endblock %}

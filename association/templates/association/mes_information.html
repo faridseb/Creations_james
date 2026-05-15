@@ -1,0 +1,233 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  /* Styles généraux */
+.container {
+  margin-top: 2rem;
+  max-width: 100%;
+  padding: 0 1rem;
+}
+
+.border {
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  border-radius: 0.25rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.img-thumbnail {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Styles pour les petits écrans */
+@media (max-width: 576px) {
+  .d-flex {
+    display: block !important;
+  }
+
+  .justify-content-between {
+    justify-content: flex-start !important;
+  }
+
+  .align-items-center {
+    align-items: flex-start !important;
+  }
+
+  .text-right {
+    text-align: left !important;
+  }
+
+  .col-md-6 {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+
+  .table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Styles pour les grands écrans */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+
+  .text-right {
+    text-align: right !important;
+  }
+}
+</style>
+<div class="container mt-5">
+  <!-- Informations du Membre -->
+  <div class="border p-4 mb-4 shadow-sm rounded">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="font-weight-bold text-primary">INFORMATION DU MEMBRE</h5>
+      <a href="{% url 'association:update_member' %}" class="btn btn-outline-primary btn-sm">
+        <i class="fas fa-edit"></i> Mettre à jour
+      </a>
+    </div>
+
+    <table class="table table-striped table-hover">
+      <tbody>
+        <tr>
+          <td>
+            <strong>Photo:</strong>
+          </td>
+          <td>
+            {% if association_user.photo %}
+              <img src="{{ association_user.photo.url }}" alt="Photo de l'utilisateur" class="img-thumbnail" style="max-width: 150px; height: auto;">
+            {% else %}
+              <img src="{% static 'images/default-avatar.png' %}" alt="Photo par défaut" class="img-thumbnail" style="max-width: 150px; height: auto;">
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Nom:</strong></td>
+          <td>{{ association_user.last_name|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Prénoms:</strong></td>
+          <td>{{ association_user.first_name|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Nationalité:</strong></td>
+          <td>{{ association_user.nationalite|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Né(e) le:</strong></td>
+          <td>{{ association_user.date_of_birth|date:"d/m/Y"|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Préfecture:</strong></td>
+          <td>{{ association_user.prefecture|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Profession:</strong></td>
+          <td>{{ association_user.profession|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Lieu de naissance:</strong></td>
+          <td>{{ association_user.lieu_naissance|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Sexe:</strong></td>
+          <td>{{ association_user.sexe|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Taille de chemise:</strong></td>
+          <td>{{ association_user.taille_chemise|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Taille des pieds:</strong></td>
+          <td>{{ association_user.taille_pieds|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Adresse:</strong></td>
+          <td>{{ association_user.ville|default:"Non renseigné" }}, {{ association_user.quartier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Maison non loin de:</strong></td>
+          <td>{{ association_user.maison_non_loin_de|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Contacts:</strong></td>
+          <td>{{ association_user.contacts|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Email:</strong></td>
+          <td>{{ association_user.email|default:"Non renseigné" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Informations sur l'Héritier -->
+  <div class="border p-4 mb-4 shadow-sm rounded">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="font-weight-bold text-primary">INFORMATION SUR L'HÉRITIER</h5>
+      <a href="{% url 'association:update_heritier' %}" class="btn btn-outline-primary btn-sm">
+        <i class="fas fa-edit"></i> Mettre à jour
+      </a>
+    </div>
+
+    <table class="table table-striped table-hover">
+      <tbody>
+      <tr>
+          <td>
+            <strong>Photo:</strong>
+          </td>
+          <td>
+            {% if association_user.photo %}
+              <img src="{{ association_user.photo_heritier.url }}" alt="Photo de l'utilisateur" class="img-thumbnail" style="max-width: 150px; height: auto;">
+            {% else %}
+              <img src="{% static 'images/default-avatar.png' %}" alt="Photo par défaut" class="img-thumbnail" style="max-width: 150px; height: auto;">
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Nom:</strong></td>
+          <td>{{ association_user.nom_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Prénoms:</strong></td>
+          <td>{{ association_user.prenom_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Nationalité:</strong></td>
+          <td>{{ association_user.nationalite_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Né(e) le:</strong></td>
+          <td>{{ association_user.date_of_birth_heritier|date:"d/m/Y"|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Préfecture:</strong></td>
+          <td>{{ association_user.prefecture_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Profession:</strong></td>
+          <td>{{ association_user.profession_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Lieu de naissance:</strong></td>
+          <td>{{ association_user.lieu_naissance_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Sexe:</strong></td>
+          <td>{{ association_user.sexe_heritier|default:"Non renseigné" }}</td>
+        </tr>
+        <tr>
+          <td><strong>Contact:</strong></td>
+          <td>{{ association_user.contact_heritier|default:"Non renseigné" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Informations supplémentaires -->
+  <div class="text-right mb-4">
+    <p><strong>Établi le :</strong> {{ association_user.date_creation|date:"d/m/Y" }}</p>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <p><strong>Signature du secrétaire :</strong> ……………</p>
+    </div>
+    <div class="col-md-6 text-right">
+      <p><strong>Visa du Président :</strong> ……………</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  {% load static %}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Shop</title>
+
+  <!-- Tailwind CSS (CDN stable) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  
+  <!-- Ta feuille CSS perso -->
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet" />
+   <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="" />
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-white text-gray-900">
+
+<!-- NAVIGATION -->
+<nav class="bg-gray-900 text-white">
+  <div class="container mx-auto flex items-center justify-between p-4">
+    <!-- Logo + Nom -->
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
+      <a href="index.html" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu Desktop -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class="text-yellow-400 font-semibold">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div id="menu" class="hidden md:hidden bg-gray-800 px-4 py-4">
+    <a href="{% url 'ecommerce:product_list' %}" class="block py-2 hover:bg-gray-700">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block py-2 bg-yellow-400 text-gray-900 font-semibold">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block py-2 hover:bg-gray-700">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}" class="block py-2 hover:bg-gray-700">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block py-2 hover:bg-gray-700">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block py-2 hover:bg-gray-700">Contactez-nous</a>
+    <div class="flex space-x-4 pt-2 border-t border-gray-700 mt-2">
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- SECTION HERO -->
+<section class="bg-gray-100 py-16">
+  <div class="container mx-auto px-4 flex justify-between items-center">
+    <div class="max-w-lg">
+      <h1 class="text-5xl font-bold text-gray-900">Boutique</h1>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUITS DISPONIBLES -->
+<section class="py-10 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-center">Produits Disponibles</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for category in categories %}
+        {% for product in category.products.all %}
+          <div class="bg-white rounded shadow flex flex-col">
+            <a href="#" class="block overflow-hidden h-full hover:shadow-lg">
+              <div class="aspect-[3/4] w-full">
+                <img src="{{ product.image_url.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+              </div>
+              <div class="p-3 flex-grow">
+                <h3 class="text-md font-semibold truncate">{{ product.name }}</h3>
+                <strong class="text-yellow-500 font-bold block mt-1">{{ product.price }} CFA</strong>
+              </div>
+            </a>
+            <a href="{% url 'ecommerce:cart' %}?add={{ product.id }}&type=available"
+               class="flex justify-center gap-2 mx-3 mb-3 px-3 py-2 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white">
+              <i class="fas fa-plus"></i><span>Ajouter au panier</span>
+            </a>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- PRODUITS SUR COMMANDE -->
+<section class="py-10 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-center">Produits Disponibles Sur Commande</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for article in all_articles %}
+        <div class="bg-white rounded shadow flex flex-col">
+          <div class="aspect-[3/4] w-full overflow-hidden">
+            <img src="{{ article.image_url.url }}" alt="{{ article.name }}" class="w-full h-full object-cover">
+          </div>
+          <div class="p-3 flex-grow">
+            <h3 class="text-md font-semibold truncate">{{ article.name }}</h3>
+            <strong class="text-blue-600 font-bold block mt-1">{{ article.price }} CFA</strong>
+          </div>
+          <a href="{% url 'ecommerce:cart' %}?add={{ article.id }}&type=custom_order"
+             class="flex justify-center gap-2 mx-3 mb-3 px-3 py-2 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white">
+            <i class="fas fa-plus"></i><span>Ajouter au panier</span>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-16 relative">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl">
+      <div class="flex items-center mb-6 space-x-2">
+        <img src="{% static 'images/envelope-outline.svg' %}" alt="Envelope" class="w-6 h-6" />
+        <h3 class="text-xl font-semibold">Abonnez-vous à la newsletter</h3>
+      </div>
+      <form action="#" class="flex flex-wrap gap-4">
+        <input type="text" placeholder="Nom" class="flex-grow rounded border px-4 py-2 text-gray-900" />
+        <input type="email" placeholder="Email" class="flex-grow rounded border px-4 py-2 text-gray-900" />
+        <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+<!-- Script Menu Mobile -->
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('menu');
+  menuBtn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
+
+</body>
+</html>

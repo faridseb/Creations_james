@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boîte de réception</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+
+        .message-item {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .grised {
+            background-color: #e9ecef;
+            color: #6c757d;
+            pointer-events: none;
+        }
+
+        .message-header {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #495057;
+        }
+
+        .message-meta {
+            font-size: 0.95em;
+            color: #6c757d;
+            margin-bottom: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .message-body {
+            font-size: 1.1em;
+            text-align: justify;
+            color: #212529;
+            line-height: 1.7;
+            white-space: pre-line;
+            margin: 20px 0;
+            padding: 15px;
+            background: #fefefe;
+            border-left: 5px solid #adb5bd;
+        }
+
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-style: italic;
+            color: #495057;
+        }
+
+        .message-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center; /* Pour centrer les boutons */
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-success { background-color: #28a745; color: #fff; }
+        .btn-danger { background-color: #dc3545; color: #fff; }
+        .btn-warning { background-color: #ffc107; color: #000; }
+        .btn-primary { background-color: #007bff; color: #fff; }
+
+        .hidden {
+            display: none;
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 6px 10px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .no-message {
+            text-align: center;
+            color: #868e96;
+            font-style: italic;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .message-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Boîte de réception</h1>
+
+    <h2>Demandes</h2>
+    <ul class="message-list">
+        {% for message in messages %}
+            <li id="message-{{ message.id }}" class="message-item {% if message.is_grayed %}grised{% endif %}">
+                <div class="message-header">{{ message.subject }}</div>
+                <div class="message-meta">
+                    {% if message.sender == utilisateur_connecte %}
+                        Envoyé à {{ message.recipient.first_name }} {{ message.recipient.last_name }}
+                    {% else %}
+                        Reçu de {{ message.sender.first_name }} {{ message.sender.last_name }}
+                    {% endif %}
+                    - <span class="message-timestamp">{{ message.timestamp }}</span>
+                </div>
+
+                <div class="message-body">{{ message.body }}</div>
+
+                <div class="signature">
+                    — {{ message.sender.first_name }} {{ message.sender.last_name }}
+                </div>
+
+                <div class="message-actions">
+                    <form method="post" action="{% url 'association:accepter_message' message.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-success">Accepter</button>
+                    </form>
+                    <form method="post" action="{% url 'association:rejeter_message' message.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-danger">Rejeter</button>
+                    </form>
+                    <form method="post" action="{% url 'association:mettre_en_attente_message' message.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-warning">Mettre en attente</button>
+                    </form>
+                    {% if message.status == 'accepté' and not message.is_completed %}
+                        <button type="button" id="completer-lettre-btn-{{ message.id }}" class="btn-primary">Compléter la lettre</button>
+                    {% endif %}
+                </div>
+
+                <form id="form-{{ message.id }}" method="post" action="{% url 'association:inbox' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="message_id" value="{{ message.id }}">
+                    <div id="gris-section-{{ message.id }}" class="hidden">
+                        <p>Réponse du Président :</p>
+                        <p>Votre demande est approuvée. Versement prévu pour le <input type="date" name="date_accord"></p>
+                        <p>Retrait prévu le <input type="date" name="date_retrait"></p>
+                    </div>
+                    <div id="degris-section-{{ message.id }}" class="hidden">
+                        <p>Nom du Comptable : <input type="text" name="comptable_nom"></p>
+                        <p>Signature : <input type="text" name="signature"></p>
+                    </div>
+                    <button type="submit" class="btn-success">Valider</button>
+                </form>
+            </li>
+        {% empty %}
+            <div class="no-message">Aucun message pour le moment.</div>
+        {% endfor %}
+    </ul>
+
+    <script>
+        document.querySelectorAll('button[id^="completer-lettre-btn-"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const messageId = this.id.split('-').pop();
+                document.getElementById('gris-section-' + messageId).classList.toggle('hidden');
+                document.getElementById('degris-section-' + messageId).classList.toggle('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

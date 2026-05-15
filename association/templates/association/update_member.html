@@ -1,0 +1,120 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Couleur de fond douce */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin: 0;
+    }
+    .container {
+        background-color: #ffffff; /* Fond blanc pour le formulaire */
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 1000px; /* Limiter la largeur du formulaire */
+        margin: 20px; /* Ajouter de l'espace autour du formulaire */
+    }
+    h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 30px; /* Espacement sous le titre */
+        color: #333; /* Couleur du titre */
+    }
+    form {
+        margin-top: 20px;
+    }
+    label {
+        display: block; /* Les labels sont affichés en bloc, donc au-dessus des inputs */
+        font-weight: bold; /* Mettre les labels en gras */
+        margin-bottom: 10px; /* Espacement entre les labels et les champs */
+        color: #555; /* Couleur des labels */
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%; /* Prend toute la largeur du formulaire */
+        padding: 15px; /* Espacement interne des champs */
+        margin-bottom: 20px; /* Espacement entre les champs */
+        border: 1px solid #ddd; /* Bordure gris clair */
+        border-radius: 8px; /* Coins arrondis */
+        background-color: #f1f1f1; /* Couleur de fond claire pour les champs */
+        font-size: 16px; /* Taille du texte */
+        box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur totale */
+        transition: all 0.3s ease; /* Animation au focus */
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #007bff; /* Changer la couleur de la bordure au focus */
+        background-color: #e9f3ff; /* Changer la couleur de fond au focus */
+    }
+    button[type="submit"] {
+        width: 100%; /* Le bouton prend toute la largeur du formulaire */
+        padding: 15px;
+        border: none;
+        background-color: #007bff; /* Couleur du bouton */
+        color: #ffffff;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease; /* Animation de couleur au survol */
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3; /* Changer la couleur du bouton au survol */
+    }
+    .alert {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+    }
+    .alert ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+    @media (max-width: 600px) {
+        .container {
+            padding: 4%;
+            width: 90%;
+        }
+        h1 {
+            font-size: 4vw;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        select,
+        textarea {
+            font-size: 3.5vw;
+        }
+        button[type="submit"] {
+            font-size: 3.5vw;
+        }
+    }
+</style>
+<div class="container mt-5">
+    <h2>Modifier Ses informations</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Affichage du formulaire HeritierForm -->
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+    </form>
+</div>
+{% endblock %}

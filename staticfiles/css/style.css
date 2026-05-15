@@ -1,0 +1,209 @@
+body {
+    background-color: ; /* Ajoute une couleur d'arrière-plan si nécessaire */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    min-height: 100vh; /* Hauteur minimale */
+    overflow-x: hidden; /* Éviter le défilement horizontal */
+    margin: 0; /* Éliminer toute marge qui pourrait empêcher l'affichage correct */
+}
+
+.navbar {
+    background-color: black !important;
+    display: flex;
+    align-items: center;
+    padding-top: 10px; /* Padding en haut */
+}
+
+.navbar .navbar-brand {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-brand img {
+    border-radius: 50%;
+    width: 100px;
+    height: auto;
+}
+
+.brand-text {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Espace entre le texte de la marque et la barre de recherche */
+}
+
+#search-bar {
+    margin-top: 0; /* Supprimer la marge supérieure */
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .nav-link {
+    color: gold !important;
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
+}
+
+.m {
+    color: white;
+    text-decoration: none;
+}
+
+.brand-text .creation {
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.brand-text .james {
+    color: gold;
+    font-weight: bold;
+    margin-left: 5px;
+    font-size: 24px;
+}
+
+@media (max-width: 448px) {
+    .brand-text {
+        display: none; /* Cacher le texte sur les petits écrans */
+    }
+}
+
+.carousel-item img {
+    height: 150px;
+    object-fit: cover; /* Assurer que l'image couvre le conteneur */
+    margin-right: 10px; /* Espace entre les images */
+}
+
+.carousel-container {
+    margin-bottom: 30px;
+    margin-left: 80px;
+    margin-top: 30px;
+    flex: 0 0 auto; /* Ne pas forcer la taille */
+    max-width: 100%; /* S'assurer que le conteneur peut s'étendre */
+    width: 100%;
+}
+
+.carousel-container .n {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Centrer le bouton */
+    width: 100%;
+}
+
+.carousel-container .n .btn-primary {
+    width: 100%; /* Bouton prend toute la largeur */
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 30%; /* Ajuster la position du texte */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.carousel-caption p {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.carousel-container,
+.company-description-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.company-description p {
+    flex: 1;
+    color: white;
+    font-size: 18px;
+    margin-top: 30px;
+    text-align: justify;
+}
+footer {
+    background-color: black;
+    color: white;
+    width: 100vw; /* Prend toute la largeur de l’écran */
+    padding: 10px 0;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px; /* Espace entre les icônes */
+}
+
+.social-icons li:last-child {
+    margin-right: 0; /* Pas d'espace pour le dernier élément */
+}
+
+.social-icons li a {
+    color: white !important;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .carousel-container {
+        width: 100%; /* Garder la première case à pleine largeur */
+        margin-left: 20px;
+
+    }
+
+    .row:first-child .col-6.col-md-2.mb-3 {
+        width: 100%; /* Garder la première case à pleine largeur */
+    }
+
+    .row:nth-child(2),
+    .row:nth-child(3) {
+        display: flex;
+        flex-wrap: wrap; /* Permet de passer à la ligne suivante si nécessaire */
+    }
+
+    .row:nth-child(2) .col-6.col-md-2.mb-3,
+    .row:nth-child(3) .col-6.col-md-2.mb-3 {
+        width: 50%; /* 2 cases par ligne */
+    }
+
+    body {
+        max-width: 90%;
+        overflow-x: hidden; /* Éviter le défilement horizontal */
+        margin: 0; /* Éliminer toute marge */
+    }
+}
+#mainCarousel .carousel-item {
+    height: 180px; /* Hauteur fixe du carrousel */
+    width: 180px;
+}
+
+#mainCarousel .carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* L'image remplit le conteneur sans déformation */
+}
+.btn-full-width {
+    display: block;
+    width: 100%;
+    text-align: center;
+}

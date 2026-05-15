@@ -1,0 +1,17 @@
+{% extends 'use.html' %}
+
+{% block content %}
+
+    <meta charset="UTF-8">
+    <title>Paiement réussi</title>
+
+<div class="container text-center mt-5">
+    <h2 class="text-success">Paiement réussi ! 🎉</h2>
+    <p>Votre paiement a été traité avec succès.</p>
+    <p>Merci pour votre confiance.</p>
+    <a href="{% url 'authentication:user_dashboard' %}" class="btn btn-success mt-3">Retour au tableau de bord</a>
+<h1>{{ message }}</h1>
+</body>
+
+</div>
+{% endblock %}

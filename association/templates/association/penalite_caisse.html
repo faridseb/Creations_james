@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des pénalités</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+   <div class="container mt-5">
+    <h1 class="text-center">Gestion des pénalités</h1>
+       {% if penalite_existante %}
+        <div class="alert alert-warning" role="alert">
+            Vous avez déjà attribué une pénalité ce mois-ci. Vous pouvez en attribuer une nouvelle le mois prochain.
+        </div>
+    {% endif %}
+{% if messages %}
+    <div class="alert alert-info">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Retard de 15 minutes -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Retard de 15 minutes</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="penalite_retard_15min" class="form-label">Prix de la pénalité :</label>
+                    <input type="text" class="form-control" id="penalite_retard_15min" name="penalite_retard_15min" value="{{ penalite_retard_15min }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Membres concernés</label>
+                    <div>
+                        <input type="radio" id="tous_15min" name="membres_15min" value="tous" class="form-check-input">
+                        <label for="tous_15min" class="form-check-label">Pour tous</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="sauf_15min" name="membres_15min" value="sauf" class="form-check-input">
+                        <label for="sauf_15min" class="form-check-label">Pour tous sauf...</label>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Montant Adhésion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selected_users_15min" value="{{ user.id }}">
+                                </td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.montant_adhesion }} CFA</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">Aucun utilisateur trouvé</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retard de 30 minutes -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Retard de 30 minutes</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="penalite_retard_30min" class="form-label">Prix de la pénalité :</label>
+                    <input type="text" class="form-control" id="penalite_retard_30min" name="penalite_retard_30min" value="{{ penalite_retard_30min }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Membres concernés</label>
+                    <div>
+                        <input type="radio" id="tous_30min" name="membres_30min" value="tous" class="form-check-input">
+                        <label for="tous_30min" class="form-check-label">Pour tous</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="sauf_30min" name="membres_30min" value="sauf" class="form-check-input">
+                        <label for="sauf_30min" class="form-check-label">Pour tous sauf...</label>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Montant Adhésion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selected_users_30min" value="{{ user.id }}">
+                                </td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.montant_adhesion }} CFA</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">Aucun utilisateur trouvé</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retard de 45 minutes -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Retard de 45 minutes</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="penalite_retard_45min" class="form-label">Prix de la pénalité :</label>
+                    <input type="text" class="form-control" id="penalite_retard_45min" name="penalite_retard_45min" value="{{ penalite_retard_45min }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Membres concernés</label>
+                    <div>
+                        <input type="radio" id="tous_45min" name="membres_45min" value="tous" class="form-check-input">
+                        <label for="tous_45min" class="form-check-label">Pour tous</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="sauf_45min" name="membres_45min" value="sauf" class="form-check-input">
+                        <label for="sauf_45min" class="form-check-label">Pour tous sauf...</label>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Montant Adhésion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selected_users_45min" value="{{ user.id }}">
+                                </td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.montant_adhesion }} CFA</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">Aucun utilisateur trouvé</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retard de 60 minutes -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Retard de 60 minutes</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="penalite_retard_60min" class="form-label">Prix de la pénalité :</label>
+                    <input type="text" class="form-control" id="penalite_retard_60min" name="penalite_retard_60min" value="{{ penalite_retard_60min }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Membres concernés</label>
+                    <div>
+                        <input type="radio" id="tous_60min" name="membres_60min" value="tous" class="form-check-input">
+                        <label for="tous_60min" class="form-check-label">Pour tous</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="sauf_60min" name="membres_60min" value="sauf" class="form-check-input">
+                        <label for="sauf_60min" class="form-check-label">Pour tous sauf...</label>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Montant Adhésion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selected_users_60min" value="{{ user.id }}">
+                                </td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.montant_adhesion }} CFA</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">Aucun utilisateur trouvé</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Absence -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Absence</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="penalite_absence" class="form-label">Prix de la pénalité :</label>
+                    <input type="text" class="form-control" id="penalite_absence" name="penalite_absence" value="{{ penalite_absence }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Membres concernés</label>
+                    <div>
+                        <input type="radio" id="tous_absence" name="membres_absence" value="tous" class="form-check-input">
+                        <label for="tous_absence" class="form-check-label">Pour tous</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="sauf_absence" name="membres_absence" value="sauf" class="form-check-input">
+                        <label for="sauf_absence" class="form-check-label">Pour tous sauf...</label>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Montant Adhésion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selected_users_absence" value="{{ user.id }}">
+                                </td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.montant_adhesion }} CFA</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">Aucun utilisateur trouvé</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mt-4">Enregistrer les pénalités</button>
+        </div>
+    </form>
+</div>
+
+<script>
+ document.addEventListener("DOMContentLoaded", function () {
+    const sections = [
+        {radioTous: 'tous_15min', checkboxes: 'selected_users_15min'},
+        {radioTous: 'tous_30min', checkboxes: 'selected_users_30min'},
+        {radioTous: 'tous_45min', checkboxes: 'selected_users_45min'},
+        {radioTous: 'tous_60min', checkboxes: 'selected_users_60min'},
+        {radioTous: 'tous_absence', checkboxes: 'selected_users_absence'}
+    ];
+
+    // Tableau pour stocker l'état de chaque utilisateur, pour éviter qu'il soit sélectionné dans plusieurs sections
+    let selectedUsers = new Set();
+
+    sections.forEach(section => {
+        const radioTous = document.getElementById(section.radioTous);
+        const checkboxes = document.querySelectorAll(`input[name="${section.checkboxes}"]`);
+        const radioSauf = document.getElementById(section.radioTous.replace('tous', 'sauf'));
+
+        // Fonction pour griser uniquement les sections "Tous les membres"
+        function toggleDisableSectionsTous(disable) {
+            sections.forEach(otherSection => {
+                if (otherSection.radioTous !== section.radioTous) {
+                    const otherRadioTous = document.getElementById(otherSection.radioTous);
+                    if (disable) {
+                        // Désactiver l'option "Tous les membres" des autres sections
+                        otherRadioTous.disabled = true;
+                    } else {
+                        otherRadioTous.disabled = false;
+                    }
+                }
+            });
+        }
+
+        // Fonction pour griser toutes les options dans les autres sections
+        function toggleDisableSections(disable) {
+            sections.forEach(otherSection => {
+                if (otherSection.radioTous !== section.radioTous) {
+                    const otherCheckboxes = document.querySelectorAll(`input[name="${otherSection.checkboxes}"]`);
+                    if (disable) {
+                        otherCheckboxes.forEach(checkbox => checkbox.disabled = true);
+                    } else {
+                        otherCheckboxes.forEach(checkbox => checkbox.disabled = false);
+                    }
+                }
+            });
+        }
+
+        // Fonction pour gérer la sélection/désélection des utilisateurs dans chaque section
+        function handleCheckboxChange(checkbox) {
+            const userId = checkbox.value; // L'ID de l'utilisateur est stocké dans la valeur de chaque case à cocher
+
+            if (checkbox.checked) {
+                // Si la case est cochée, ajouter l'utilisateur à la liste des utilisateurs sélectionnés
+                if (!selectedUsers.has(userId)) {
+                    selectedUsers.add(userId);
+                    // Désactiver les cases à cocher correspondantes dans les autres sections pour cet utilisateur
+                    sections.forEach(otherSection => {
+                        if (otherSection.radioTous !== section.radioTous) {
+                            const otherCheckboxes = document.querySelectorAll(`input[name="${otherSection.checkboxes}"]`);
+                            otherCheckboxes.forEach(otherCheckbox => {
+                                if (otherCheckbox.value === userId) {
+                                    otherCheckbox.checked = false;  // Décocher l'utilisateur dans cette section
+                                    otherCheckbox.disabled = true;  // Désactiver la case à cocher dans l'autre section
+                                }
+                            });
+                        }
+                    });
+                }
+            } else {
+                // Si la case est décochée, retirer l'utilisateur de la liste
+                selectedUsers.delete(userId);
+                // Réactiver les cases à cocher dans les autres sections pour cet utilisateur
+                sections.forEach(otherSection => {
+                    const otherCheckboxes = document.querySelectorAll(`input[name="${otherSection.checkboxes}"]`);
+                    otherCheckboxes.forEach(otherCheckbox => {
+                        if (otherCheckbox.value === userId) {
+                            otherCheckbox.disabled = false;
+                        }
+                    });
+                });
+            }
+        }
+
+        // Écouteur d'événement pour le radio "Tous les membres"
+        radioTous?.addEventListener('change', function () {
+            if (radioTous.checked) {
+                // Sélectionner tous les checkboxes dans cette section
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                    handleCheckboxChange(checkbox); // Ajouter cet utilisateur à la liste sélectionnée
+                });
+                toggleDisableSections(true);  // Griser les autres sections
+            }
+        });
+
+        // Écouteur d'événement pour le radio "Tous les membres sauf"
+        radioSauf?.addEventListener('change', function () {
+            if (radioSauf.checked) {
+                // Réinitialiser tous les checkboxes dans cette section
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    handleCheckboxChange(checkbox); // Retirer cet utilisateur de la liste sélectionnée
+                });
+                // Griser uniquement "Tous les membres" des autres sections
+                toggleDisableSectionsTous(true); // Désactiver "Tous les membres" dans les autres sections
+                toggleDisableSections(false); // Dégriser les autres cases à cocher
+            }
+        });
+
+        // Ajouter un écouteur d'événements sur chaque case à cocher
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                handleCheckboxChange(checkbox);
+            });
+        });
+    });
+});
+
+
+</script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

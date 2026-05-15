@@ -1,0 +1,10 @@
+{% extends 'use.html' %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="text-danger">Échec du paiement</h2>
+    <p>Une erreur est survenue lors du traitement de votre paiement.</p>
+    <p class="text-warning"><strong>{{ error }}</strong></p>
+    <a href="{% url 'authentication:payment' %}" class="btn btn-primary mt-3">Réessayer</a>
+</div>
+{% endblock %}

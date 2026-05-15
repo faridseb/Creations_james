@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .dashboard-header {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="dashboard-header text-center">Bienvenue, {{ user.username }}!</h1>
+
+        <div class="card">
+            <div class="card-header">
+                Informations Utilisateur
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Détails du Compte</h5>
+                <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                <p class="card-text"><strong>Nom d'utilisateur:</strong> {{ user.username }}</p>
+                <p class="card-text"><strong>Date d'inscription:</strong> {{ user.date_joined }}</p>
+                <!-- Ajoute d'autres informations à afficher ici -->
+            </div>
+        </div>
+
+        <!-- Ajoute d'autres sections pour le tableau de bord ici -->
+
+        <div class="text-center mt-4">
+            <a href="{% url 'association_logout' %}" class="btn btn-danger">Déconnexion</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

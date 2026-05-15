@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Inclure jQuery en premier -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Ensuite, inclure Bootstrap -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Style personnalisé -->
+<style>
+    body {
+        background-size: cover;
+        background-position: center;
+    }
+
+    .avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
+
+    .profile-section {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .profile-image-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 50px;
+    }
+
+    .profile-image-section img {
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+    }
+
+    .profile-info-section {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .profile-info-section .card {
+        width: 45%;
+    }
+
+    h1 {
+        color: black;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        text-align: center;
+    }
+
+    a {
+        color: white;
+        background-color: #6EC2E8;
+        padding: 10px 20px;
+        font-size: 18px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    a:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    .referral-link {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .profile-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card {
+        border: 2px solid #007bff;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        background: #fff;
+    }
+
+    .card-header {
+        background-color: #CC6CE7;
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-body {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .card-body p {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+
+    .card-body p strong {
+        flex: 1;
+    }
+
+    .card-body p span {
+        flex: 2;
+        text-align: right;
+    }
+
+    @media (max-width: 768px) {
+        .profile-info-section {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-info-section .card {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .profile-image-section img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        h1 {
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        a {
+            font-size: 16px;
+            padding: 8px 15px;
+        }
+
+        .card-body p {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .profile-image-section img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        h1 {
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        a {
+            font-size: 14px;
+            padding: 6px 12px;
+        }
+
+        .card-header {
+            font-size: 18px;
+        }
+
+        .card-body p {
+            font-size: 13px;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .card-body p span {
+            text-align: left;
+            display: block;
+        }
+    }
+</style>
+
+<!-- Modal pour le recadrage de l'image -->
+<div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cropModalLabel">Recadrer votre photo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="img-container">
+                    <img id="imageToCrop" src="" class="img-fluid">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="cropButton">Recadrer & Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="cover-photo" style="background-image: url('{% static "images/perlage.jpg" %}');">
+                <h1 class="cover-title">Mon Profil</h1>
+                <div class="profile-image-section">
+                    <img src="{{ profile_picture_url }}" id="profileImage" alt="Image de profil" class="avatar">
+                    <a href="javascript:void(0);" onclick="document.getElementById('profile_picture_input').click();">
+                        Modifier la photo
+                    </a>
+                    <input type="file" id="profile_picture_input" style="display: none;" onchange="previewAndUploadImage(event)">
+                    <div id="upload-status"></div>
+                </div>
+            </div>
+
+            <h2>Projets associés à votre rôle : {{ user.role }}</h2>
+
+            {% if projets_concernes %}
+                <ul>
+                    {% for projet in projets_concernes %}
+                        <li>
+                            <h3>{{ projet.titre }}</h3>
+                            <p>{{ projet.description }}</p>
+                            <p>Montant objectif: {{ projet.montant_objectif }} CFA</p>
+                            <p>Montant récolté: {{ projet.montant_recolte }} CFA</p>
+                            <p>Il reste {{ projet.rester_a_sponsoriser }} CFA à récolter pour les sponsors.</p>
+                            <p>Il reste {{ projet.rester_a_donner }} CFA à récolter pour les donateurs.</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Actions disponibles :</h3>
+                <p>Vous pouvez effectuer les actions suivantes :</p>
+
+                {% for action in actions_possibles %}
+                    {% if action == "Faire un don" %}
+                        <form method="POST" action="{% url 'homepage:faire_un_don' %}">
+                            {% csrf_token %}
+                            <button type="submit">Faire un don</button>
+                        </form>
+                    {% elif action == "Sponsoriser un projet" %}
+                        <form method="POST" action="{% url 'homepage:sponsoriser_un_projet' %}">
+                            {% csrf_token %}
+                            <button type="submit">Sponsoriser un projet</button>
+                        </form>
+                    {% elif action == "Être bienfaiteur" %}
+                        <form method="POST" action="{% url 'homepage:etre_bienfaiteur' %}">
+                            {% csrf_token %}
+                            <button type="submit">Être bienfaiteur d'un projet</button>
+                        </form>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>Aucun projet disponible pour votre rôle.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- creationjames/templates/search_results.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Résultats de recherche</title>
+</head>
+<body>
+    <h1>Résultats de recherche pour "{{ query }}"</h1>
+    <ul>
+        {% for result in results %}
+            <li><a href="{% url 'article_detail' result.id %}">{{ result.title }}</a></li>
+        {% empty %}
+            <li>Aucun résultat trouvé</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

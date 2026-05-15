@@ -1,0 +1,88 @@
+{% extends "ecommerce_base.html" %}
+
+{% block title %}Récompenses{% endblock %}
+
+{% block content %}
+<div class="content-header">
+    <h1>Récompenses</h1>
+</div>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Cadre pour le portefeuille avec une largeur réduite -->
+            <div class="card mb-4" style="max-width: 400px; margin: auto; background-color:gold;">
+                <div class="card-header">
+                    <h5>Portefeuille</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="card-title">Solde: {{ user.wallet_balance }} FCFA</h4>
+                    <p class="card-text">Utilisez votre solde pour effectuer des paiements ou pour vos récompenses.</p>
+                </div>
+            </div>
+
+            <h3>Total des Récompenses: {{ user.total_rewards }} FCFA</h3>
+            <canvas id="rewardsChart" width="400" height="200"></canvas>
+            <h4>Détails des Récompenses</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Montant (FCFA)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reward in user.rewards.all %}
+                            <tr>
+                                <td>{{ reward.description }}</td>
+                                <td>{{ reward.amount }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center">Aucune récompense trouvée.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('rewardsChart').getContext('2d');
+    const rewardsData = {
+        labels: [
+            {% for reward in user.rewards.all %}
+                '{{ reward.description }}'{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Montant des Récompenses (FCFA)',
+            data: [
+                {% for reward in user.rewards.all %}
+                    {{ reward.amount }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            ],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    const rewardsChart = new Chart(ctx, {
+        type: 'bar',
+        data: rewardsData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

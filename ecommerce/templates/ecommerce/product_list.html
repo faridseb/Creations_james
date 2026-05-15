@@ -1,0 +1,614 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {% load static %}
+<!-- Font Awesome CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS (CDN stable) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  
+  <!-- Ta feuille CSS perso -->
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet" />
+   
+
+  <title>E-commerce_Creationjames</title>
+</head>
+
+<body class="bg-white text-gray-900">
+
+  <!-- Début de l'en-tête / Navigation -->
+ <nav class="bg-gray-900 text-white">
+  <div class="container mx-auto flex items-center justify-between p-4">
+    <!-- Logo + Nom -->
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
+      <a href="index.html" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu Desktop -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="{% url 'ecommerce:product_list' %}" class=" text-yellow-400 font-semibold">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class="hover:text-gray-300">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div id="menu" class="hidden md:hidden bg-gray-800 px-4 py-4">
+    <a href="{% url 'ecommerce:product_list' %}" class="block py-2 bg-yellow-400 text-gray-900 font-semibold ">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block py-2 hover:bg-gray-700 ">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block py-2 hover:bg-gray-700">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}" class="block py-2 hover:bg-gray-700">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block py-2 hover:bg-gray-700">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block py-2 hover:bg-gray-700">Contactez-nous</a>
+    <div class="flex space-x-4 pt-2 border-t border-gray-700 mt-2">
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</nav>
+
+  <!-- Début de la section Hero -->
+  <div class="hero">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row justify-between">
+        <div class="lg:w-5/12">
+          <div class="intro-excerpt">
+            <h1 class="text-4xl font-bold mb-6">
+              Design d'Intérieur Moderne
+            </h1>
+            <p class="mb-6">Sublimez vos salons et studios.</p>
+            <p>
+              <a href="{% url 'ecommerce:cart' %}" class="inline-block bg-gray-700 text-white py-2 px-4 rounded mr-2 hover:bg-gray-800">Acheter Maintenant</a>
+              <a href="{% url 'ecommerce:shop' %}" class="inline-block border border-gray-700 text-gray-700 py-2 px-4 rounded hover:bg-gray-100">Explorer</a>
+            </p>
+          </div>
+        </div>
+        <div class="lg:w-4/12">
+          <div class="hero-img-wrap">
+            {% if produit_image_5 %}
+    <img src="{{ produit_image_5.image_url.url }}" alt="{{ produit_image_5.name }}">
+{% else %}
+    <p>Produit non trouvé.</p>
+{% endif %}
+
+          </div>
+        </div>
+      </div>
+      
+
+<!-- Section Desktop Produits -->
+ <!-- Section Desktop Produits Disponibles -->
+<section class="hidden lg:block py-12">
+  <h2 class="text-2xl font-semibold mb-4">Produit Disponible</h2>
+
+  <div class="container mx-auto px-4 flex gap-6 max-w-screen-xl">
+    <!-- Colonne gauche -->
+    <aside class="w-1/3 bg-white shadow rounded p-4 shrink-0 flex flex-col">
+      <h2 class="text-lg font-semibold mb-4">Catégories</h2>
+      <ul class="space-y-2 flex-1">
+        {% for category in categories %}
+          <li>
+            <button
+              onclick="afficherCategorie('{{ category.name|slugify }}', this)"
+              class="w-full text-left py-2 px-3 rounded bg-white hover:bg-green-500 hover:text-white text-gray-700 font-medium"
+              {% if forloop.first %} id="categorie-btn-active" {% endif %}
+            >
+              {{ category.name }}
+            </button>
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <!-- Colonne droite -->
+    <div class="flex-1 overflow-x-auto">
+      <div class="min-w-[1024px] bg-white rounded p-6 h-full">
+        {% for category in categories %}
+          <div id="categorie-{{ category.name|slugify }}" class="categorie-produit hidden flex flex-nowrap gap-6">
+            {% with category.products.all as products %}
+              {% if products %}
+                {% for product in products %}
+                  <div class="w-64 flex-shrink-0 relative bg-white hover:shadow-lg transition rounded overflow-hidden">
+
+                    <!-- Image -->
+                    <div class="aspect-[4/3] w-full overflow-hidden">
+                      <img src="{{ product.image_url.url }}" alt="{{ product.name }}" class="w-full h-full object-cover rounded">
+                    </div>
+
+                    <!-- Détails produit -->
+                    <div class="p-3">
+                      <h3 class="text-md font-semibold truncate">{{ product.name }}</h3>
+                      <strong class="block mt-1 text-blue-600 font-bold">{{ product.price }} CFA</strong>
+                    </div>
+
+                    <!-- Ajouter au panier -->
+                    <a href="{% url 'ecommerce:cart' %}?add={{ product.id }}&type=available"
+                       class="absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer group"
+                       title="Ajouter au panier">
+                      <svg class="w-6 h-6 transition-transform group-hover:scale-110" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
+                        <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
+                      </svg>
+                    </a>
+
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p class="text-gray-500 italic">Aucun produit disponible dans cette catégorie.</p>
+              {% endif %}
+            {% endwith %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Mobile Produits Disponibles -->
+<section class="block lg:hidden w-full px-4">
+  <h2 class="text-2xl font-semibold mb-4">Produit Disponible</h2>
+
+  <aside class="w-full bg-white shadow rounded p-4 mb-4">
+    <h2 class="text-lg font-semibold mb-4">Catégories</h2>
+    <ul class="flex overflow-x-auto space-x-4">
+      {% for category in categories %}
+        <li>
+          <button
+            onclick="afficherCategorieMobile('{{ category.name|slugify }}', this)"
+            class="whitespace-nowrap py-2 px-3 rounded hover:bg-green-500 hover:text-white text-gray-700 font-medium
+            {% if forloop.first %} bg-orange-500 text-white {% else %} bg-white {% endif %}"
+            {% if forloop.first %} id="mobile-categorie-btn-active" {% endif %}
+          >
+            {{ category.name }}
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  </aside>
+
+  <div class="w-full bg-white rounded p-6">
+    {% for category in categories %}
+      <div id="mobile-categorie-{{ category.name|slugify }}" class="categorie-produit-mobile hidden flex flex-wrap -mx-4">
+        {% with category.products.all as products %}
+          {% if products %}
+            {% for product in products %}
+              <div class="w-full sm:w-1/2 px-2 mb-6">
+                <a class="product-item block border rounded overflow-hidden hover:shadow-lg transition relative bg-white h-full" href="{% url 'ecommerce:cart' %}">
+                  <div class="aspect-[4/3] w-full overflow-hidden">
+                    <img src="{{ product.image_url.url }}" alt="{{ product.name }}" class="w-full h-full object-cover rounded">
+                  </div>
+                  <div class="px-2 pb-3">
+                    <h3 class="mt-4 text-base font-semibold">{{ product.name }}</h3>
+                    <strong class="block mt-1 text-blue-600 font-bold">{{ product.price }} CFA</strong>
+                  </div>
+                  <span class="icon-cross absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer">
+                    <svg class="w-6 h-6" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
+                      <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-gray-500 italic px-4">Aucun produit disponible dans cette catégorie.</p>
+          {% endif %}
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Section Desktop Produits Spécifiques -->
+<section class="hidden lg:block py-12">
+  <h2 class="text-2xl font-semibold mb-4">Produit Spécifique Sur commande</h2>
+
+  <div class="container mx-auto px-4 flex gap-6 max-w-screen-xl">
+
+    <!-- Colonne gauche -->
+    <aside class="w-1/3 bg-white shadow rounded p-4 shrink-0 flex flex-col">
+      <h2 class="text-lg font-semibold mb-4">Catégories</h2>
+      <ul class="space-y-2 flex-1 article-liste-desktop">
+        {% for articles_category in article_categories %}
+          <li>
+            <button
+              onclick="afficherarticleCategorie('{{ articles_category.name|slugify }}', this, 'desktop')"
+              class="w-full text-left py-2 px-3 rounded bg-white hover:bg-green-500 hover:text-white text-gray-700 font-medium
+              {% if forloop.first %} bg-orange-500 text-white {% endif %}"
+              {% if forloop.first %} id="article-btn-active-desktop" {% endif %}
+            >
+              {{ articles_category.name }}
+            </button>
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <!-- Colonne droite -->
+    <div class="flex-1 overflow-x-auto">
+      <div class="min-w-[1024px] bg-white rounded p-6 h-full">
+        {% for articles_category in article_categories %}
+          <div id="articlecategorie-desktop-{{ articles_category.name|slugify }}" class="categorie-article-desktop hidden flex flex-nowrap gap-6">
+            {% with articles_category.articles.all as articles %}
+              {% if articles %}
+                {% for article in articles %}
+                  <div class="w-64 flex-shrink-0 relative bg-white hover:shadow-lg transition rounded overflow-hidden">
+
+                    <!-- Image -->
+                    <div class="aspect-[4/3] w-full overflow-hidden">
+                      <img src="{{ article.image_url.url }}" alt="{{ article.name }}" class="w-full h-full object-cover rounded">
+                    </div>
+
+                    <!-- Infos article -->
+                    <div class="p-3">
+                      <h3 class="text-md font-semibold truncate">{{ article.name }}</h3>
+                      <strong class="block mt-1 text-blue-600 font-bold">{{ article.price }} CFA</strong>
+                    </div>
+
+                    <!-- Ajouter au panier -->
+                    <a href="{% url 'ecommerce:cart' %}?add={{ article.id }}"
+                       class="absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer group"
+                       title="Ajouter au panier">
+                      <svg class="w-6 h-6 transition-transform group-hover:scale-110" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
+                        <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
+                      </svg>
+                    </a>
+
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p class="text-gray-500 italic">Aucun article disponible dans cette catégorie.</p>
+              {% endif %}
+            {% endwith %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Section Mobile Produits Spécifiques -->
+<section class="block lg:hidden w-full px-4">
+  <h2 class="text-2xl font-semibold mb-4">Produit Spécifique Sur commande</h2>
+
+  <aside class="w-full bg-white shadow rounded p-4 mb-4">
+    <h2 class="text-lg font-semibold mb-4">Catégories</h2>
+    <ul class="flex overflow-x-auto space-x-4 article-liste-mobile">
+      {% for articles_category in article_categories %}
+        <li>
+          <button
+            onclick="afficherarticleCategorie('{{ articles_category.name|slugify }}', this, 'mobile')"
+            class="whitespace-nowrap py-2 px-3 rounded hover:bg-green-500 hover:text-white text-gray-700 font-medium
+            {% if forloop.first %} bg-orange-500 text-white {% else %} bg-white {% endif %}"
+            {% if forloop.first %} id="article-btn-active-mobile" {% endif %}
+          >
+            {{ articles_category.name }}
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  </aside>
+
+  <div class="w-full bg-white rounded p-6">
+    {% for articles_category in article_categories %}
+      <div id="articlecategorie-mobile-{{ articles_category.name|slugify }}" class="categorie-article-mobile hidden flex flex-wrap -mx-4">
+        {% with articles_category.articles.all as articles %}
+          {% if articles %}
+            {% for article in articles %}
+              <div class="w-full sm:w-1/2 px-2 mb-6">
+                <a class="product-item block border rounded overflow-hidden hover:shadow-lg transition relative bg-white h-full" href="{% url 'ecommerce:cart' %}">
+                  <div class="aspect-[4/3] w-full overflow-hidden">
+                    <img src="{{ article.image_url.url }}" alt="{{ article.name }}" class="w-full h-full object-cover rounded">
+                  </div>
+                  <div class="px-2 pb-3">
+                    <h3 class="mt-4 text-base font-semibold">{{ article.name }}</h3>
+                    <strong class="block mt-1 text-blue-600 font-bold">{{ article.price }} CFA</strong>
+                  </div>
+                  <span class="icon-cross absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer">
+                    <svg class="w-6 h-6" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
+                      <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-gray-500 italic px-4">Aucun article disponible dans cette catégorie.</p>
+          {% endif %}
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- Début Section Pourquoi Choisir Nous -->
+<div class="why-choose-section py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-between -mx-4">
+            <div class="w-full lg:w-1/2 px-4">
+                <h2 class="section-title text-2xl font-semibold mb-4">Pourquoi Nous Choisir</h2>
+                <p class="mb-6">Nous sommes basés dans l'artisanat et créons nos propres articles de qualité.</p>
+
+                <div class="flex flex-wrap my-5 -mx-4">
+                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
+                        <div class="feature space-y-3">
+                            <div class="icon">
+                                <img src="{% static 'images/truck.svg' %}" alt="Expédition Rapide & Gratuite" class="w-1/3 h-auto">
+                            </div>
+                            <h3 class="text-lg font-semibold">Expédition Rapide & Gratuite</h3>
+
+                        </div>
+                    </div>
+
+                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
+                        <div class="feature space-y-3">
+                            <div class="icon">
+                                <img src="{% static 'images/bag.svg' %}" alt="Facilité d'Achat" class="w-1/3 h-auto">
+                            </div>
+                            <h3 class="text-lg font-semibold">Facilité d'Achat</h3>
+
+                        </div>
+                    </div>
+
+                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
+                        <div class="feature space-y-3">
+                            <div class="icon">
+                                <img src="{% static 'images/support.svg' %}" alt="Support 24/7" class="w-1/3 h-auto">
+                            </div>
+                            <h3 class="text-lg font-semibold">Support 24/7</h3>
+
+                        </div>
+                    </div>
+
+                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
+                        <div class="feature space-y-3">
+                            <div class="icon">
+                                <img src="{% static 'images/return.svg' %}" alt="Retours Sans Tracas" class="w-1/3 h-auto">
+                            </div>
+                            <h3 class="text-lg font-semibold">Retours Sans Tracas</h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-72 w-full lg:w-1/2 px-4">
+                <div class=" img-wrap">
+                    <img src="{% static 'images/filet.png' %}" alt="Pourquoi Choisir Nous" class="w-full h-auto rounded">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Fin Section Pourquoi Choisir Nous -->
+
+
+
+<!-- Début Section Produits Populaires -->
+<div class="popular-product py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap -mx-4">
+
+            <div class="w-full md:w-1/2 lg:w-1/3 mb-4 lg:mb-0 px-4">
+                <div class="product-item-sm flex space-x-4">
+                    <div class="thumbnail flex-shrink-0">
+                        <img src="{% static 'images/chaise.png' %}" alt="Chaise Nordique" class="w-24 h-24 object-cover rounded">
+                    </div>
+                    <div class="pt-3">
+                        <h3 class="text-lg font-semibold">Chaise de Qualite en filet</h3>
+                        <p class="text-sm mb-2"></p>
+                        <p><a href="#" class="text-blue-600 hover:underline">En savoir plus</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 lg:w-1/3 mb-4 lg:mb-0 px-4">
+                <div class="product-item-sm flex space-x-4">
+                    <div class="thumbnail flex-shrink-0">
+                        <img src="{% static 'images/boure.png' %}" alt="Chaise Kruzo Aero" class="w-24 h-24 object-cover rounded">
+                    </div>
+                    <div class="pt-3">
+                        <h3 class="text-lg font-semibold">Table en filet pour vos salon</h3>
+                        <p class="text-sm mb-2"></p>
+                        <p><a href="#" class="text-blue-600 hover:underline">En savoir plus</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 lg:w-1/3 mb-4 lg:mb-0 px-4">
+                <div class="product-item-sm flex space-x-4">
+                    <div class="thumbnail flex-shrink-0">
+                        <img src="{% static 'images/balance1.png' %}" alt="Chaise Ergonomique" class="w-24 h-24 object-cover rounded">
+                    </div>
+                    <div class="pt-3">
+                        <h3 class="text-lg font-semibold">Balancoire en filet</h3>
+                        <p class="text-sm mb-2"></p>
+                        <p><a href="#" class="text-blue-600 hover:underline">En savoir plus</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Fin Section Produits Populaires -->
+
+
+<!-- Début Section Footer -->
+<footer class="bg-gray-100 pt-12 pb-8">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- Logo & Description -->
+      <div>
+        <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="w-16 mb-3">
+        <p class="text-sm text-gray-700">L’art de créer la richesse !</p>
+        <p class="mt-2 text-sm text-gray-600">
+          Total D’Action Sur Le Site : <strong class="text-black">0</strong>
+        </p>
+      </div>
+
+      <!-- Liens utiles -->
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-3">Liens utiles</h4>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li><a href="{% url 'ecommerce:product_list' %}" class="hover:text-blue-600">Accueil</a></li>
+          <li><a href="{% url 'ecommerce:shop' %}" class="hover:text-blue-600">Boutique</a></li>
+          <li><a href="{% url 'ecommerce:about' %}" class="hover:text-blue-600">À propos de nous</a></li>
+          <li><a href="{% url 'ecommerce:services' %}" class="hover:text-blue-600">Services</a></li>
+          <li><a href="{% url 'ecommerce:blog' %}" class="hover:text-blue-600">Blog</a></li>
+          <li><a href="{% url 'ecommerce:contact' %}" class="hover:text-blue-600">Contactez-nous</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-3">Rester informé</h4>
+        <form>
+          <input type="email" placeholder="Votre email" class="w-full px-3 py-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Soumettre</button>
+        </form>
+        <p class="text-sm text-gray-600 mt-3">Téléphone : +228 90 12 17 64</p>
+        <p class="text-sm text-gray-600">Email : creationjames9@gmail.com</p>
+      </div>
+
+      <!-- Réseaux sociaux -->
+      <div>
+        <h4 class="font-semibold text-gray-800 mb-3">Suivez-nous</h4>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script>
+function afficherCategorie(slug, btn) {
+  const sections = document.querySelectorAll('.categorie-produit');
+  sections.forEach(section => section.classList.add('hidden'));
+
+  const target = document.getElementById('categorie-' + slug);
+  if (target) target.classList.remove('hidden');
+
+  const btnActive = document.getElementById('categorie-btn-active');
+  if (btnActive) {
+    btnActive.classList.remove('bg-orange-500', 'text-white');
+    btnActive.classList.add('bg-white', 'text-gray-700');
+    btnActive.removeAttribute('id');
+  }
+
+  btn.classList.add('bg-orange-500', 'text-white');
+  btn.classList.remove('bg-white', 'text-gray-700');
+  btn.id = 'categorie-btn-active';
+}
+
+function afficherCategorieMobile(slug, btn) {
+  const sections = document.querySelectorAll('.categorie-produit-mobile');
+  sections.forEach(section => section.classList.add('hidden'));
+
+  const target = document.getElementById('mobile-categorie-' + slug);
+  if (target) target.classList.remove('hidden');
+
+  const btnActive = document.getElementById('mobile-categorie-btn-active');
+  if (btnActive) {
+    btnActive.classList.remove('bg-orange-500', 'text-white');
+    btnActive.classList.add('bg-white', 'text-gray-700');
+    btnActive.removeAttribute('id');
+  }
+
+  btn.classList.add('bg-orange-500', 'text-white');
+  btn.classList.remove('bg-white', 'text-gray-700');
+  btn.id = 'mobile-categorie-btn-active';
+}
+</script>
+<script>
+function afficherarticleCategorie(slug, btn, mode) {
+  const sectionClass = mode === 'desktop' ? '.categorie-article-desktop' : '.categorie-article-mobile';
+  const targetId = mode === 'desktop' ? 'articlecategorie-desktop-' + slug : 'articlecategorie-mobile-' + slug;
+  const activeBtnId = mode === 'desktop' ? 'article-btn-active-desktop' : 'article-btn-active-mobile';
+
+  document.querySelectorAll(sectionClass).forEach(section => section.classList.add('hidden'));
+
+  const target = document.getElementById(targetId);
+  if (target) target.classList.remove('hidden');
+
+  const oldActiveBtn = document.getElementById(activeBtnId);
+  if (oldActiveBtn) {
+    oldActiveBtn.classList.remove('bg-orange-500', 'text-white');
+    oldActiveBtn.classList.add('bg-white', 'text-gray-700');
+    oldActiveBtn.removeAttribute('id');
+  }
+
+  btn.classList.add('bg-orange-500', 'text-white');
+  btn.classList.remove('bg-white', 'text-gray-700');
+  btn.id = activeBtnId;
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialisation catégories produits (desktop & mobile)
+  document.querySelector('aside ul button')?.click();
+  document.querySelector('.article-liste-desktop button')?.click();
+  document.querySelector('.article-liste-mobile button')?.click();
+
+  // Menu hamburger
+  const menuBtn = document.getElementById('menu-btn');
+  const menu = document.getElementById('menu');
+  if (menuBtn && menu) {
+    menuBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+});
+</script>
+
+
+
+</body>
+</html>

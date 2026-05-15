@@ -1,0 +1,116 @@
+{% load static %}
+{% block content %}
+<link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-papNT24S+..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Notification -->
+<!-- Notification + Bouton "Se connecter" sur la même ligne -->
+<div class="max-w-7xl mx-auto px-4 py-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+
+    <!-- Notification -->
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg w-full md:w-auto">
+      <p><i class="fa-solid fa-triangle-exclamation mr-2"></i>
+        Avant de faire un don ou devenir donateur, vous devez
+        <a href="{% url 'authentication:user_signup' %}" class="text-blue-600 underline font-semibold">créer un compte</a>
+        en utilisant le code de parrainage de votre parrain.
+      </p>
+    </div>
+
+    <!-- Bouton Se connecter -->
+    <a href="{% url 'authentication:user_login' %}" class="mt-4 md:mt-0 flex flex-col items-center text-blue-600 md:ml-6">
+      <i class="fas fa-user-circle text-4xl"></i>
+      <span class="text-sm">Se connecter</span>
+    </a>
+  </div>
+    <!-- Texte explicatif en dessous -->
+    <div class="mt-4 flex flex-col md:flex-row md:items-start md:justify-between gap-4 shadow-lg">
+    <p class="text-gray-900 text-base sm:text-lg leading-relaxed mb-4 px-2">
+
+             Un donateur est une personne ou une entité qui soutient volontairement des projets
+            à impact social en apportant une contribution financière ou matérielle.
+            Ce soutien est essentiel pour la réussite de nombreuses initiatives
+            locales et communautaires.
+        </p>
+
+        <!-- Lien Texte + Audio -->
+        <div class="mt-4 md:mt-0 md:ml-6 space-x-4">
+            <button onclick="document.getElementById('modalTexte').classList.remove('hidden')" class="text-blue-600 font-semibold hover:underline">Texte</button>
+            <button onclick="document.getElementById('modalAudio').classList.remove('hidden')" class="text-green-600 font-semibold hover:underline">Audio</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Donateurs -->
+<h1 class="text-2xl font-bold text-center text-gray-800 mt-10 mb-6">Liste des Donateurs</h1>
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for donateur in donateurs %}
+        <div class="bg-white shadow-md rounded-lg p-4 text-center hover:shadow-xl transition-all duration-300">
+            <img src="{% if donateur.profile_picture %}{{ donateur.profile_picture.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}" alt="Avatar" class="w-24 h-24 mx-auto rounded-full border-4 border-blue-500 object-cover mb-4">
+            <h3 class="text-lg font-bold text-blue-900">{{ donateur.username }}</h3>
+            <p class="text-sm text-gray-600">{{ donateur.email }}</p>
+            <p class="text-sm mt-2"><strong>{{ donateur.projets.count }}</strong> projets soutenus</p>
+            <h5 class="mt-3 font-semibold text-gray-700">Projets financés :</h5>
+            <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                {% for donation in donateur.dons.all %}
+                <li><a href="#project-{{ donation.projet.id }}" class="text-blue-600 hover:underline">Projet {{ donation.projet.id }} - {{ donation.projet.titre|truncatechars:25 }}</a></li>
+                {% empty %}
+                <li>Aucun don effectué.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Projets -->
+<h2 class="text-2xl font-bold text-center text-gray-800 mt-10 mb-6">Projets nécessitant des Donateurs</h2>
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for projet in projets %}
+        <div id="project-{{ projet.id }}" class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
+            <h4 class="text-xl font-semibold text-red-700 mb-1">{{ projet.titre }}</h4>
+            <div class="text-xs text-gray-500 mb-2">ID: {{ projet.id }}</div>
+            <p class="text-sm text-gray-700">{{ projet.description|truncatewords:20 }}</p>
+            <p class="text-sm mt-2"><strong>Objectif :</strong> {{ projet.montant_objectif }} CFA</p>
+            <p class="text-sm"><strong>Recolté :</strong> {{ projet.montant_recolte }} CFA</p>
+            <a href="{% url 'authentication:user_login' %}" class="inline-block bg-green-600 text-white text-sm px-4 py-2 mt-3 rounded hover:bg-green-700">
+                <i class="fa-solid fa-hand-holding-heart"></i> Faire un don
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modale Texte -->
+<div id="modalTexte" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-lg w-full relative">
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Qu’est-ce qu’un donateur ?</h3>
+        <p class="text-gray-700 leading-relaxed">
+            Un donateur est une personne qui choisit de soutenir une cause, un projet ou une organisation en fournissant des ressources financières, matérielles ou autres. Son geste, volontaire et généreux, contribue directement au développement et à la réussite des actions menées sur le terrain.
+        </p>
+        <button onclick="document.getElementById('modalTexte').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+    </div>
+</div>
+
+<!-- Modale Audio -->
+<div id="modalAudio" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full relative">
+        <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
+        <audio controls class="w-full">
+            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+        <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
+          <audio controls class="w-full">
+            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+        <button onclick="document.getElementById('modalAudio').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+    </div>
+</div>
+
+{% endblock %}

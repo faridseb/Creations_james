@@ -1,0 +1,64 @@
+{% extends 'use.html' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<style>
+    .notification {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+    .notification.read {
+        background-color: #e0e0e0;
+    }
+    .notification-header {
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between; /* Pour espacer le contenu */
+        align-items: center; /* Pour aligner verticalement les éléments */
+    }
+    .notification-body {
+        margin-top: 5px;
+    }
+</style>
+
+<div class="container">
+    <h1>Notifications</h1>
+    <div>
+    <form method="post">
+        {% csrf_token %}
+        <label>
+            Recevoir des notifications par e-mail:
+            <input type="checkbox" name="email_notifications" {% if user.email_notifications %}checked{% endif %}>
+        </label>
+        <button type="submit">Sauvegarder</button>
+    </form>
+    </div>
+    {% for notification in notifications %}
+        <div class="notification {% if notification.is_read %}read{% endif %} {% if notification.is_deleted %}deleted{% endif %}">
+            <div class="notification-header">
+                <div>
+                    Notification du {{ notification.created_at|date:"d M Y H:i" }}
+                </div>
+                <div>
+                    {% if not notification.is_read %}
+                        <a href="{% url 'authentication:mark_as_read' notification.id %}" class="btn btn-primary btn-sm">Marquer comme lu</a>
+                    {% endif %}
+                    {% if not notification.is_deleted %}
+                        <a href="{% url 'authentication:delete_notification' notification.id %}" class="btn btn-danger btn-sm ml-2">Supprimer</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="notification-body">
+                {{ notification.message }}
+            </div>
+        </div>
+    {% empty %}
+        <p>Aucune notification pour le moment.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

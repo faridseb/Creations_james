@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ projet.titre }}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>{{ projet.titre }}</h2>
+    <p>{{ projet.description }}</p>
+    <p><strong>Montant Objectif :</strong> {{ projet.montant_objectif }} CFA</p>
+    <p><strong>Montant Recolté :</strong> {{ projet.montant_recolte }} CFA</p>
+    <p><strong>Début :</strong> {{ projet.date_debut }}</p>
+    <p><strong>Fin :</strong> {{ projet.date_fin }}</p>
+    <a href="{% url 'make_donation' projet.id %}" class="btn btn-primary">Faire un Don</a>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

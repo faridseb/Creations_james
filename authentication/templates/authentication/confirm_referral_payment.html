@@ -1,0 +1,97 @@
+{% extends 'use.html' %}
+{% block content %}
+{% load static %}
+<link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+<div class="min-h-screen flex flex-col justify-center items-center bg-white px-4 py-10">
+    <h1 class="text-3xl md:text-4xl font-semibold text-center bg-yellow-400 text-gray-900 px-6 py-6 rounded-lg mb-14 shadow-md">
+        Paiement de votre Adhésion
+    </h1>
+
+    <div class="w-full max-w-4xl bg-white p-6 md:p-10 rounded-xl shadow-lg flex flex-col items-center">
+        <div class="flex flex-wrap justify-center gap-6 mb-8">
+            <!-- Wallet -->
+            <form id="wallet-form" action="{% url 'authentication:wallet_payment_success' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_method" value="wallet">
+                <button type="submit">
+                    <img src="{% static 'images/wallet.png' %}" alt="wallet" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- Tmoney -->
+            <form id="tmoney-form" action="{% url 'authentication:initiate_payment_cinet' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_channel" value="tmoney">
+                <button type="submit">
+                    <img src="{% static 'images/Tmoney.png' %}" alt="Tmoney" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- Flooz -->
+            <form id="flooz-form" action="{% url 'authentication:initiate_payment_cinet' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_channel" value="flooz">
+                <button type="submit">
+                    <img src="{% static 'images/Moov-money.png' %}" alt="Flooz" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- Visa -->
+            <form id="card-form" action="{% url 'authentication:confirm_referral_payment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_method" value="card">
+                <button type="submit">
+                    <img src="{% static 'images/visa.jpg' %}" alt="Visa" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- Mobile Money -->
+            <form id="mobile_money-form" action="{% url 'authentication:initiate_payment_cinet' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_channel" value="mobile_money">
+                <button type="submit">
+                    <img src="{% static 'images/mastercard-mobile.png' %}" alt="Mastercard" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- Google Pay -->
+            <form id="google-pay-form" action="{% url 'authentication:confirm_referral_payment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_method" value="google_pay">
+                <button type="submit">
+                    <img src="{% static 'images/google-pay.png' %}" alt="Google Pay" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- Apple Pay -->
+            <form id="apple-pay-form" action="{% url 'authentication:confirm_referral_payment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_method" value="apple_pay">
+                <button type="submit">
+                    <img src="{% static 'images/apple-pay.jpeg' %}" alt="Apple Pay" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+
+            <!-- PayPal -->
+            <form id="paypal-form" action="{% url 'authentication:confirm_referral_payment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="payment_method" value="paypal">
+                <button type="submit">
+                    <img src="{% static 'images/paypal_payment.jpg' %}" alt="PayPal" class="w-28 hover:scale-105 transition-transform">
+                </button>
+            </form>
+        </div>
+
+        <div class="text-center">
+            <p class="text-lg font-medium text-gray-700">Le montant de votre paiement est de <span class="font-bold text-green-600">5000 CFA</span></p>
+            <p class="text-sm text-gray-600 mt-2 mb-4">Veuillez sélectionner une option ci-dessus pour procéder au paiement.</p>
+            <a href="{% url 'authentication:user_dashboard' %}" class="text-blue-600 hover:underline text-sm">
+                Confirmer plus tard dans une semaine
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts nécessaires (Stripe, etc.) -->
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}

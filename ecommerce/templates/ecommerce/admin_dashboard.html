@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .nav-link-btn {
+            color: #ffffff;
+            width: 300px;
+            height: 120px;
+            margin: 20px;
+            transition: background-color 0.3s;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+        .nav-link-btn:hover {
+            cursor: pointer;
+        }
+        .products {
+            background-color: #007bff; /* Bleu */
+        }
+        .add-product {
+            background-color: #28a745; /* Vert */
+        }
+        .add-category {
+            background-color: #ffc107; /* Jaune */
+        }
+        .article-command-list {
+            background-color: #17a2b8; /* Cyan */
+        }
+        .add-article-command {
+            background-color: #fd7e14; /* Orange foncé */
+        }
+        .add-article-category {
+            background-color: #6f42c1; /* Violet */
+        }
+        .article-modifications {
+            background-color: #20c997; /* Vert clair */
+        }
+        .article-deletions {
+            background-color: #dc3545; /* Rouge */
+        }
+        .article-additions {
+            background-color: #e83e8c; /* Rose */
+        }
+        .home {
+            background-color: #6c757d; /* Gris */
+        }
+        .article-vendu {
+            background-color: #6610f2; /* Indigo */
+        }
+        .stats-page {
+            background-color: #28a745; /* Vert (différent nuance) */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Tableau de bord de l'administrateur</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn products">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:admin_product_list' %}">Liste des produits</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn add-product">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:admin_add_product' %}">Ajouter un produit</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn add-category">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:admin_add_category' %}">Ajouter une catégorie</a>
+                </button>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn article-command-list">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:admin_article_list' %}">Liste des articles à commander</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn add-article-command">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:admin_add_article' %}">Ajouter un article sur commande</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn add-article-category">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:admin_add_article_category' %}">Ajouter une catégorie pour commande</a>
+                </button>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn article-modifications">
+                    <a class="nav-link text-white" href="#">Modifications d'articles</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn article-deletions">
+                    <a class="nav-link text-white" href="#">Suppressions d'articles</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn article-additions">
+                    <a class="nav-link text-white" href="#">Articles ajoutés</a>
+                </button>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn home">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:product_list' %}">Accueil Ecommerce</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn article-vendu">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:sale_page' %}">Liste des articles vendus</a>
+                </button>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <button class="nav-link-btn stats-page">
+                    <a class="nav-link text-white" href="{% url 'ecommerce:stats_page' %}">Page des statistiques</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

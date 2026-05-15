@@ -1,0 +1,65 @@
+<!-- message_recu_comite.html -->
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">📩 Messages Reçus</h2>
+
+    {% if messages %}
+        <div class="row">
+            {% for message in messages %}
+                <div class="col-md-8 offset-md-2 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-secondary"><strong>Sujet :</strong> {{ message.subject }}</h5>
+                            <p class="mb-1"><strong>Expéditeur :</strong> {{ message.sender.username }}</p>
+                            <p class="mb-1"><strong>Contenu :</strong> {{ message.body }}</p>
+                            {% if message.response %}
+                                <p class="mb-1 text-success"><strong>Réponse du Président :</strong> {{ message.response }}</p>
+                            {% endif %}
+                            <p class="text-muted small mt-3"><strong>Date :</strong> {{ message.timestamp }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center text-muted mt-5">
+            <p>Aucun message reçu.</p>
+        </div>
+    {% endif %}
+
+     <h2 class="mb-4 text-center text-primary mt-4">📩 Messages Rejeter</h2>
+
+    {% if message %}
+    <div class="row">
+        {% for message in message %}
+            <div class="col-md-8 offset-md-2 mb-4">
+                <div class="card shadow-sm border-0 {% if message.status == 'rejeté' %}grisé{% endif %}">
+                    <div class="card-body">
+                        <h5 class="card-title text-secondary"><strong>Sujet :</strong> {{ message.subject }}</h5>
+                        <p class="mb-1"><strong>Expéditeur :</strong> {{ message.sender.username }}</p>
+                        <p class="mb-1"><strong>Contenu :</strong> {{ message.body }}</p>
+
+                        {% if message.response %}
+                            <p class="mb-1 text-success"><strong>Réponse du Président :</strong> {{ message.response }}</p>
+                        {% endif %}
+
+                        {% if message.status == 'rejeté' and message.rejet_motif %}
+                            <p class="mb-1 text-danger"><strong>Motif du rejet :</strong> {{ message.rejet_motif }}</p>
+                        {% endif %}
+
+                        <p class="text-muted small mt-3"><strong>Date :</strong> {{ message.timestamp }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center text-muted mt-5">
+        <p>Aucun message reçu.</p>
+    </div>
+{% endif %}
+
+</div>
+{% endblock %}

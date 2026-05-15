@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Tableau de bord utilisateur</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+   <style>
+    /* Mode clair par défaut */
+body.light-mode {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Mode sombre */
+body.dark-mode {
+    background-color: #121212;
+    color: #f4f4f4;
+}
+
+/* Bouton de basculement */
+.toggle-mode-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.toggle-mode-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Masquer la sidebar sur petit écran */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #343a40;
+    color: #ffffff;
+    overflow-y: auto;
+    padding-top: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000; /* Ensure sidebar is above other content */
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+}
+
+/* Afficher le menu hamburger sur mobile */
+.hamburger {
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1100; /* Ensure hamburger is above sidebar */
+}
+
+/* Afficher le hamburger sur petit écran */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Style pour la sidebar */
+.sidebar .nav-link {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #495057;
+    text-decoration: none;
+}
+
+.sidebar .nav-header {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 10px 15px;
+    color: #bbbbbb;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.header {
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px;
+    text-align: center;
+}
+
+.content {
+    background-color: #ffffff;
+    padding: 20px;
+}
+.sidebar .nav-link.active {
+    background-color: #007bff; /* Couleur de fond pour indiquer le lien actif */
+    color: #fff;
+}
+
+
+/* Styles pour les petits écrans */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .header {
+        padding: 10px;
+        font-size: 1.2em;
+    }
+
+    .content {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        margin-left: 0;
+        padding: 5px;
+    }
+
+    .header {
+        padding: 5px;
+        font-size: 1em;
+    }
+
+    .content {
+        padding: 5px;
+    }
+}
+       /* Styles pour les petits écrans */
+@media (max-width: 768px) {
+    .header {
+        margin-top: 50px; /* Add space above the header */
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        margin-top: 50px; /* Add space above the header */
+    }
+}
+</style>
+</head>
+<body class="light-mode">
+<button class="toggle-mode-btn" id="toggle-mode-btn">🌞 Mode sombre</button>
+<i class="fas fa-bars hamburger" id="hamburger"></i>
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="nav-header">
+        <i class="fas fa-home"></i> Navigation
+    </div>
+    <a href="{% url 'authentication:user_dashboard' %}" class="nav-link">
+        <i class="fas fa-tachometer-alt"></i> Tableau de bord
+    </a>
+    <a href="{% url 'authentication:view_profile' %}" class="nav-link">
+        <i class="fas fa-user"></i> Voir le profil
+    </a>
+    <a href="{% url 'authentication:edit_profile' %}" class="nav-link">
+        <i class="fas fa-user-edit"></i> Modifier le profil
+    </a>
+    <a href="{% url 'authentication:register_referral' %}" class="nav-link">
+        <i class="fas fa-user-plus"></i> Inscrire un filleul
+    </a>
+    <a href="{% url 'authentication:view_referrals' %}" class="nav-link">
+        <i class="fas fa-network-wired"></i> Voir les filleuls
+    </a>
+    <a href="{% url 'authentication:view_wallet' %}" class="nav-link">
+        <i class="fas fa-wallet"></i> Voir le portefeuille
+    </a>
+    <a href="{% url 'authentication:projet_don' %}" class="nav-link">
+       <i class="fa-solid fa-sack-dollar"></i> Projet Necessitant des Dons
+    </a>
+    <a href="{% url 'authentication:referral_statistics' %}" class="nav-link">
+        <i class="fas fa-chart-bar"></i> Statistiques de parrainage
+    </a>
+    <a href="{% url 'authentication:rewards' %}" class="nav-link">
+        <i class="fas fa-gift"></i> Récompenses
+    </a>
+    <a href="{% url 'authentication:referral_codes' %}" class="nav-link">
+        <i class="fas fa-key"></i> Codes de parrainage
+    </a>
+    <a href="{% url 'authentication:trends_and_charts' %}" class="nav-link">
+        <i class="fas fa-chart-line"></i> Tendances et graphiques
+    </a>
+    <a href="{% url 'authentication:support' %}" class="nav-link">
+        <i class="fas fa-headset"></i> Support client
+    </a>
+    <a href="{% url 'authentication:settings' %}" class="nav-link">
+        <i class="fas fa-cogs"></i> Paramètres
+    </a>
+    <a href="{% url 'authentication:user_login' %}" class="nav-link">
+        <i class="fas fa-sign-out-alt"></i> Déconnexion
+    </a>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="header">
+        <h1>{% block header_title %}Tableau de bord utilisateur{% endblock %}</h1>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleModeBtn = document.getElementById('toggle-mode-btn');
+        const body = document.body;
+        const sidebar = document.getElementById('sidebar');
+        const hamburger = document.getElementById('hamburger');
+
+        // Vérification du mode actuel dans le stockage local
+        const currentMode = localStorage.getItem('theme') || 'light-mode';
+        body.className = currentMode;
+        toggleModeBtn.textContent = currentMode === 'dark-mode' ? '🌙 Mode clair' : '🌞 Mode sombre';
+
+        // Gestion du clic sur le bouton hamburger
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Gestion du clic sur le bouton de basculement du mode
+        toggleModeBtn.addEventListener('click', () => {
+            const isDarkMode = body.classList.contains('dark-mode');
+            const newMode = isDarkMode ? 'light-mode' : 'dark-mode';
+
+            body.className = newMode;
+            localStorage.setItem('theme', newMode);
+            toggleModeBtn.textContent = isDarkMode ? '🌞 Mode sombre' : '🌙 Mode clair';
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Récupérer tous les liens de navigation
+        const navLinks = document.querySelectorAll(".sidebar .nav-link");
+
+        // Récupérer l'URL actuelle
+        const currentUrl = window.location.href;
+
+        navLinks.forEach(link => {
+            if (link.href === currentUrl) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

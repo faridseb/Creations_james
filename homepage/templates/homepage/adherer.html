@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions des Comptes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .account-section {
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .account-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .account-description {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .btn-custom {
+            background-color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+            color: black;
+            font-size: 18px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        .marchand {
+            background-color: #007bff; /* Bleu */
+        }
+        .association {
+            background-color: #28a745; /* Vert */
+        }
+        .mlm {
+            background-color: #ffc107; /* Jaune */
+        }
+        .parti {
+            background-color: #dc3545; /* Rouge */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Couleur sombre semi-transparente */
+            z-index: 1;
+        }
+        /* Ajout d'une classe pour assurer que le texte soit blanc */
+        .text-white {
+            color: white !important; /* Texte blanc pur */
+        }
+           .signup-link {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #fff;
+        }
+        .signup-link a {
+            color: white; /* Couleur pour le lien d'inscription */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Conditions de Chaque Compte</h1>
+
+        <!-- Compte Marchand -->
+        <div class="account-section marchand">
+            <div class="account-title text-white">Compte Marchand</div>
+            <div class="account-description text-white">
+                <p>Conditions d'adhésion :</p>
+                <ul>
+                    <li>Acheter des produits et services pour obtenir des numéros marchands.</li>
+                    <li>Partager ces numéros avec d'autres pour gagner 3 % de commissions.</li>
+                    <li>Création de compte : 2000 FCFA.</li>
+                    <li>Les commissions sont versées sur le compte créé.</li>
+                    <li>Possibilité de création de compte même sans fonds initiaux.</li>
+                </ul>
+            </div>
+            <a href="#" class="btn btn-custom">Voir plus</a>
+
+        </div>
+
+        <!-- Compte Associations -->
+        <div class="account-section association">
+
+            <div class="account-title text-white">Compte Associations</div>
+            <div class="account-description text-white">
+                <p>Conditions d'adhésion :</p>
+                <ul>
+                    <li>Création d'une interface pour chaque association.</li>
+                    <li>Transparence et fluidité pour les membres.</li>
+                    <li>Cotisation de base : a partir de 500 FCFA par mois.</li>
+                    <li>Prêts disponibles en fonction des cotisations.</li>
+                </ul>
+            </div>
+           <a href="#" class="btn btn-custom">Voir plus</a>
+        </div>
+
+        <!-- Compte MLM -->
+        <div class="account-section mlm">
+
+            <div class="account-title text-white">Compte MLG</div>
+            <h3>C'est le deuxieme volet de notre Association pour
+                permettre au personnes lointainnes de faire leurs dons
+                pour accompagner les oeuvres sociales de l'association
+                et en retour avoir des recompenses selons leurs efforts
+                fait pour faire adherer d'autres personnes</h3>
+            <div class="account-description text-white">
+                <h4>Conditions d'adhésion :</h4>
+                <ul>
+                    <li>Formation et ressources disponibles (vidéos, audio,Powerpoint).</li>
+                    <li>Inscription ouverte pour tous.</li>
+
+                </ul>
+            </div>
+           <a href="#" class="btn btn-custom">Voir plus</a>
+        </div>
+
+        <!-- Compte Parti Politique -->
+        <div class="account-section parti">
+
+            <div class="account-title text-white">Compte PP</div>
+            <div class="account-description text-white">
+                <p>Conditions d'adhésion :</p>
+                <ul>
+                    <li>Inscription libre pour ceux qui adhèrent à notre vision.</li>
+                    <li>Paiement de 5000 FCFA pour l'adhésion.</li>
+                    <li>Lecture de la charte du parti et des règlements intérieurs.</li>
+                </ul>
+            </div>
+            <a href="#" class="btn btn-custom">Voir plus</a>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,854 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATION JAMES</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+<link rel="icon" type="image/jpg" href="{% static 'images/logo.jpg' %}">
+
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+/>
+<style>
+  .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 22px;
+            border-radius: 50px;
+            background: rgba(209, 209, 209, 0.18);
+            border: 1.5px solid rgba(255,255,255,.4);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s, transform .15s;
+            letter-spacing: .03em;
+        }
+
+    .cta-btne {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 22px;
+            border-radius: 50px;
+            background: rgba(255,255,255,.18);
+            border: 1.5px solid rgba(255,255,255,.4);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s, transform .15s;
+            letter-spacing: .03em;
+        }
+
+        .cta-btn:hover ,.cta-btne:hover {
+            background: rgba(255,255,255,.32);
+            transform: scale(1.04);
+            border : 1px solid black;
+        }
+
+        .cta-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --blue-deep: #1a2e7a;
+      --blue-main: #1e3a9f;
+      --blue-bright: #2350d4;
+      --blue-light: #3a6bff;
+      --blue-glow: #4d7fff;
+      --accent: #f0c040;
+      --white: #ffffff;
+      --text-muted: rgba(255,255,255,0.72);
+    }
+ 
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--blue-deep);
+    }
+ 
+    /* ── SECTION ── */
+    .comptes-section {
+      background: linear-gradient(135deg, #0d1f5c 0%, #1e3a9f 50%, #0d1f5c 100%);
+      padding: 60px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    /* subtle background pattern */
+    .comptes-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 85%, rgba(74,124,255,0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(74,124,255,0.15) 0%, transparent 40%);
+      pointer-events: none;
+    }
+ 
+    /* floating grid lines */
+    .comptes-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+ 
+    /* ── TITLE ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      z-index: 2;
+    }
+ 
+    .section-header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: var(--white);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+    }
+ 
+    .section-header h1::after {
+      content: '';
+      display: block;
+      margin: 10px auto 0;
+      width: 70px;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--blue-glow), var(--accent));
+    }
+ 
+    /* ── CAROUSEL WRAPPER ── */
+    .carousel-wrapper {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      z-index: 2;
+    }
+ 
+    .carousel-overflow {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+ 
+    .carousel-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+ 
+    /* ── SLIDE ── */
+    .slide {
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 48px 56px;
+      background: linear-gradient(135deg,
+        rgba(255,255,255,0.07) 0%,
+        rgba(255,255,255,0.03) 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    /* corner accent */
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(74,124,255,0.2), transparent 70%);
+      pointer-events: none;
+    }
+ 
+    .slide-badge { display: none; }
+ 
+    /* ── SLIDE CONTENT ── */
+    .slide-content {
+      flex: 1;
+      min-width: 0;
+    }
+ 
+    .slide-content h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1rem, 2.5vw, 1.45rem);
+      color: var(--white);
+      margin-bottom: 22px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+    }
+ 
+    .slide-content p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+ 
+    .slide-content ul {
+      list-style: none;
+      space-y: 8px;
+      margin-bottom: 28px;
+    }
+ 
+    .slide-content ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 9px;
+    }
+ 
+    .slide-content ul li::before {
+      content: '▸';
+      color: var(--accent);
+      font-size: 0.8rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+ 
+    .slide-content ul li:first-child {
+      font-weight: 700;
+      color: var(--white);
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .slide-content ul li:first-child::before { content: ''; display: none; }
+ 
+    /* CTA Link */
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: linear-gradient(90deg, var(--blue-light), var(--blue-glow));
+      padding: 10px 22px;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 18px rgba(74,124,255,0.35);
+    }
+ 
+    .cta-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(74,124,255,0.55);
+    }
+ 
+    .cta-link::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+ 
+    .cta-link:hover::after { transform: translateX(4px); }
+ 
+    /* ── IMAGE AREA ── */
+    .slide-image {
+      flex-shrink: 0;
+      width: 210px;
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .slide-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(74,124,255,0.15), transparent 70%);
+    }
+ 
+    .slide-image img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.4s ease;
+    }
+ 
+    .slide:hover .slide-image img {
+      transform: scale(1.07);
+    }
+ 
+    /* SVG fallback icons */
+    .icon-svg {
+      width: 130px;
+      height: 130px;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.4s ease;
+    }
+ 
+    .slide:hover .icon-svg { transform: scale(1.07); }
+ 
+    /* ── NAVIGATION ── */
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 28px;
+    }
+ 
+    .nav-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 26px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(4px);
+    }
+ 
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-1px);
+    }
+ 
+    /* dots */
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+    }
+ 
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+ 
+    .dot.active {
+      background: var(--accent);
+      width: 24px;
+      border-radius: 4px;
+    }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .slide { flex-direction: column; padding: 36px 28px; }
+      .slide-image { width: 150px; height: 150px; }
+      .icon-svg { width: 90px; height: 90px; }
+    }
+ 
+    /* entrance animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .comptes-section { animation: fadeUp 0.6s ease both; }
+</style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+    <!-- Header Section -->
+    <section class="relative">
+        <img src="static/images/art.jpg" alt="Bureau" class="w-full h-[400px] object-cover opacity-80">
+        <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 flex items-center justify-center">
+            <div class="text-center text-white px-4 max-w-xl">
+                <img src="static/images/logo.jpg" alt="Logo" class="mx-auto mb-4 w-24">
+                <h1 class="text-4xl font-bold">CREATION JAMES</h1>
+                <p class="italic text-xl mt-1 mb-4">L’art de créer la richesse !</p>
+                <p>La Structure Création James débat sur plusieurs thèmes dans le domaine social, économique, éducatif, artisanal, entrepreneurial, leadership et politique.</p>
+                <div class="mt-4">
+                    <input type="text" placeholder="Taper votre recherche ici" class="px-4 py-2 rounded-l-md">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formations -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center">
+            <img src="static/images/concept-de-technologie-d-innovation-et-de-cyberespace.jpg" alt="VR" class="w-full md:w-1/2 mb-4 md:mb-0">
+            <div class="md:ml-8">
+                <h2 class="text-2xl font-bold">NOS FORMATIONS ET INFORMATIONS </h2>
+                <p class="my-4">La Structure Création James débat sur plusieurs thèmes sociaux, éducatifs, économiques, etc.</p>
+                <a href="{% url 'homepage:formation' %}" class="text-black font-semibold cta-btn">Visiter catalogue →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boutique en ligne -->
+  <section class="py-12">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-bold">BOUTIQUE EN LIGNE</h2>
+      <a href="{% url 'ecommerce:product_list' %}" class="text-black cta-btn">Visiter boutique →</a>
+    </div>
+
+    <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Produit avec mini carrousel -->
+      <div class="bg-white shadow rounded p-4 text-center">
+        <div class="swiper produit-swiper mb-4">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="static/images/lit.png" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/lit2.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/lit3.jpg" class="w-full h-48 object-cover">
+            </div>
+          </div>
+        </div>
+        <p class="font-semibold mb-2">Révolution de la vue</p>
+        <p class="mb-2">15 000 FCFA</p>
+        <button class="text-blue-600 cta-btn">Ajouter au panier →</button>
+      </div>
+
+
+       <div class="bg-white shadow rounded p-4 text-center">
+        <div class="swiper produit-swiper mb-4">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="static/images/FACE-2.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/FACE-4.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/FACE-2.jpg" class="w-full h-48 object-cover">
+            </div>
+          </div>
+        </div>
+        <p class="font-semibold mb-2">Révolution de la vue</p>
+        <p class="mb-2">15 000 FCFA</p>
+        <button class="text-blue-600 cta-btn">Ajouter au panier →</button>
+      </div>
+
+      <div class="bg-white shadow rounded p-4 text-center">
+        <div class="swiper produit-swiper mb-4">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="static/images/images.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/VU-DESSUS.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/BO70.jpg" class="w-full h-48 object-cover">
+            </div>
+             <div class="swiper-slide">
+              <img src="static/images/BASKET.jpg" class="w-full h-48 object-cover">
+            </div>
+          </div>
+        </div>
+        <p class="font-semibold mb-2">Révolution de la vue</p>
+        <p class="mb-2">15 000 FCFA</p>
+        <button class="text-blue-600 cta-btn" >Ajouter au panier →</button>
+      </div>
+    </div>
+
+      <div class="block md:hidden">
+  <div class="swiper global-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="{% static 'images/lit.png' %}" class="w-full h-48 object-cover">
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/lit2.jpg' %}" class="w-full h-48 object-cover">
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/lit3.jpg' %}" class="w-full h-48 object-cover">
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/FACE-2.jpg' %}" class="w-full h-48 object-cover">
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/FACE-4.jpg' %}" class="w-full h-48 object-cover">
+      </div>
+      <div class="swiper-slide">
+              <img src="static/images/images.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/VU-DESSUS.jpg" class="w-full h-48 object-cover">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/BO70.jpg" class="w-full h-48 object-cover">
+            </div>
+             <div class="swiper-slide">
+              <img src="static/images/BASKET.jpg" class="w-full h-48 object-cover">
+            </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+
+
+
+    <!-- Compte Marchand -->
+<section class="comptes-section">
+  <div class="section-header">
+    <h1>Nos Différents Comptes</h1>
+  </div>
+ 
+  <div class="carousel-wrapper">
+    <div class="carousel-overflow">
+      <div class="carousel-track" id="carouselTrack">
+ 
+        <!-- SLIDE 1 — MARCHAND -->
+        <div class="slide">
+          <span class="slide-badge">01 / 04</span>
+          <div class="slide-content">
+            <h2>Compte Marchand</h2>
+            <ul>
+              <li>Conditions d'adhésion</li>
+              <li>Achetez des produits pour obtenir vos numéros marchands.</li>
+              <li>Gagnez 3 % de commissions en partageant.</li>
+              <li>Création de compte : <strong>2 000 FCFA</strong>.</li>
+              <li>Commissions versées directement sur votre compte.</li>
+              <li>Ouverture possible même sans fonds initiaux.</li>
+            </ul>
+            <a href="#" class="cta-link">Se connecter</a>
+          </div>
+          <div class="slide-image">
+            <!-- Shopping cart SVG -->
+            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18h10l14 44h42l8-30H28" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="42" cy="74" r="6" stroke="white" stroke-width="4"/>
+              <circle cx="68" cy="74" r="6" stroke="white" stroke-width="4"/>
+              <path d="M28 34h52" stroke="white" stroke-width="3" stroke-dasharray="5 4"/>
+            </svg>
+          </div>
+        </div>
+ 
+        <!-- SLIDE 2 — ASSOCIATION -->
+        <div class="slide">
+          <span class="slide-badge">02 / 04</span>
+          <div class="slide-content">
+            <h2>Compte Association</h2>
+            <ul>
+              <li>Conditions d'adhésion</li>
+              <li>Création d'une interface dédiée à votre association.</li>
+              <li>Transparence et fluidité totale pour tous les membres.</li>
+              <li>Cotisation de base : à partir de <strong>500 FCFA / mois</strong>.</li>
+              <li>Prêts disponibles selon le niveau des cotisations.</li>
+            </ul>
+            <a href="#" class="cta-link">Se connecter</a>
+          </div>
+          <div class="slide-image">
+            <!-- People/group SVG -->
+            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="28" r="12" stroke="white" stroke-width="4"/>
+              <path d="M26 76c0-13.3 10.7-24 24-24s24 10.7 24 24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="22" cy="38" r="8" stroke="white" stroke-width="3.5" opacity=".7"/>
+              <path d="M8 70c0-7.7 6.3-14 14-14" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
+              <circle cx="78" cy="38" r="8" stroke="white" stroke-width="3.5" opacity=".7"/>
+              <path d="M92 70c0-7.7-6.3-14-14-14" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
+            </svg>
+          </div>
+        </div>
+ 
+        <!-- SLIDE 3 — MLG -->
+        <div class="slide">
+          <span class="slide-badge">03 / 04</span>
+          <div class="slide-content">
+            <h2>Compte MLG</h2>
+            <p>Deuxième volet de notre association, permettant aux personnes éloignées de faire des dons pour soutenir nos œuvres sociales et recevoir des récompenses selon leurs efforts de recrutement.</p>
+            <ul>
+              <li>Conditions d'adhésion</li>
+              <li>Formations et ressources disponibles (vidéos, audio, PowerPoint).</li>
+              <li>Inscription ouverte à tous, sans restriction.</li>
+            </ul>
+            <a href="#" class="cta-link">Se connecter</a>
+          </div>
+          <div class="slide-image">
+            <!-- Network/research SVG -->
+            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="14" stroke="white" stroke-width="4"/>
+              <circle cx="18" cy="25" r="8" stroke="white" stroke-width="3.5"/>
+              <circle cx="82" cy="25" r="8" stroke="white" stroke-width="3.5"/>
+              <circle cx="18" cy="75" r="8" stroke="white" stroke-width="3.5"/>
+              <circle cx="82" cy="75" r="8" stroke="white" stroke-width="3.5"/>
+              <line x1="26" y1="29" x2="38" y2="42" stroke="white" stroke-width="2.5"/>
+              <line x1="74" y1="29" x2="62" y2="42" stroke="white" stroke-width="2.5"/>
+              <line x1="26" y1="71" x2="38" y2="58" stroke="white" stroke-width="2.5"/>
+              <line x1="74" y1="71" x2="62" y2="58" stroke="white" stroke-width="2.5"/>
+            </svg>
+          </div>
+        </div>
+ 
+        <!-- SLIDE 4 — PP -->
+        <div class="slide">
+          <span class="slide-badge">04 / 04</span>
+          <div class="slide-content">
+            <h2>Compte PP</h2>
+            <ul>
+              <li>Conditions d'adhésion</li>
+              <li>Inscription libre pour tous ceux qui adhèrent à notre vision.</li>
+              <li>Adhésion : <strong>5 000 FCFA</strong>.</li>
+              <li>Lecture obligatoire du PP et des règlements intérieurs.</li>
+            </ul>
+            <a href="#" class="cta-link">Se connecter</a>
+          </div>
+          <div class="slide-image">
+            <!-- Document/policy SVG -->
+            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="22" y="12" width="56" height="76" rx="6" stroke="white" stroke-width="4"/>
+              <line x1="34" y1="32" x2="66" y2="32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              <line x1="34" y1="46" x2="66" y2="46" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              <line x1="34" y1="60" x2="54" y2="60" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="66" cy="68" r="10" stroke="white" stroke-width="3"/>
+              <path d="M62 68l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+ 
+      </div><!-- /track -->
+    </div><!-- /overflow -->
+ 
+    <!-- Navigation -->
+    <div class="carousel-nav">
+      <button class="nav-btn" id="prevBtn">← Précédent</button>
+      <div class="nav-dots" id="navDots">
+        <button class="dot active" data-index="0"></button>
+        <button class="dot" data-index="1"></button>
+        <button class="dot" data-index="2"></button>
+        <button class="dot" data-index="3"></button>
+      </div>
+      <button class="nav-btn" id="nextBtn">Suivant →</button>
+    </div>
+  </div><!-- /wrapper -->
+</section>
+
+      <section class="py-12 bg-gray-200 mt-12">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Bloc 1 -->
+        <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+            <img src="static/images/community.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Oeuvre sociale">
+            <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 backdrop-blur-sm rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                <p class="font-semibold text-gray-800 text-lg mb-2">Nos œuvres sociales</p>
+                <a href="{% url 'homepage:oeuvreSocial' %}" class="text-blue-600 font-medium">Voir plus →</a>
+            </div>
+        </div>
+
+        <!-- Bloc 2 -->
+        <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+            <img src="static/images/accord.webp" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Récompenses">
+            <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 backdrop-blur-sm rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                <p class="font-semibold text-gray-800 text-lg mb-2">Récompenses et bénéficiaire</p>
+                <a href="#" class="text-blue-600 font-medium">Voir plus →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Catégories -->
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+                <img src="static/images/perlage.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
+
+                <!-- Overlay texte sur image -->
+                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Artisanat Et Entrepreneuriat</p>
+                    <a href="{% url 'homepage:artisEntrep' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                </div>
+            </div>
+           <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+                <img src="static/images/educ.png" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
+
+                <!-- Overlay texte sur image -->
+                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Education et Economie</p>
+                    <a href="{% url 'homepage:educationEconomie' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                </div>
+            </div>
+            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+                <img src="static/images/leder.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
+
+                <!-- Overlay texte sur image -->
+                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Leadership</p>
+                    <a href="{% url 'homepage:leadershipMF' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+<!-- Catégories -->
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+                <img src="static/images/talk.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
+
+                <!-- Overlay texte sur image -->
+                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Droit-Devoir-Politique</p>
+                    <a href="{% url 'homepage:politique' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                </div>
+            </div>
+             <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+                <img src="static/images/snate.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
+
+                <!-- Overlay texte sur image -->
+                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Santé et Environnement</p>
+                    <a href="{% url 'homepage:sante' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                </div>
+            </div>
+            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
+                <img src="static/images/work.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
+
+                <!-- Overlay texte sur image -->
+                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
+                    <p class="font-semibold text-gray-800 text-lg mb-2">Bibliographie Du Fondateur </p>
+                    <a href="{% url 'homepage:bibliographie' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10 mt-10">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <img src="static/images/logo.jpg" class="w-16 mb-2">
+                <p>L’art de créer la richesse !</p>
+                <p class="mt-2">Total D’Action Sur Le Site : <strong>0</strong></p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-2">LIENS UTILES</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="{% url 'homepage:home' %}">Accueil</a></li>
+                    <li><a href="#">Politique</a></li>
+                    <li><a href="#">Comptes</a></li>
+                    <li><a href="#">Leadership</a></li>
+                    <li><a href="#">Boutique en ligne</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-2">RESTER INFORMÉ</h4>
+                <form>
+                    <input type="email" placeholder="Email" class="px-3 py-2 rounded w-full mb-2">
+                    <button class="w-full bg-blue-600 py-2 rounded">Soumettre</button>
+                </form>
+                <p class="text-sm mt-2">Téléphone : +228 90 12 17 64</p>
+                <p class="text-sm">Email : creationjames9@gmail.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const carousel = document.querySelector('#carousel > div');
+    let currentIndex = 0;
+    const totalSlides = carousel.children.length;
+
+    function updateSlide() {
+        const offset = -100 * currentIndex;
+        carousel.style.transform = `translateX(${offset}%)`;
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlide();
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateSlide();
+    }
+</script>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+  // Initialiser les Swiper des grands écrans (chacun)
+  document.querySelectorAll('.produit-swiper').forEach((el) => {
+    new Swiper(el, {
+      loop: true,
+      autoplay: { delay: 3000 },
+    });
+  });
+
+  // Initialiser le Swiper mobile (global)
+  new Swiper('.global-swiper', {
+    loop: true,
+    autoplay: { delay: 2500 },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+
+  const track  = document.getElementById('carouselTrack');
+  const dots   = document.querySelectorAll('.dot');
+  let current  = 0;
+  const total  = 4;
+ 
+  function goTo(index) {
+    current = (index + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+ 
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.index)));
+ 
+  // auto-advance
+  setInterval(() => goTo(current + 1), 6000);
+</script>
+
+
+</body>
+</html>
+

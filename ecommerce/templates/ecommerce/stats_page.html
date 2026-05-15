@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistiques du Site</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Ajouter le lien vers Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .circle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center; /* Pour centrer le texte horizontalement */
+            flex-direction: column;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: gold;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px;
+            font-size: 24px;
+        }
+        .label {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<div class="container">
+    <h1 class="mt-5 mb-3">Statistiques du Site</h1>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="circle-container">
+                <div class="circle">{{ total_products }}</div>
+                <div class="label">Total Produits</div>
+            </div>
+        </div>
+          <div class="col-sm-2">
+            <div class="circle-container">
+                <div class="circle">{{ total_articles }}</div>
+                <div class="label">Total Articles</div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="circle-container">
+                <div class="circle">{{ total_additions }}</div>
+                <div class="label">Total Additions</div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="circle-container">
+                <div class="circle">{{ total_modifications }}</div>
+                <div class="label">Total Modifications</div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="circle-container">
+                <div class="circle">{{ total_deletions }}</div>
+                <div class="label">Total Deletions</div>
+            </div>
+        </div>
+        <!-- Ajout du bloc pour les utilisateurs actifs -->
+        <div class="col-sm-2">
+            <div class="circle-container">
+                <div class="circle">{{ total_users }}</div>
+                <div class="label">Utilisateurs Actifs</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Graphique du nombre total d'actions -->
+    <canvas id="actionCountsChart" width="400" height="400"></canvas>
+
+    <script>
+        // Récupérer les données transmises depuis la vue Django
+        var totalAdditions = {{ total_additions|safe }};
+        var totalModifications = {{ total_modifications|safe }};
+        var totalDeletions = {{ total_deletions|safe }};
+
+        // Créer le graphique du nombre total d'actions
+        var ctx = document.getElementById('actionCountsChart').getContext('2d');
+        var actionCountsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Ajouts', 'Modifications', 'Suppressions'],
+                datasets: [{
+                    label: 'Nombre total d\'actions',
+                    data: [totalAdditions, totalModifications, totalDeletions],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

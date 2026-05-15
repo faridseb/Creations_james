@@ -1,0 +1,73 @@
+{% extends 'use.html' %}
+
+{% block content %}
+<style>
+    * Ajustements pour les petits écrans */
+@media (max-width: 480px) {
+    /* Réduit la taille de la police pour les petits écrans */
+    .table th, .table td {
+        font-size: 12px; /* Ajuste la taille de la police */
+    }
+
+    /* Empêche le texte de déborder */
+    .alert-container {
+        font-size: 12px; /* Ajuste la taille des alertes */
+    }
+
+    h2 {
+        font-size: 18px; /* Réduit la taille du titre */
+    }
+}
+</style>
+<div class="container mt-5">
+    <h2 class="mb-4">Filleuls en attente de confirmation</h2>
+
+    <!-- Affichage des messages -->
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Vérification de la liste des parrainages en attente -->
+    {% if pending_referrals %}
+    <div class="table-responsive"> <!-- Ajout de la classe table-responsive -->
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Date d'inscription</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for referral in pending_referrals %}
+                {% if not referral.is_confirmed %}
+                    <tr>
+                        <td>{{ referral.referred.get_full_name }}</td>
+                        <td>{{ referral.referred.email }}</td>
+                        <td>{{ referral.date_joined|date:"d-m-Y" }}</td>
+                        <td>
+                            <form method="post" class="d-inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="referral_uuid" value="{{ referral.referred.referral_uuid }}">
+                                <button type="submit" class="btn btn-primary">Confirmer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    {% else %}
+        <!-- Message en cas d'absence de filleuls en attente -->
+        <div class="alert alert-info text-center mt-4">
+            Aucun filleul en attente de confirmation.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

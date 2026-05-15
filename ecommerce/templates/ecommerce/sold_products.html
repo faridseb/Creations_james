@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Vente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        form {
+            display: inline-block;
+        }
+        button {
+            cursor: pointer;
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            border: none;
+            margin-right: 10px;
+            border: 2px solid #3498db;
+        }
+        button.sold {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Page de Vente</h1>
+
+    <h2>Produits</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Catégorie</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.category.name }}</td>
+                <td><img src="{{ product.image_url }}" alt="{{ product.name }}"></td>
+                <td class="actions">
+                    {% if not product.is_sold %}
+                    <form action="{% url 'toggle_product_sold' product.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="sold">Vendu</button>
+                    </form>
+                    {% endif %}
+                    {% if not product.is_ordered %}
+                    <form action="{% url 'toggle_product_ordered' product.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Commandé</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

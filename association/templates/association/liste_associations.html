@@ -1,0 +1,19 @@
+{% extends 'assoc_base.html' %}
+
+{% block content %}
+<h2>Liste des associations</h2>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Adresse</th>
+    </tr>
+    {% for association in associations %}
+    <tr>
+        <td>{{ association.nom }}</td>
+        <td>{{ association.description }}</td>
+        <td>{{ association.adresse }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "use.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-success">
+        <div class="card-header bg-success text-white text-center">
+            <h4 class="mb-0">✅ Paiement Réussi</h4>
+        </div>
+        <div class="card-body">
+            <p class="text-success text-center">Merci ! Votre compte a été crédité avec succès.</p>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="text-muted">Montant</h6>
+                    <p><strong>{{ montant }} FCFA</strong></p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-muted">Moyen de paiement</h6>
+                    <p><strong>{{ moyen_paiement }}</strong></p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-muted">Date</h6>
+                    <p><strong>{{ date_paiement }}</strong></p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-muted">ID de Transaction</h6>
+                    <p><strong>{{ transaction_id }}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'authentication:user_dashboard' %}" class="btn btn-outline-success">Retour au tableau de bord</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

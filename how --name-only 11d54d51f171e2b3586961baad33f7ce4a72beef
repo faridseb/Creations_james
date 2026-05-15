@@ -1,0 +1,77 @@
+[33mcommit 11d54d51f171e2b3586961baad33f7ce4a72beef[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: username <ninababalima38@gmail.com>
+Date:   Wed Mar 12 10:23:12 2025 +0000
+
+    revue des pages de l'app authentication modification des prix de payment d'adhesion
+
+[33mcommit 8358e673c1dca08916d74ba2770c5e616ac7ef1a[m
+Author: username <ninababalima38@gmail.com>
+Date:   Tue Mar 4 19:19:43 2025 +0000
+
+    Modification sur le moyen de payment stripe l'envoie du lien d'inscription et la modification des template dans homepage authentication
+
+[33mcommit 84f6ba1b04631e7929f2cba3cd6ce47d19fdc050[m
+Author: username <ninababalima38@gmail.com>
+Date:   Mon Mar 3 22:39:19 2025 +0000
+
+    Sauvegarde des modifications en cours avant de changer de branche
+
+[33mcommit 825cd28fa91c88ee6f8e3f52a776daca34914413[m
+Author: username <ninababalima38@gmail.com>
+Date:   Mon Mar 3 22:31:41 2025 +0000
+
+    Sécurisation du projet : suppression de fichiers sensibles et ajout de .gitignore
+
+[33mcommit 8dfc9193e4883b3a5043ad8b105b6b2c5b9cd7b3[m
+Author: username <ninababalima38@gmail.com>
+Date:   Thu Feb 27 15:41:02 2025 +0000
+
+    reussite de l'inscription avec payment reussi
+
+[33mcommit 3c449804c1d4e535b56e083bbf3fa40e69f54ecf[m
+Author: username <ninababalima38@gmail.com>
+Date:   Fri Feb 21 19:42:19 2025 +0000
+
+    je suis au derniere modification j'ai integrer cinetpay comme autre moyen de payment
+
+[33mcommit abdc439e42802af1f65c8627dd9958b5a1834547[m
+Author: username <ninababalima38@gmail.com>
+Date:   Sun Feb 16 14:09:57 2025 +0000
+
+    on a ajouter l'envoie de message mais ce n'est pas encore terminer
+
+[33mcommit b9926987abc94397b9dc73efe39b82feb70a039f[m
+Author: username <ninababalima38@gmail.com>
+Date:   Fri Jan 24 16:27:37 2025 +0000
+
+    modification  et travail sur le moyen de paiement et ajout de moyen de paiement dans parti
+
+[33mcommit a68bceedc74349dc146066508f1aaffa2914daa4[m
+Author: username <ninababalima38@gmail.com>
+Date:   Wed Oct 30 17:21:10 2024 +0000
+
+    travail sur association
+
+[33mcommit 8b6fac8d363e75705982312f3ba03f9500efe0e0[m
+Author: username <ninababalima38@gmail.com>
+Date:   Thu Oct 24 17:29:39 2024 +0000
+
+    suite de reprise sur authentication en ajoutant le adminelte et black dashboard
+
+[33mcommit 207b5aa3a404161a8e889fff1b1cb4e1ea17a12b[m
+Author: username <ninababalima38@gmail.com>
+Date:   Sat Oct 19 11:34:40 2024 +0000
+
+    reprise du commit precedent et modification des chose maintenant ca semble bon
+
+[33mcommit c7a7e1c16615876a3e4691460802b67f2aaf8326[m
+Author: username <ninababalima38@gmail.com>
+Date:   Thu Aug 8 17:27:04 2024 +0000
+
+    mise a jour complete
+
+[33mcommit 39567933a8ccf9a0725dab54194a9fdfa319541a[m
+Author: username <ninababalima38@gmail.com>
+Date:   Wed Jun 26 16:46:12 2024 +0000
+
+    Premier commit : Ajout de mon projet initial

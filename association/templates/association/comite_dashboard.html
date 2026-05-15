@@ -1,0 +1,938 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Tableau de Bord - Comité</title>
+<style>
+    /* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* Empêche le body de bouger horizontalement */
+    padding: 25px; /* Ajoute un espace de 15px autour de tout le contenu */
+}
+
+formulaire {
+
+    padding: 25px; /* Ajoute un espace de 15px autour de tout le contenu */
+}
+
+header, footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+.container {
+    margin-top: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.form-inline .form-group {
+    flex: 1 1 200px;
+    min-width: 150px;
+}
+
+.btn {
+    margin-top: 1rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+}
+
+.form-control-sm {
+    width: 60px;
+}
+
+.formset-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+}
+
+.numero-container {
+    display: flex; /* Utilisation de flex pour aligner tous les éléments sur une ligne */
+    justify-content: flex-start; /* Aligne tous les numéros sur la même ligne */
+    gap: 22px; /* Espacement entre chaque numéro */
+    max-width: 1000px; /* Utilisation de toute la largeur disponible */
+    padding: 10px 0;
+    margin-left: 0px;
+}
+
+.numero-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.numero {
+    background-color: #023047;
+    padding: 15px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+    position: relative;
+}
+
+.numero:hover {
+    background-color: #007bff;
+    transform: scale(1.1);
+}
+
+.numero.active {
+    background-color: #28a745 !important;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.7);
+}
+
+.link-name {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+} /* Éviter le débordement dans les tables */
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Pour une meilleure expérience sur iOS */
+    }
+
+    /* Le tableau doit s'adapter à la taille de l'écran */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th, table td {
+        padding: 8px 12px;
+        text-align: left;
+    }
+
+    /* Header */
+    header {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        padding: 15px 0;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    /* Section formulaire d'inscription */
+    section h2 {
+        font-size: 1.25rem;
+        color: #BB0506;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    /* Formulaire responsive */
+    .form-inline {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-inline label {
+        flex: 1;
+        margin-bottom: 10px;
+    }
+
+    .form-inline input {
+        flex: 2;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    /* Responsive : assurer une bonne visibilité sur les petits écrans */
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 1.2rem;
+        }
+
+        .form-inline input, .form-inline label {
+            width: 100%;
+        }
+
+        .form-inline button {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .table th, .table td {
+            font-size: 0.9rem;
+            padding: 6px;
+        }
+         .numero-container {
+        flex-wrap: wrap; /* Permet de revenir à la ligne si nécessaire */
+        justify-content: space-around; /* Répartit les éléments sur toute la largeur */
+        gap: 15px; /* Réduit l'espace entre les éléments */
+    }
+
+    .numero-item {
+        flex: 1 1 23%; /* Chaque item prendra environ 1/4 de la ligne */
+        margin-bottom: 15px;
+    }
+
+    .numero {
+        font-size: 16px; /* Réduit la taille du texte */
+        width: 50px;
+        height: 50px;
+        padding: 12px;
+    }
+
+    .link-name {
+        font-size: 12px; /* Réduit la taille du texte des liens sous les numéros */
+    }
+    }
+
+    /* Pour les très petits écrans, s'assurer que tout reste visible */
+    @media (max-width: 480px) {
+        .table th, .table td {
+            font-size: 0.8rem;
+            padding: 4px;
+        }
+
+        .btn {
+            width: 100%;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-3">
+        <h1>Tableau de Bord - Comité</h1>
+    </header>
+
+    <div class="container mt-5">
+{% if messages %}
+<div class="alert alert-info">
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+    </div>
+   <div class="col-md-4">
+       <div class="numero-container">
+    <div class="numero-item">
+        <a href="{% url 'association:situation' %}" class="numero" data-name="Situation">1</a>
+        <span class="link-name">Situation</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:objectif6mois' %}" class="numero" data-name="Objectif 6 Mois">2</a>
+        <span class="link-name">Objectif 6 Mois</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:creer_association' %}" class="numero" data-name="Créer une association">3</a>
+        <span class="link-name">Créer une association</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:penalite_caisse' %}" class="numero" data-name="Pénalité Caisse">4</a>
+        <span class="link-name">Pénalité Caisse</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:penalite_pret' %}" class="numero" data-name="Pénalité Prêt">5</a>
+        <span class="link-name">Pénalité Prêt</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:gestion_remboursement' %}" class="numero" data-name="Gestion Remboursement">6</a>
+        <span class="link-name">Gestion Remboursement</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:loan_payments' %}" class="numero" data-name="Paiements Prêts">7</a>
+        <span class="link-name">Paiements Prêts</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:completed_loans' %}" class="numero" data-name="Prêts Complétés">8</a>
+        <span class="link-name">Prêts Complétés</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:inbox' %}" class="numero" data-name="Messagerie">9</a>
+        <span class="link-name">Messagerie</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:message_envoye' %}" class="numero" data-name="Messages Envoyés">10</a>
+        <span class="link-name">Messages Envoyés</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:comptabilite' %}" class="numero" data-name="Comptabilité">11</a>
+        <span class="link-name">Comptabilité</span>
+    </div>
+    <div class="numero-item">
+        <a href="{% url 'association:homepage_association' %}" class="numero" data-name="Se déconnecter">12</a>
+        <span class="link-name">Se déconnecter</span>
+    </div>
+</div>
+
+</div>
+
+        </div>
+<!-- Formulaire d'Inscription Multiple -->
+<section class="container mt-5" style="max-height: 80vh; overflow-y: auto;">
+    <h2 style="text-align: center; color: #BB0506; margin-top: 50px;">INSCRIPTION MULTIPLE</h2>
+
+    <!-- Formulaire pour choisir le nombre d'inscriptions -->
+    <form method="get" action="{% url 'association:comite_dashboard' %}" class="form-inline mb-4">
+        <label for="nombre_inscriptions" class="mr-2">Nombre d'inscriptions :</label>
+        <input type="number" id="nombre_inscriptions" name="nombre_inscriptions" value="{{ nombre_inscriptions }}" min="1" class="form-control mr-2">
+        <button type="submit" class="btn btn-primary">Générer les formulaires</button>
+    </form>
+
+    <!-- Formulaire d'inscription multiple généré dynamiquement -->
+    <form method="post" enctype="multipart/form-data" action="{% url 'association:comite_dashboard' %}">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <div class="formset-container">
+            {% for form in formset %}
+                <div class="form-inline">
+                    {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+
+                            <!-- Appliquer des styles spécifiques à la case de "sanction membre" -->
+                            {% if field.name == "sanction_membre" %}
+                                {{ field|add_class:"form-control-sm w-25" }}
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3 ml-auto d-block" name="submit" id="submit">Valider les inscriptions</button>
+    </form>
+</section>
+
+
+<section class="container mt-5">
+    <h3 style="text-align: center; color: #329E07; margin-top: 5Opx;">LISTE DES INSCRIT</h3>
+    <div class="table-container table table-bordered table-hover table-striped" style="max-height: 400px; max-width: 100%; overflow: auto;">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Identifiant</th>
+                    <th>Email</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Contact</th>
+                    <th>Date d'adhésion</th>
+                    <th>Photo</th>
+                    <th>Nom de l'Héritier</th>
+                    <th>Montant Adhésion</th>
+                    <th>Solde Cotisation Mensuelle</th>
+                    <th>Solde Pénalités Mensuelles</th>
+                    <th>Solde Part Sociale</th>
+                    <th>Solde Part Lucrative</th>
+                    <th>Cotisation Effectuée</th>
+                    <th>Pénalité Réglée</th>
+                    <th>Pénalité Retirer Caisse</th>
+                    <th>Total Pénalité Retard</th>
+                    <th>Total Pénalité Absence</th>
+                    <th>Total Sanctions</th>
+                    <th>Total Sanctions Membres</th>
+                    <th>Solde</th>
+                    <th>Nombre Total Filleuls</th>
+                    <th>Nombre Total Membres</th>
+                    <th>Objectif Général</th>
+                    <th>Objectif Personnel (6 mois)</th>
+                    <th>Date Limite Objectifs</th>
+                    <th>Dates Réunions</th>
+                    <th>Nombre Prêts Obtenus</th>
+                    <th>Montant Prêt Remboursé</th>
+                    <th>Reste à Payer</th>
+                    <th>Nombre Assistances Détresse Obtenues</th>
+                    <th>Nombre Assistances Détresse Restantes</th>
+                    <th>Montant à Obtenir</th>
+                    <th>Total Deductions Assistance</th>
+                    <th>Montant Net Virer</th>
+                    <th>Sanction Obtenue</th>
+                    <th>Total Sanctions</th>
+                    <th>Sanction Membre</th>
+                    <th>Montant Retenu Quitter Association</th>
+                    <th>Total Intérêts Association</th>
+                    <th>Total Dépenses</th>
+                    <th>Part Lucrative Totale</th>
+                    <th>Dividende Part</th>
+                    <th>Total Intérêts Membres</th>
+                    <th>Intérêt Division Intérêts Généraux</th>
+                    <th>Intérêt Part Lucrative</th>
+                    <th>Total Intérêts Individuels</th>
+                    <th>Nouveau Solde Part Sociale</th>
+                    <th>Nouveau Solde Part Lucrative</th>
+                    <th>Ancien Solde Part Sociale</th>
+                    <th>Ancien Solde Part Lucrative</th>
+                    <th>Total Soldes Sociaux</th>
+                    <th>Total Soldes Lucratifs</th>
+                    <th>Nombre Remise Zéro Assistance</th>
+                    <th>Nombre Demande Assistance Acceptée</th>
+                    <th>Numéros Membres Concernés Assistance</th>
+                    <th>Remise Zéro Validée Assistance</th>
+                    <th>Nombre Remise Zéro Prêt</th>
+                    <th>Nombre Demande Prêt Acceptée</th>
+                    <th>Numéros Membres Concernés Prêt</th>
+                    <th>Remise Zéro Validée Prêt</th>
+                    <th>Taux Intérêt 10%</th>
+                    <th>Total 10% Intérêts Membres</th>
+                    <th>Intérêt Part Lucrative Semestriel</th>
+                    <th>Montant Déduction Evénement</th>
+                    <th>Total Cotisations Sociales</th>
+                    <th>Solde Part Sociale</th>
+                    <th>Solde Part Lucrative</th>
+                    <th>Total Intérêts</th>
+                    <th>Total Dépenses</th>
+                    <th>Total Pénalités Membres</th>
+                    <th>Total Sanctions Membres</th>
+                    <th>Date Limite Objectifs</th>
+                    <th>Date Retrait</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inscrit in inscrits %}
+                    <tr>
+                        <td>{{ inscrit.identifiant }}</td>
+                        <td>{{ inscrit.email }}</td>
+                        <td>{{ inscrit.first_name }}</td>
+                        <td>{{ inscrit.last_name }}</td>
+                        <td>{{ inscrit.adresse }}</td>
+                        <td>{{ inscrit.contact }}</td>
+                        <td>{{ inscrit.date_joined }}</td>
+                        <td>
+                            {% if inscrit.photo_membre %}
+                                <img src="{{ inscrit.photo_membre.url }}" alt="Photo" width="50" height="50">
+                            {% else %}
+                                Pas de photo
+                            {% endif %}
+                        </td>
+                        <td>{{ inscrit.nom_heritier }}</td>
+                        <td>{{ inscrit.montant_adhesion }}</td>
+                        <td>{{ inscrit.solde_cotisation_mensuelle }}</td>
+                        <td>{{ inscrit.solde_penalites_mensuelles }}</td>
+                        <td>{{ inscrit.solde_part_sociale }}</td>
+                        <td>{{ inscrit.solde_part_lucrative }}</td>
+                        <td>{{ inscrit.cotisation_effectuee }}</td>
+                        <td>{{ inscrit.penalite_reglee }}</td>
+                        <td>{{ inscrit.penalite_retirer_caisse }}</td>
+                        <td>{{ inscrit.total_penalite_retard }}</td>
+                        <td>{{ inscrit.total_penalite_absence }}</td>
+                        <td>{{ inscrit.total_sanctions }}</td>
+                        <td>{{ inscrit.total_sanctions_membres }}</td>
+                        <td>{{ inscrit.solde }}</td>
+                        <td>{{ inscrit.nombre_total_filleuls }}</td>
+                        <td>{{ inscrit.nombre_total_membres }}</td>
+                        <td>{{ inscrit.objectif_general }}</td>
+                        <td>{{ inscrit.objectif_personnel_6_mois }}</td>
+                        <td>{{ inscrit.date_limite_objectifs }}</td>
+                        <td>{{ inscrit.dates_reunions }}</td>
+                        <td>{{ inscrit.nombre_prets_obtenus }}</td>
+                        <td>{{ inscrit.montant_pret_remboursement }}</td>
+                        <td>{{ inscrit.reste_a_payer }}</td>
+                        <td>{{ inscrit.nombre_assistances_detresse_obtenues }}</td>
+                        <td>{{ inscrit.nombre_assistances_detresse_restantes }}</td>
+                        <td>{{ inscrit.montant_a_obtenir }}</td>
+                        <td>{{ inscrit.total_deductions_assistance }}</td>
+                        <td>{{ inscrit.montant_net_virer }}</td>
+                        <td>{{ inscrit.sanction_obtenue }}</td>
+                        <td>{{ inscrit.total_sanctions }}</td>
+                        <td>{{ inscrit.sanction_membre }}</td>
+                        <td>{{ inscrit.montant_retiré_quitter_association }}</td>
+                        <td>{{ inscrit.total_interets_association }}</td>
+                        <td>{{ inscrit.total_depenses }}</td>
+                        <td>{{ inscrit.part_lucrative_totale }}</td>
+                        <td>{{ inscrit.dividende_part }}</td>
+                        <td>{{ inscrit.total_interets_membres }}</td>
+                        <td>{{ inscrit.interet_division_interets_generaux }}</td>
+                        <td>{{ inscrit.interet_part_lucrative }}</td>
+                        <td>{{ inscrit.total_interets_individuels }}</td>
+                        <td>{{ inscrit.nouveau_solde_part_sociale }}</td>
+                        <td>{{ inscrit.nouveau_solde_part_lucrative }}</td>
+                        <td>{{ inscrit.ancien_solde_part_sociale }}</td>
+                        <td>{{ inscrit.ancien_solde_part_lucrative }}</td>
+                        <td>{{ inscrit.total_soldes_sociaux }}</td>
+                        <td>{{ inscrit.total_soldes_lucratifs }}</td>
+                        <td>{{ inscrit.nombre_remise_zero_assistance }}</td>
+                        <td>{{ inscrit.nombre_demande_assistance_acceptee }}</td>
+                        <td>{{ inscrit.numeros_membres_concernes_assistance }}</td>
+                        <td>{{ inscrit.remise_zero_validee_assistance }}</td>
+                        <td>{{ inscrit.nombre_remise_zero_pret }}</td>
+                        <td>{{ inscrit.nombre_demande_pret_acceptee }}</td>
+                        <td>{{ inscrit.numeros_membres_concernes_pret }}</td>
+                        <td>{{ inscrit.remise_zero_validee_pret }}</td>
+                        <td>{{ inscrit.taux_interet_10 }}</td>
+                        <td>{{ inscrit.total_10_interets_membres }}</td>
+                        <td>{{ inscrit.interet_part_lucrative_semestriel }}</td>
+                        <td>{{ inscrit.montant_deduction_evenement }}</td>
+                        <td>{{ inscrit.total_cotisations_sociales }}</td>
+                        <td>{{ inscrit.solde_part_sociale }}</td>
+                        <td>{{ inscrit.solde_part_lucrative }}</td>
+                        <td>{{ inscrit.total_interets }}</td>
+                        <td>{{ inscrit.total_depenses }}</td>
+                        <td>{{ inscrit.total_penalites_membres }}</td>
+                        <td>{{ inscrit.total_sanctions_membres }}</td>
+                        <td>{{ inscrit.date_limite_objectifs }}</td>
+                        <td>{{ inscrit.date_retrait }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+    <br> <br> <br>
+    <h1 style="text-align: center; color: #D68101">VALIDATION DES COTISATION</h1>
+    <br> <br> <br>
+<form method="post" action="{% url 'association:comite_dashboard' %}">
+    {% csrf_token %}
+
+    <div class="row formulaire">
+         <form id="formulaire" method="POST" action="{% url 'association:comite_dashboard' %}" class="col-md-6 ml-5">
+    {% csrf_token %}
+        <!-- Section Formulaire -->
+        <div class="container-fluid">
+    <div class="row">
+        <!-- Première ligne avec 2 champs -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="text" name="date" id="date" class="form-control w-100" value="{{ today }}" readonly>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="recette_actuelle">Recette actuelle</label>
+                <input type="number" name="recette_actuelle" id="recette_actuelle" class="form-control w-100" value="{{ recette_actuelle }}">
+            </div>
+        </div>
+
+        <!-- Deuxième ligne avec 2 champs -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="total">Total</label>
+                <input type="number" id="total" name="total" class="form-control w-100" value="{{ total|default:0 }}" readonly>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="type_cotisation">Type de Cotisation</label>
+                <select name="type_cotisation" id="type_cotisation" class="form-control w-100" required>
+                    <option value="">Sélectionner</option>
+                    {% for cotisation in types_cotisation %}
+                    <option value="{{ cotisation }}" {% if selected_cotisation and selected_cotisation == cotisation %}selected{% endif %}>
+                        {{ cotisation }} CFA
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Troisième ligne avec 2 champs, un pour les membres et un pour le total à valider -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Sélectionner les Membres :</label>
+                <div class="d-flex">
+                    <div class="mr-4">
+                        <input type="radio" id="tous_membres" name="selection_membres" value="tous_membres">
+                        <label for="tous_membres">Tous les Membres</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="membres_sauf" name="selection_membres" value="membres_sauf">
+                        <label for="membres_sauf">Tous les Membres sauf...</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total à Valider et bouton "Valider" sur la même ligne -->
+        <div class="col-md-6">
+            <div class="form-group d-flex align-items-center">
+                <label for="calcul_total" class="mr-2">Total à Valider</label>
+                <input type="number" id="calcul_total" name="calcul_total" class="form-control w-75 mr-2" readonly>
+                <button type="submit" class="btn btn-primary" name="valider" id="valider">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Tableau des Membres -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Montant Adhésion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="user-checkbox" data-user-id="{{ user.id }}">
+                            </td>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.montant_adhesion }} CFA</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">Aucun utilisateur trouvé</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Section Calcul Total -->
+        </div>
+
+</form>
+        <!-- Section Numéros -->
+
+    </div>
+</form>
+
+
+<script>
+// Obtenir les éléments nécessaires
+const tousMembresRadio = document.getElementById('tous_membres');
+const membresSaufRadio = document.getElementById('membres_sauf');
+const checkboxes = document.querySelectorAll('.user-checkbox');
+const typeCotisationSelect = document.getElementById('type_cotisation');
+const calculTotalInput = document.getElementById('calcul_total');
+const totalInput = document.getElementById('total');
+const formulaire = document.getElementById('cotisation_form');
+const validerButton = document.getElementById('valider');
+
+let ancienneRecette = parseFloat(typeCotisationSelect.value) || 0;
+
+// Charger les options grisées depuis le stockage local
+document.addEventListener('DOMContentLoaded', function () {
+    const griserOptions = JSON.parse(localStorage.getItem('griserOptions')) || {};
+    const now = new Date();
+
+    // Déterminer la date du 1er jour du mois suivant
+    const nextMonthStart = new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime();
+
+    // Charger l'état du total
+    const lastResetTime = localStorage.getItem('lastResetTime');
+    const lastResetTimeInt = lastResetTime !== null ? parseInt(lastResetTime) : 0;
+
+    // Si la validation a eu lieu après le 1er du mois suivant, réinitialiser le total
+    if (now.getTime() > nextMonthStart) {
+        totalInput.value = (0).toFixed(2); // Réinitialiser le total à 0
+        localStorage.setItem('total', (0).toFixed(2));
+    } else {
+        const totalSauvegarde = localStorage.getItem('total');
+        if (totalSauvegarde) {
+            totalInput.value = parseFloat(totalSauvegarde).toFixed(2);
+        }
+    }
+
+    for (const [optionValue, timestamp] of Object.entries(griserOptions)) {
+        if (now - timestamp < nextMonthStart - now.getTime()) { // Jusqu'au 1er du mois suivant
+            griserLOption(optionValue);
+        } else {
+            // Si le temps est écoulé, supprimer l'option grisée
+            delete griserOptions[optionValue];
+        }
+    }
+
+    // Sauvegarder l'état mis à jour dans le stockage local
+    localStorage.setItem('griserOptions', JSON.stringify(griserOptions));
+});
+
+// Fonction pour gérer la sélection/désélection des cases à cocher
+function handleSelection(selectedOption) {
+    checkboxes.forEach(function (checkbox) {
+        if (selectedOption === 'tous_membres') {
+            checkbox.checked = true;
+            checkbox.disabled = false;
+        } else if (selectedOption === 'membres_sauf') {
+            checkbox.checked = true;
+            checkbox.disabled = false;
+        } else {
+            checkbox.checked = false;
+            checkbox.disabled = false;
+        }
+    });
+    calculerTotal();
+}
+
+// Fonction pour calculer `calcul_total`
+function calculerTotal() {
+    const typeCotisation = parseFloat(typeCotisationSelect.value) || 0;
+    let totalMembres = 0;
+
+    checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) {
+            totalMembres += 1;
+        }
+    });
+
+    const calcultotal = totalMembres * typeCotisation;
+    calculTotalInput.value = calcultotal.toFixed(2);
+}
+
+// Gestion des événements de changement
+tousMembresRadio.addEventListener('change', function () {
+    if (tousMembresRadio.checked) {
+        handleSelection('tous_membres');
+    }
+});
+
+membresSaufRadio.addEventListener('change', function () {
+    if (membresSaufRadio.checked) {
+        handleSelection('membres_sauf');
+    }
+});
+
+typeCotisationSelect.addEventListener('change', function () {
+    const nouvelleRecette = parseFloat(typeCotisationSelect.value) || 0;
+
+    if (nouvelleRecette !== ancienneRecette) {
+        totalInput.value = (0).toFixed(2); // Réinitialiser le total à 0
+        ancienneRecette = nouvelleRecette;
+    }
+
+    calculerTotal();
+});
+
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', calculerTotal);
+});
+
+// Fonction pour griser une option et stocker l'état
+function griserLOption(optionValue) {
+    const selectedOption = typeCotisationSelect.querySelector(`option[value="${optionValue}"]`);
+    if (selectedOption) {
+        selectedOption.disabled = true;
+        selectedOption.style.color = "gray";
+    }
+}
+
+// Désactiver l'option sélectionnée pendant 2 minutes après validation
+function desactiverOptionSelectionnee() {
+    const selectedOption = typeCotisationSelect.options[typeCotisationSelect.selectedIndex];
+    if (selectedOption && selectedOption.value !== "") {
+        const optionValue = selectedOption.value;
+
+        // Griser l'option sélectionnée
+        griserLOption(optionValue);
+
+        // Sauvegarder dans le stockage local
+        const griserOptions = JSON.parse(localStorage.getItem('griserOptions')) || {};
+        griserOptions[optionValue] = Date.now(); // Ajouter un timestamp
+        localStorage.setItem('griserOptions', JSON.stringify(griserOptions));
+
+        // Réactiver l'option après 2 minutes (120000 ms)
+        setTimeout(() => {
+            selectedOption.disabled = false;
+            selectedOption.style.color = ""; // Restaurer la couleur normale
+
+            // Mettre à jour le stockage local
+            const griserOptions = JSON.parse(localStorage.getItem('griserOptions')) || {};
+            delete griserOptions[optionValue];
+            localStorage.setItem('griserOptions', JSON.stringify(griserOptions));
+        }, 120000); // 2 minutes
+    }
+}
+
+// Gérer la soumission du formulaire
+validerButton.addEventListener('click', function () {
+    // Calculer le nouveau total
+    const calcultotal = parseFloat(calculTotalInput.value) || 0;
+    const totalActuel = parseFloat(totalInput.value) || 0;
+
+    const nouveauTotal = totalActuel + calcultotal;
+    totalInput.value = nouveauTotal.toFixed(2);
+
+    // Sauvegarder le nouveau total dans le stockage local
+    localStorage.setItem('total', nouveauTotal.toFixed(2));
+
+    // Enregistrer le moment de la réinitialisation
+    localStorage.setItem('lastResetTime', Date.now());
+
+    // Réinitialiser `calcul_total` à 0
+    calculTotalInput.value = (0).toFixed(2);
+
+    // Appeler la fonction pour griser l'option sélectionnée
+    desactiverOptionSelectionnee();
+
+    // Soumettre le formulaire
+    formulaire.submit();
+});
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeCotisationSelect = document.getElementById('type_cotisation');
+
+        // Restaurer la sélection du stockage local
+        const savedCotisation = localStorage.getItem('selected_cotisation');
+        if (savedCotisation) {
+            typeCotisationSelect.value = savedCotisation;
+        }
+
+        // Sauvegarder la sélection lors du changement
+        typeCotisationSelect.addEventListener('change', function() {
+            localStorage.setItem('selected_cotisation', typeCotisationSelect.value);
+        });
+
+        // Gérer le formulaire de filtrage via AJAX
+        document.getElementById('formulaire').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+
+            var formData = new FormData(this);
+
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var tableBody = document.getElementById('user-list');
+                tableBody.innerHTML = ''; // Vider la table
+
+                if (data.users.length > 0) {
+                    data.users.forEach(function(user) {
+                        var row = document.createElement('tr');
+                        row.innerHTML = `<td>${user.id}</td><td>${user.name}</td><td>${user.montant_adhesion} CFA</td>`;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="3">Aucun utilisateur trouvé</td></tr>';
+                }
+                // Restaurer la sélection de type de cotisation dans le formulaire
+                document.getElementById('type_cotisation').value = data.selected_cotisation;
+            })
+            .catch(error => console.log('Erreur:', error));
+        });
+    });
+</script>
+
+<script>
+    const recetteActuelleInput = document.getElementById('recette_actuelle');
+
+    function chargerRecetteActuelle() {
+        const savedRecette = localStorage.getItem('recette_actuelle');
+        if (savedRecette) {
+            recetteActuelleInput.value = savedRecette;
+        }
+    }
+
+    function sauvegarderRecetteActuelle() {
+        const recetteSaisie = recetteActuelleInput.value;
+        localStorage.setItem('recette_actuelle', recetteSaisie);
+    }
+
+    document.addEventListener('DOMContentLoaded', chargerRecetteActuelle);
+    recetteActuelleInput.addEventListener('input', sauvegarderRecetteActuelle);
+</script>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    // Vérifie si un bouton actif est enregistré dans localStorage
+    const activeButtonUrl = localStorage.getItem("activeButton");
+
+    // Si un bouton actif est trouvé, applique la classe active
+    if (activeButtonUrl) {
+        const activeButton = document.querySelector(`.numero[href="${activeButtonUrl}"]`);
+        if (activeButton) {
+            activeButton.classList.add("active");
+        }
+    }
+
+    // Ajoute un événement de clic pour chaque bouton
+    document.querySelectorAll(".numero").forEach(button => {
+        button.addEventListener("click", function () {
+            // Lors du clic, on enregistre l'URL du bouton dans localStorage
+            localStorage.setItem("activeButton", this.href);
+        });
+    });
+});
+
+    </script>
+</body>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col">
+                <p>Adresse : AGOE CAMPS GP LOME-TOGO</p>
+            </div>
+            <div class="col">
+                <p>Téléphone : +228 90121764</p>
+            </div>
+            <div class="col">
+                <p>Email : creationjames@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

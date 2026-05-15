@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connexion - E-commerce</title>
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+        body {
+            background-color: #007bff; /* Couleur de fond bleu */
+            color: white; /* Couleur du texte */
+            min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex; /* Utilisation de Flexbox pour centrer */
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            margin: 0; /* Supprime les marges par défaut */
+        }
+
+        .form-container {
+            background-color: #ffffff; /* Fond du formulaire en blanc */
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px; /* Largeur du conteneur augmentée */
+            width: 90%;
+            margin: auto;
+            color: black; /* Texte noir pour contenu dans le formulaire */
+        }
+        .form-container h2 {
+            color: #007bff; /* Couleur du titre */
+            margin-bottom: 20px; /* Espacement sous le titre */
+        }
+        .form-group label {
+            color: #007bff; /* Couleur des labels */
+            font-weight: bold; /* Gras pour les labels */
+        }
+        .form-group {
+            width: 100%; /* S'assurer que chaque champ utilise toute la largeur */
+        }
+        input {
+            width: 100%; /* Champs d'entrée à 100% de la largeur */
+            border: 1px solid #007bff; /* Bordure bleu pour les champs d'entrée */
+            border-radius: 5px; /* Coins arrondis pour les champs d'entrée */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre pour les champs d'entrée */
+            padding: 10px; /* Espacement interne pour les champs d'entrée */
+        }
+        input:focus {
+            border-color: #0056b3; /* Couleur de bordure au focus */
+            box-shadow: 0 0 5px rgba(0, 91, 204, 0.5); /* Ombre au focus */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Couleur du bouton */
+            border: none; /* Supprime la bordure */
+            margin-top: 1rem;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour le bouton */
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Couleur au survol du bouton */
+        }
+        a {
+            color: #007bff; /* Couleur du lien */
+        }
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .table-container {
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table-container h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            height: 100vh;
+        }
+
+        .table-container th,
+        .table-container td {
+            padding: 2px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .scrollable-table {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Nouvelle section texte et audio */
+        .text-audio-section {
+            margin-top: 20px;
+        }
+        .text-audio-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: black;
+        }
+        .text-audio-section audio {
+            width: 100%;
+            outline: none;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .table-container {
+                width: 250px;
+                height: 100%;
+                padding: 5px;
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Tableau des noms et prénoms -->
+        <div class="table-container" style="width: 250px;">
+            <h3>Utilisateurs (Nom & Prénom)</h3>
+            <input
+                type="text"
+                id="searchUsers"
+                placeholder="Rechercher un utilisateur..."
+                onkeyup="searchTable('userTable', this.value)"
+            />
+            <div class="scrollable-table">
+                <table id="userTable">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in utilisateurs %}
+                        <tr>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">Aucun utilisateur</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h2 class="text-center">Connexion au compte Marchand</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="id_email">Username(Pseudo)</label>
+                    {{ form.username }} <!-- Utilisation directe du champ -->
+                </div>
+                <div class="form-group">
+                    <label for="id_password">Mot de passe</label>
+                    {{ form.password }} <!-- Utilisation directe du champ -->
+                </div>
+                <input type="hidden" name="app_name" value="ecommerce" />
+                <button type="submit" class="btn btn-primary btn-block">
+                    Se connecter
+                </button>
+                {% if show_password_reset_link %}
+                <div class="text-center mt-3">
+                    <a href="{% url 'ecommerce:password_reset' %}">Mot de passe oublié ?</a>
+                </div>
+                {% endif %}
+            </form>
+            <p class="text-center">
+                Pas encore inscrit ?
+                <a href="{% url 'ecommerce:ecommerce_signup' %}">Inscrivez-vous ici</a>.
+            </p>
+
+            <!-- Section Texte et Audio -->
+            <div class="text-audio-section">
+                <p>
+                    Bienvenue sur la plateforme e-commerce ! Connectez-vous pour accéder à
+                    votre compte marchand et gérer vos produits et commandes.
+                </p>
+                <audio controls>
+                    <source src="{% static 'audio/welcome_message.mp3' %}" type="audio/mpeg" />
+                    Votre navigateur ne supporte pas la lecture audio.
+                </audio>
+            </div>
+        </div>
+
+        <div class="table-container" style="width: 250px;">
+            <h3>Pseudos des utilisateurs</h3>
+            <input
+                type="text"
+                id="searchPseudos"
+                placeholder="Rechercher un pseudo..."
+                onkeyup="searchTable('pseudoTable', this.value)"
+            />
+            <div class="scrollable-table">
+                <table id="pseudoTable">
+                    <thead>
+                        <tr>
+                            <th>Pseudo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in utilisateurs %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>Aucun utilisateur</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let scrolling = true; // Variable pour contrôler le défilement
+
+            // Fonction de défilement pour un tableau donné
+            function createScroller(scrollableTable) {
+                const originalContent = scrollableTable.innerHTML; // Contenu original
+                scrollableTable.innerHTML += originalContent; // Dupliquer le contenu pour le défilement
+
+                let scrollHeight = scrollableTable.scrollHeight / 2; // Nouvelle hauteur totale
+
+                function scrollTable() {
+                    if (scrolling) {
+                        if (scrollableTable.scrollTop >= scrollHeight) {
+                            scrollableTable.scrollTop = 0; // Réinitialiser à 0
+                        } else {
+                            scrollableTable.scrollTop += 1; // Défilement vers le bas
+                        }
+                    }
+                }
+
+                setInterval(scrollTable, 10); // Ajustez la vitesse de défilement
+            }
+
+            // Appliquez le défilement aux tableaux
+            const userTableContainers = document.querySelectorAll(".scrollable-table");
+            userTableContainers.forEach(function (container) {
+                createScroller(container);
+            });
+
+            // Fonction de recherche dynamique
+            function searchTable(tableId, searchText) {
+                let table = document.getElementById(tableId);
+                let rows = table.getElementsByTagName("tr");
+                let found = false; // Pour vérifier si une correspondance est trouvée
+
+                for (let i = 1; i < rows.length; i++) {
+                    let cells = rows[i].getElementsByTagName("td");
+
+                    // Réinitialiser la visibilité de la ligne
+                    rows[i].style.display = "none";
+
+                    // Vérifier chaque cellule pour une correspondance
+                    for (let j = 0; j < cells.length; j++) {
+                        if (
+                            cells[j] &&
+                            cells[j].innerText.toLowerCase().includes(searchText.toLowerCase())
+                        ) {
+                            found = true; // Une correspondance est trouvée
+                            break;
+                        }
+                    }
+
+                    // Afficher la ligne si une correspondance est trouvée
+                    if (found) {
+                        rows[i].style.display = "";
+                    }
+                    found = false; // Réinitialiser pour la prochaine ligne
+                }
+
+                // Mettre en pause le défilement si un texte est entré, reprendre s'il est vide
+                scrolling = searchText === "";
+            }
+
+            // Ajouter des écouteurs d'événements pour les barres de recherche
+            document
+                .getElementById("searchUsers")
+                .addEventListener("keyup", function () {
+                    searchTable("userTable", this.value);
+                });
+
+            document
+                .getElementById("searchPseudos")
+                .addEventListener("keyup", function () {
+                    searchTable("pseudoTable", this.value);
+                });
+        });
+    </script>
+</body>
+</html>

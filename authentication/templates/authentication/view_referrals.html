@@ -1,0 +1,155 @@
+{% extends 'use.html' %}
+{% load static %}
+{% block title %}Voir les Filleuls{% endblock %}
+
+{% block content %}
+<head>
+    <!-- Lien vers Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Autres liens CSS et ressources -->
+</head>
+
+<style>
+    /* 📌 Conteneur principal avec scroll horizontal */
+    .grid-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    /* 📌 Wrapper de tableau */
+    .table-wrapper {
+        border: 1px solid #ddd; /* Ajoute un bord autour du tableau */
+        border-radius: 8px;
+        overflow-x: auto; /* Activation du défilement horizontal */
+        max-width: 100%;
+    }
+
+    /* 📌 Ligne de la grille */
+    .grid-row {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap; /* Empêche les éléments de passer à la ligne */
+        gap: 5px;
+    }
+
+    /* 👤 Style des utilisateurs */
+    .user-container {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        transition: transform 0.2s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 🎭 Icône utilisateur */
+    .user-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    /* 📝 Texte */
+    .username {
+        font-size: 10px;
+    }
+
+    /* 📌 Couleurs de l'icône pour chaque stage */
+    .stage-1 .user-icon { color: blue; }
+    .stage-2 .user-icon { color: green; }
+    .stage-3 .user-icon { color: yellow; }
+    .stage-4 .user-icon { color: orange; }
+    .stage-5 .user-icon { color: red; }
+    .stage-6 .user-icon { color: purple; }
+    .stage-7 .user-icon { color: pink; }
+    .stage-8 .user-icon { color: brown; }
+    .stage-9 .user-icon { color: gray; }
+    .stage-10 .user-icon { color: black; }
+
+    /* 📱 Adaptation aux écrans moyens */
+    @media (max-width: 768px) {
+        .user-container {
+            width: 80px;
+            height: 80px;
+        }
+
+        .user-icon {
+            width: 45px;
+            height: 45px;
+            font-size: 16px;
+        }
+
+        .username {
+            font-size: 10px;
+        }
+    }
+
+    /* 📲 Adaptation aux petits écrans */
+    @media (max-width: 480px) {
+        .user-container {
+            width: 70px;
+            height: 70px;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .username {
+            font-size: 8px;
+        }
+
+        .table-wrapper {
+            margin-top: 10px;
+        }
+    }
+</style>
+
+<body>
+<div class="container grid-container">
+    <div class="table-wrapper">
+        {% for row in rows %}
+        <div class="grid-row">
+            {% for referral in row %}
+            <div class="user-container {% if referral %}
+                {% if referral.stage == 1 %} stage-1
+                {% elif referral.stage == 2 %} stage-2
+                {% elif referral.stage == 3 %} stage-3
+                {% elif referral.stage == 4 %} stage-4
+                {% elif referral.stage == 5 %} stage-5
+                {% elif referral.stage == 6 %} stage-6
+                {% elif referral.stage == 7 %} stage-7
+                {% elif referral.stage == 8 %} stage-8
+                {% elif referral.stage == 9 %} stage-9
+                {% elif referral.stage == 10 %} stage-10
+                {% else %} vide {% endif %}
+                {% else %} vide {% endif %}
+            ">
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                {% if referral %}
+                <p class="username">{{ referral.username }}</p>
+                {% else %}
+                <p class="username">Vide</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+{% endblock %}

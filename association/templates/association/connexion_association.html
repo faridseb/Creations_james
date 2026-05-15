@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connexion à l'Association</title>
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200 min-h-screen flex flex-col justify-between">
+
+  <main class="flex flex-col lg:flex-row items-start justify-center gap-6 p-4 flex-grow mt-28">
+
+    <!-- Tableau des noms et prénoms -->
+    <div class="bg-white p-4 rounded-lg shadow w-full max-w-xs h-[275px] overflow-hidden">
+      <h3 class="text-center text-lg font-semibold mb-2">Utilisateurs (Nom & Prénom)</h3>
+      <input type="text" id="searchUsers" placeholder="Rechercher un utilisateur..." class="w-full p-2 mb-2 border rounded" />
+      <div class="overflow-y-auto h-96 scrollable-table">
+        <table class="w-full text-sm" id="userTable">
+          <thead>
+            <tr>
+              <th class="text-left border-b py-1">Nom</th>
+              <th class="text-left border-b py-1">Prénom</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in utilisateurs %}
+              <tr>
+                <td class="py-1">{{ user.first_name }}</td>
+                <td class="py-1">{{ user.last_name }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="2">Aucun utilisateur</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Formulaire de connexion -->
+    <div class="bg-yellow-300 p-6 rounded-xl shadow w-full max-w-md mx-auto">
+      <h2 class="text-center text-xl font-bold mb-6">Connexion à l'association {{ association.nom }}</h2>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="flex items-center mb-4">
+  <label class="w-52">{{ field.label }}</label>
+  {{ field }}
+</div>
+
+        {% endfor %}
+        <input type="hidden" name="app_name" value="association" />
+        <button type="submit" class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition">Se connecter</button>
+      </form>
+      {% if messages %}
+        <div class="mt-4">
+          {% for message in messages %}
+            <div class="bg-red-100 text-red-700 p-2 rounded mb-2">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Tableau des pseudos -->
+    <div class="bg-white p-4 rounded-lg shadow w-full max-w-xs h-[275px] overflow-hidden">
+      <h3 class="text-center text-lg font-semibold mb-2">Pseudos des utilisateurs</h3>
+      <input type="text" id="searchPseudos" placeholder="Rechercher un pseudo..." class="w-full p-2 mb-2 border rounded" />
+      <div class="overflow-y-auto h-96 scrollable-table">
+        <table class="w-full text-sm" id="pseudoTable">
+          <thead>
+            <tr>
+              <th class="text-left border-b py-1">Nom Populaire</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in utilisateurs %}
+              <tr><td class="py-1">{{ user.nompop }}</td></tr>
+            {% empty %}
+              <tr><td>Aucun utilisateur</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center py-4">
+    <div class="container mx-auto">
+      <p>© 2024 - Tous droits réservés | CREATION JAMES</p>
+      <p>Total des actions pour l'association : <strong class="text-xl">{{ total_actions }}</strong></p>
+      <p class="mt-2">
+        <a href="#" class="text-white underline mr-4">Mentions légales</a>
+        <a href="#" class="text-white underline mr-4">Politique de confidentialité</a>
+        <a href="#" class="text-white underline">Contact</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let scrolling = true;
+      function createScroller(scrollableTable) {
+        const originalContent = scrollableTable.innerHTML;
+        scrollableTable.innerHTML += originalContent;
+        let scrollHeight = scrollableTable.scrollHeight / 2;
+        function scrollTable() {
+          if (scrolling) {
+            if (scrollableTable.scrollTop >= scrollHeight) {
+              scrollableTable.scrollTop = 0;
+            } else {
+              scrollableTable.scrollTop += 1;
+            }
+          }
+        }
+        setInterval(scrollTable, 10);
+      }
+
+      document.querySelectorAll('.scrollable-table').forEach(container => createScroller(container));
+
+      function searchTable(tableId, searchText) {
+        let table = document.getElementById(tableId);
+        let rows = table.getElementsByTagName('tr');
+        let found = false;
+        for (let i = 1; i < rows.length; i++) {
+          let cells = rows[i].getElementsByTagName('td');
+          rows[i].style.display = 'none';
+          for (let j = 0; j < cells.length; j++) {
+            if (cells[j] && cells[j].innerText.toLowerCase().includes(searchText.toLowerCase())) {
+              found = true;
+              break;
+            }
+          }
+          if (found) {
+            rows[i].style.display = '';
+          }
+          found = false;
+        }
+        scrolling = searchText === '';
+      }
+
+      document.getElementById('searchUsers').addEventListener('keyup', function() {
+        searchTable('userTable', this.value);
+      });
+
+      document.getElementById('searchPseudos').addEventListener('keyup', function() {
+        searchTable('pseudoTable', this.value);
+      });
+    });
+  </script>
+</body>
+</html>

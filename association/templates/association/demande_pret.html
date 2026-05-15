@@ -1,0 +1,195 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Demande de Prêt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #d0d3d4;
+        }
+        .letter {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #eafaf1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .letter p {
+            margin: 10px 0;
+            color: #333;
+        }
+        input, textarea, select {
+            border: none;
+            border-bottom: 1px dotted #000;
+            background: none;
+            width: auto;
+            display: inline;
+            padding: 2px;
+            font-family: inherit;
+            font-size: inherit;
+            color: #0495b9;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-bottom: 1px solid #000;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fafafa;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            color: #555;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div class="letter">
+            <p>Lomé, le <input type="date" name="date" required></p>
+            <p>À</p>
+            <p>Monsieur le Président</p>
+            <p>du CEG CON PRO</p>
+            <p><strong>Objet : Demande de Prêt</strong></p>
+            <p>Monsieur le Président,</p>
+            <p>Suite à un événement
+                <select name="evenement" required>
+                    <option value="Heureux">Heureux</option>
+                    <option value="Malheureux">Malheureux</option>
+                </select> que je vis,
+            </p>
+            <p>Suite au <textarea name="description" placeholder="Description de l'événement" required></textarea>,</p>
+            <p>Selon mon statut de membre, nos règlements intérieurs du club,</p>
+            <p>Je vous prie de m'accorder un prêt de
+                <select name="pourcentage_pret" id="pourcentage_pret" required>
+                    <option value="10">10%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                </select> de mon net lucratif dans le club,
+            </p>
+            <p>Une somme qui pourrait s'élever à <input type="number" id="montant_pret" name="montant_pret" placeholder="Montant en F CFA" required readonly> F CFA. Que je compte payer en
+                <input type="number" id="duree_remboursement" name="duree_remboursement" placeholder="Durée en Mois" required> Mois. Avec un intérêt de
+                <input type="number" id="interet" name="interet" placeholder="Intérêt en %" required>. Une totale de
+                <input type="number" id="total_remboursement" name="total_remboursement" placeholder="Total à rembourser" required readonly> F CFA.
+            </p>
+            <p>Veuillez agréer, Monsieur le Président, l'expression de mes salutations distinguées.</p>
+            <p>Signature :</p>
+            <p>Nom et Prénom du Membre : <input type="text" name="membre_nom" placeholder="{{ utilisateur.last_name|default:'Non renseigné' }} {{ utilisateur.first_name|default:'Non renseigné' }}" required ></p>
+
+            <div id="gris-section" class="hidden">
+                <p>Réponse du Président</p>
+                <p>Lu, approuvé et sera accordé selon votre désir au plus tard
+                Le <input type="date" name="date_accord" >……. Demande non accordée………</p>
+                <p>Lu, approuvé et sera accordé à <input type="number" name="nouveau_pourcentage" placeholder="Nouveau Pourcentage" >% et doit être remboursé en
+                    <input type="number" name="nouvelle_duree" placeholder="Nouvelle Durée"> Mois.</p>
+                <p>Êtes-vous d'accord avec la nouvelle décision du comité ? Oui… ou Non laissez tomber…… ENVOYÉ</p>
+                <p>Retiré le <input type="date" name="date_retrait" ></p>
+                <p>Nom et Prénom du Comptable : <input type="text" name="comptable_nom" ></p>
+                <p>Signature :                                Signature :</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Remboursement</th>
+                        <th>Reste à Payer</th>
+                    </tr>
+                </thead>
+                <tbody id="tableau_remboursement">
+                    <!-- Les lignes de remboursement seront ajoutées ici par JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const partLucrative = {{ part_lucrative }};
+            console.log('Part Lucrative:', partLucrative);  // Vérifier la valeur de part_lucrative
+
+            const pourcentagePretSelect = document.getElementById('pourcentage_pret');
+            const montantPretInput = document.getElementById('montant_pret');
+            const interetInput = document.getElementById('interet');
+            const dureeRemboursementInput = document.getElementById('duree_remboursement');
+            const totalRemboursementInput = document.getElementById('total_remboursement');
+            const tableauRemboursement = document.getElementById('tableau_remboursement');
+
+            function calculateMontant() {
+                const pourcentagePret = parseFloat(pourcentagePretSelect.value);
+                const interet = parseFloat(interetInput.value) || 0;
+                const dureeRemboursement = parseInt(dureeRemboursementInput.value) || 0;
+
+                console.log('Pourcentage Prêt:', pourcentagePret);  // Vérifier la valeur de pourcentage_pret
+                console.log('Intérêt:', interet);  // Vérifier la valeur de interet
+                console.log('Durée Remboursement:', dureeRemboursement);  // Vérifier la valeur de duree_remboursement
+
+                const montantPret = partLucrative * (pourcentagePret / 100);
+                const totalRemboursement = montantPret + (montantPret * (interet / 100));
+                const remboursementMensuel = totalRemboursement / dureeRemboursement;
+
+                console.log('Montant Prêt:', montantPret);  // Vérifier le calcul de montant_pret
+                console.log('Total Remboursement:', totalRemboursement);  // Vérifier le calcul de total_remboursement
+
+                montantPretInput.value = montantPret.toFixed(2);
+                totalRemboursementInput.value = totalRemboursement.toFixed(2);
+
+                tableauRemboursement.innerHTML = '';
+                let resteAPayer = totalRemboursement;
+                for (let mois = 1; mois <= dureeRemboursement; mois++) {
+                    resteAPayer -= remboursementMensuel;
+                    tableauRemboursement.innerHTML += `
+                        <tr>
+                            <td>${mois}</td>
+                            <td>${remboursementMensuel.toFixed(2)}</td>
+                            <td>${resteAPayer.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }
+            }
+
+            pourcentagePretSelect.addEventListener('change', calculateMontant);
+            interetInput.addEventListener('input', calculateMontant);
+            dureeRemboursementInput.addEventListener('input', calculateMontant);
+            calculateMontant();
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - E-commerce</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+        body {
+            background-color: #007bff; /* Couleur de fond bleu */
+            color: white; /* Couleur du texte */
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex; /* Utilisation de Flexbox pour centrer */
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            margin: 0; /* Supprime les marges par défaut */
+        }
+        .form-container {
+            max-width: 600px; /* Largeur du conteneur augmentée */
+            padding: 30px; /* Espacement interne augmenté */
+            background-color: #ffffff; /* Fond du formulaire en blanc */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre pour le conteneur */
+            width: 100%;
+        }
+        .form-container h2 {
+            color: #007bff; /* Couleur du titre */
+            margin-bottom: 20px; /* Espacement sous le titre */
+        }
+        .form-group label {
+            color: #007bff; /* Couleur des labels */
+            font-weight: bold; /* Gras pour les labels */
+        }
+        .form-group {
+            width: 100%; /* S'assurer que chaque champ utilise toute la largeur */
+        }
+        input {
+            width: 100%; /* Champs d'entrée à 100% de la largeur */
+            border: 1px solid #007bff; /* Bordure bleu pour les champs d'entrée */
+            border-radius: 5px; /* Coins arrondis pour les champs d'entrée */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre pour les champs d'entrée */
+            padding: 10px; /* Espacement interne pour les champs d'entrée */
+        }
+        input:focus {
+            border-color: #0056b3; /* Couleur de bordure au focus */
+            box-shadow: 0 0 5px rgba(0, 91, 204, 0.5); /* Ombre au focus */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Couleur du bouton */
+            border: none; /* Supprime la bordure */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour le bouton */
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Couleur au survol du bouton */
+        }
+        a {
+            color: #007bff; /* Couleur du lien */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 class="text-center">Inscription E-commerce</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }} <!-- Afficher le champ -->
+                    {% if field.errors %}
+                        <div class="text-danger">{{ field.errors|striptags }}</div> <!-- Afficher les erreurs -->
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+        </form>
+        <p class="text-center">Déjà inscrit ? <a href="{% url 'ecommerce:ecommerce_login' %}">Connectez-vous ici</a>.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comptabilité</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .H {
+            border-radius: 8px;
+            padding: 50px;
+            text-align: center;
+            color: black;
+            font-size: 70px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .statcard {
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .statcard-fixed {
+            height: 150px; /* Fixe la hauteur des cartes */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .statcard-primary { background-color: #007bff; }
+        .statcard-warning { background-color: #ffc107; color: #212529; }
+        .statcard-danger { background-color: #dc3545; }
+        .statcard-success { background-color: #28a745; }
+        .statcard-dark { background-color: #343a40; }
+        .statcard-info { background-color: #17a2b8; }
+        .statcard-alternative { background-color: #6c757d; } /* Couleur supplémentaire */
+
+        .statcard-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .statcard-desc {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+<h1 class="H">TABLE DE COMPTABILITE</h1>
+<div class="container mt-5">
+
+    <!-- Entrées -->
+    <h2>Nos Entrées</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="statcard statcard-primary statcard-fixed">
+                <h3 class="statcard-number">{{ total_adhesions }}</h3>
+                <span class="statcard-desc">Somme totale des adhésions</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="statcard statcard-warning statcard-fixed">
+                <h3 class="statcard-number">{{ total_penalites_caisse }}</h3>
+                <span class="statcard-desc">Pénalités retirées en réunion</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="statcard statcard-danger statcard-fixed">
+                <h3 class="statcard-number">{{ total_penalites_caisse }}</h3>
+                <span class="statcard-desc">Somme totale retenue</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Autres Entrées -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="statcard statcard-success statcard-fixed">
+                <h3 class="statcard-number">{{ total_sanctions }}</h3>
+                <span class="statcard-desc">Total des sanctions</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="statcard statcard-dark statcard-fixed">
+                <h3 class="statcard-number">{{ total_interet_pret }}</h3>
+                <span class="statcard-desc">Intérêts sur les prêts</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="statcard statcard-alternative statcard-fixed">
+                <h3 class="statcard-number">{{ total_dons }}</h3>
+                <span class="statcard-desc">Dons reçus</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dépenses -->
+    <h2 class="mt-5">Nos Dépenses</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="statcard statcard-danger statcard-fixed">
+                <h3 class="statcard-number">{{ total_remunerations }}</h3>
+                <span class="statcard-desc">Rémunérations du bureau</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="statcard statcard-warning statcard-fixed">
+                <h3 class="statcard-number">{{ total_investissements }}</h3>
+                <span class="statcard-desc">Investissements</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="statcard statcard-primary statcard-fixed">
+                <h3 class="statcard-number">{{ total_dons_offerts }}</h3>
+                <span class="statcard-desc">Dons offerts</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bilan -->
+    <h2 class="mt-5">Bilan des 6 derniers mois</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="statcard statcard-success statcard-fixed">
+                <h3 class="statcard-number">{{ bilan_total }}</h3>
+                <span class="statcard-desc">Bilan global</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

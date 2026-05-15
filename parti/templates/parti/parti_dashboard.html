@@ -1,0 +1,252 @@
+{% extends "parti.html" %}
+
+{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+.container {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin: auto;
+}
+
+.row {
+    margin: 0;
+}
+
+h5, h6, p {
+    text-align: center;
+}
+
+p.small {
+    font-size: 14px;
+}
+
+/* S'assurer que le texte et les éléments ne débordent pas sur mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 5px;
+    }
+
+    .col-md-12 {
+        padding: 10px;
+    }
+
+    .small {
+        font-size: 12px;
+    }
+
+    .border {
+        padding: 10px;
+    }
+
+    /* Ajustement des marges pour les spans */
+    .col-md-12 span {
+        display: block;
+        margin-left: 0 !important;
+        text-align: center;
+    }
+}
+
+/* Style général des tables */
+.table-container {
+    width: 100%; /* Prend toute la largeur disponible */
+    max-width: 100%;
+    overflow: hidden; /* Empêche le débordement horizontal */
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed; /* Force les colonnes à garder une largeur égale */
+    border-collapse: collapse;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.table, .table th, .table td {
+    border: 1px solid black;
+}
+
+.table th {
+    background-color: #f8f9fa; /* Gris clair pour l'en-tête */
+    color: #000; /* Texte noir */
+    padding: 10px;
+}
+
+.table td {
+    background-color: #ffffff; /* Fond blanc */
+    color: #000; /* Texte noir */
+    padding: 8px;
+    word-wrap: break-word; /* Coupe le texte long pour éviter le débordement */
+    overflow: hidden;
+}
+
+/* Mode responsive pour petits écrans */
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 12px;
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-container {
+        width: 100%;
+    }
+
+    .table th, .table td {
+        font-size: 12px;
+        padding: 5px;
+    }
+}
+
+</style>
+
+<div class="container mt-4">
+  <div class="row">
+      {% if partiuser %}
+    <p>Utilisateur: {{ partiuser }}</p>
+{% else %}
+    <p>Aucun utilisateur trouvé.</p>
+{% endif %}
+
+    <!-- Première section -->
+      <h5 class="text-center font-weight-bold small text-primary">PARTI CREATIONJAMES</h5>
+      <p class="small">
+        <strong>Siège social :</strong> Agoè Logopé, Camp G.P, Carrefour de l'Amour<br>
+        <strong>Ville :</strong> Lomé-Togo<br>
+        <strong>Contact :</strong> (+228) 99 51 30 61 / 99 40 08 19<br>
+        <strong>Email :</strong> creation_james@yahoo.fr
+      </p>
+      <hr style="border-color: #007bff;">
+      <h6 class="text-center small text-secondary">Carnet de membres</h6>
+      <p class="small" style="margin-left: 20px; text-align:center; font-size:50px;"><strong>N° : </strong>{{ partiuser.id|default:"Non renseigné" }}</p>
+     <p class="small">
+
+        <strong>Nombre de tous les membres :</strong> ………
+    </p>
+  </div>
+
+    <!-- Deuxième section -->
+    <div class="col-md-12 border p-4 mt-4" style="background-color: #e9ecef; border-radius: 10px;">
+      <p class="small">
+  <span style="margin-left: 200px;" ><strong>N° :</strong> {{ carnets.id|default:"Non renseigné" }}</span>
+  <span style="margin-left: 200px;"><strong>ADHESION :</strong> {{ partiuser.montant_adhesion|default:"Non renseigné" }}</span>
+  <span style="margin-left: 200px;"><strong>ANNEE :</strong> ……</span>
+</p>
+
+
+
+<!-- Affichage combiné des informations pour chaque année et carnet -->
+{% for infos_semestre in informations_par_annee_semestre %}
+    <h3>Année: {{ infos_semestre.annee }} - Semestre: {{ infos_semestre.semestre }}</h3>
+<!-- Tableau des objectifs -->
+    <table class="table table-bordered table-sm mt-3" style="">
+        <thead class="small" style="background-color: #007bff; color: #fff;">
+            <tr>
+                <th>Objectif des 6 Prochains mois</th>
+                <th>Montant (F CFA)</th>
+                <th>Date Limite</th>
+            </tr>
+        </thead>
+        <tbody class="small">
+            <!-- Assurer que chaque semestre n'a qu'une seule ligne pour les objectifs et les soldes -->
+            <tr>
+                <td>Général <span style="margin-left: 200px;"><strong>nbr mois :</strong> {{ infos_semestre.objectif_general|default:"Non renseigné" }}</span></td>
+                <td>{{ infos_semestre.solde_objectif_general|default:"Non renseigné" }}</td>
+                <td rowspan="2">Le {{ infos_semestre.date_limite_objectifs|default:"Non renseigné" }}</td>
+            </tr>
+            <tr>
+                <td>Personnel <span style="margin-left: 200px;"><strong>nbr mois :</strong>{{ infos_semestre.objectif_personnel_6_mois|default:"Non renseigné" }}</span></td>
+                <td>{{ infos_semestre.solde_objectif_personnel|default:"Non renseigné" }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table class="table table-bordered table-sm mt-3">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Cotisation</th>
+                <th>Pénalité</th>
+                <th>Sanction</th>
+                <th>Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Affichage des mois et des informations -->
+            {% for infos_mois in infos_semestre.mois_infos %}
+            <tr>
+
+                <td>{{ infos_mois.mois }}/{{ infos_semestre.annee }}</td>
+                <td>{{ infos_mois.cotisation }}</td>
+                <td>{{ infos_mois.penalite }}</td>
+                <td>{{ infos_mois.sanction }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+
+            <!-- Affichage des lignes de carnet actuelles -->
+            {% for carnet in carnets %}
+                {% if carnet.annee == infos_semestre.annee %}
+l
+                        {% if infos_semestre.semestre == 1 %}
+                            {% if ligne.date.month <= 6 %}
+                            <tr>
+                                <td>{{ ligne.date|default:"N/A" }}</td>
+                                <td>{{ ligne.cotisation|default:"N/A" }}</td>
+                                <td>{{ ligne.penalite|default:"N/A" }}</td>
+                                <td>{{ ligne.sanctions|default:"N/A" }}</td>
+                                <td>{{ ligne.signature|default:"N/A" }}</td>
+                            </tr>
+                            {% endif %}
+                        {% elif infos_semestre.semestre == 2 %}
+                            {% if ligne.date.month > 6 %}
+                            <tr>
+                                <td>{{ ligne.date|default:"N/A" }}</td>
+                                <td>{{ ligne.cotisation|default:"N/A" }}</td>
+                                <td>{{ ligne.penalite|default:"N/A" }}</td>
+                                <td>{{ ligne.sanctions|default:"N/A" }}</td>
+                                <td>{{ ligne.signature|default:"N/A" }}</td>
+                            </tr>
+                            {% endif %}
+                        {% endif %}
+
+
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        <tfoot class="small">
+        <tr>
+                <td>TOTAL</td>
+                <td>{{ infos_semestre.totaux.total_cotisation|default:"N/A" }}</td>
+                <td>{{ infos_semestre.totaux.total_penalite|default:"N/A" }}</td>
+                <td>{{ infos_semestre.totaux.total_sanction|default:"N/A" }}</td>
+
+            </tr>
+         <tr>
+                <td>TOTAL ASSOCIATION</td>
+                <td>Interet : {{ infos_semestre.totaux.interet|default:"N/A" }}</td>
+                <td>Depense : {{ infos_semestre.totaux.depense|default:"N/A" }}</td>
+                <td>Lucrative : {{ infos_semestre.totaux.lucative|default:"N/A" }}</td>
+              <td>Dividende : {{ infos_semestre.totaux.dividende|default:"N/A" }}</td>
+
+            </tr>
+        </tfoot>
+    </table>
+{% endfor %}
+
+
+      <!-- Vérification des comptes -->
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

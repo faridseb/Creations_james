@@ -1,0 +1,29 @@
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Réussi</title>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Paiement réussi !</h1>
+        <p>Merci pour votre achat. Votre paiement a été traité avec succès.</p>
+
+        <!-- Affichage des détails du paiement -->
+        <h2>Détails du paiement</h2>
+        <ul>
+            <li><strong>Mode de paiement :</strong> {{ payment_method }}</li>
+            <li><strong>Montant :</strong> {{ amount }}</li>
+            <li><strong>Devise :</strong> {{ currency }}</li>
+            <li><strong>ID de transaction :</strong> {{ transaction_id }}</li>
+        </ul>
+
+        <a href="{% url 'parti:login' %}" class="btn">Payement Valider Connectez Vous</a>
+    </div>
+</body>
+</html>
+{% endblock %}

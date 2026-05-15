@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription PartiUser</title>
+    <style>
+        body {
+            background-color: #dc3545; /* Couleur de fond rouge */
+            color: white; /* Couleur du texte */
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex; /* Utilisation de Flexbox pour centrer */
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            margin: 0; /* Supprime les marges par défaut */
+        }
+        .form-container {
+            max-width: 600px; /* Largeur maximale du conteneur */
+            padding: 30px; /* Espacement interne */
+            background-color: #ffffff; /* Fond du formulaire en blanc */
+            border-radius: 8px; /* Coins arrondis pour le conteneur */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre pour le conteneur */
+            width: 100%; /* S'assure que le conteneur utilise toute la largeur disponible */
+        }
+        .form-container h1 {
+            color: #dc3545; /* Couleur du titre */
+            margin-bottom: 20px; /* Espacement sous le titre */
+            text-align: center; /* Centre le titre */
+        }
+        .form-group label {
+            color: #007bff; /* Couleur des labels */
+            font-weight: bold; /* Gras pour les labels */
+            margin-bottom: 5px; /* Espacement sous les labels */
+        }
+        .form-group {
+            width: 100%; /* S'assurer que chaque champ utilise toute la largeur */
+            margin-bottom: 15px; /* Espacement entre les groupes de formulaire */
+        }
+        input {
+            width: 100%; /* Champs d'entrée à 100% de la largeur */
+            border: 1px solid #007bff; /* Bordure bleu pour les champs d'entrée */
+            border-radius: 5px; /* Coins arrondis pour les champs d'entrée */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre pour les champs d'entrée */
+            padding: 10px; /* Espacement interne pour les champs d'entrée */
+            font-size: 16px; /* Taille de police des champs d'entrée */
+        }
+        input:focus {
+            border-color: #0056b3; /* Couleur de bordure au focus */
+            box-shadow: 0 0 5px rgba(0, 91, 204, 0.5); /* Ombre au focus */
+            outline: none; /* Supprime le contour par défaut */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Couleur du bouton */
+            border: none; /* Supprime la bordure */
+            border-radius: 5px; /* Coins arrondis pour le bouton */
+            color: white; /* Couleur du texte du bouton */
+            padding: 10px 15px; /* Espacement interne du bouton */
+            font-size: 16px; /* Taille de police du bouton */
+            cursor: pointer; /* Curseur de main au survol */
+            transition: background-color 0.3s; /* Transition pour l'effet de survol */
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Couleur au survol du bouton */
+        }
+        .alert {
+            margin-top: 20px; /* Espacement au-dessus des messages d'erreur */
+            padding: 15px; /* Espacement interne pour les alertes */
+            border-radius: 5px; /* Coins arrondis pour les alertes */
+            background-color: #dc3545; /* Fond rouge pour les alertes */
+            color: white; /* Couleur du texte des alertes */
+            text-align: center; /* Centre le texte des alertes */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+         {% if error_message %}
+            <div class="alert">{{ error_message }}</div>
+        {% endif %}
+        <h1>Inscription pour PartiUser</h1>
+        <form method="POST" action="{% url 'parti:parti_signup' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirmer le mot de passe</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+        </form>
+
+       
+        <div class="mt-3 text-center">
+            <a href="{% url 'parti:login' %}" style="color: #007bff;">Se connecter</a>
+        </div>
+    </div>
+</body>
+</html>

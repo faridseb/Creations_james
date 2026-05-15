@@ -1,0 +1,72 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Réussi</title>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #28a745;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="receipt-container">
+        <h1>Paiement réussi !</h1>
+        <p>Merci pour votre achat. Votre paiement a été traité avec succès.</p>
+
+        <!-- Affichage des détails du paiement -->
+        <h2>Détails du paiement</h2>
+        <ul>
+            <li><strong>Mode de paiement :</strong> {{ payment_details.payment_method|default:"Non spécifié" }}</li>
+            <li><strong>Montant :</strong> {{ payment_details.amount|default:"0.00" }} {{ payment_details.currency|default:"USD" }}</li>
+            <li><strong>ID de transaction :</strong> {{ payment_details.transaction_id|default:"Non disponible" }}</li>
+            <li><strong>Email :</strong> {{ payment_details.email|default:"Non fourni" }}</li>
+            <li><strong>Statut :</strong> {{ payment_details.status|default:"Non disponible" }}</li>
+        </ul>
+    </div>
+<a href="{% url 'authentication:user_login' %}" class="btn">se connecter</a>
+<button class="btn btn-success" onclick="downloadPDF()">Télécharger en PDF</button>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    function downloadPDF() {
+        const element = document.getElementById('receipt-container');
+        const opt = {
+            margin:       0.5,
+            filename:     'recu_don.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+</html>
+{% endblock %}

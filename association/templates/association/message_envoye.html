@@ -1,0 +1,15 @@
+<h1>Messages Complétés</h1>
+<ul style="list-style: none; padding: 0;">
+    {% for message in messages %}
+        <li style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin-bottom: 16px; background-color: #fff;">
+            <p style="font-size: 18px; font-weight: bold; color: #333;"><strong>Sujet : </strong>{{ message.subject }}</p>
+            <p style="font-size: 16px; font-weight: normal; color: #555;"><strong>Contenu :</strong></p>
+            <div style="font-size: 14px; line-height: 1.6; color: #333; background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 8px;">
+                {{ message.body }}
+            </div>
+            <p style="font-size: 14px; color: #888; margin-top: 16px;"><strong>Date : </strong>{{ message.timestamp }}</p>
+        </li>
+    {% empty %}
+        <li style="font-size: 16px; color: #555;">Aucun message complété.</li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,147 @@
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container py-4">
+    <h1 class="text-center text-primary mb-5">Gestion des Prêts et Demandes d'Assistance</h1>
+
+    <!-- Section pour les demandes de prêt -->
+    <div class="mb-5">
+        <h2 class="text-center text-warning mb-4">Demandes de Prêt</h2>
+        {% if loan_messages %}
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-warning text-dark">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Prénom</th>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Contact</th>
+                        <th class="text-center">Message</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in loan_messages %}
+                        <tr>
+                            <td class="text-center">{{ message.sender.id }}</td>
+                            <td class="text-center">{{ message.sender.first_name }}</td>
+                            <td class="text-center">{{ message.sender.last_name }}</td>
+                            <td class="text-center">{{ message.sender.email }}</td>
+                            <td class="text-center">{{ message.sender.contact }}</td>
+                            <td class="text-center">{{ message.body }}</td>
+                            <td>
+                                <button class="btn btn-success" onclick="accorderPret({{ message.id }})">Accorder Prêt</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center text-muted">Aucune demande de prêt en attente.</p>
+        {% endif %}
+    </div>
+
+    <!-- Section pour les demandes d'assistance -->
+    <div>
+        <h2 class="text-center text-success mb-4">Demandes d'Assistance</h2>
+        {% if assistance_messages %}
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-success text-dark">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Prénom</th>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Contact</th>
+                        <th class="text-center">Message</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in assistance_messages %}
+                        <tr>
+                            <td class="text-center">{{ message.sender.id }}</td>
+                            <td class="text-center">{{ message.sender.first_name }}</td>
+                            <td class="text-center">{{ message.sender.last_name }}</td>
+                            <td class="text-center">{{ message.sender.email }}</td>
+                            <td class="text-center">{{ message.sender.contact }}</td>
+                            <td class="text-center">{{ message.body }}</td>
+                            <td>
+                                <button class="btn btn-primary" onclick="accorderAssistance({{ message.id }})">Accorder Assistance</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center text-muted">Aucune demande d'assistance en attente.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+/**
+ * Fonction pour accorder un prêt
+ * @param {number} messageId - ID du message de prêt
+ */
+function accorderPret(messageId) {
+    fetch("{% url 'association:gestion_remboursement' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            message_id: messageId,  // ID du message de prêt
+            action_type: "pret",  // Type d'action : prêt
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Prêt accordé avec succès.\nMontant : ${data.montant} FCFA`);
+            location.reload(); // Recharge la page pour actualiser les données
+        } else {
+            alert("Erreur : " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Erreur :", error);
+        alert("Une erreur est survenue. Veuillez réessayer.");
+    });
+}
+
+/**
+ * Fonction pour accorder une assistance
+ * @param {number} messageId - ID du message d'assistance
+ */
+function accorderAssistance(messageId) {
+    fetch("{% url 'association:gestion_remboursement' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            message_id: messageId,  // ID du message d'assistance
+            action_type: "assistance",  // Type d'action : assistance
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Assistance accordée avec succès.\nMontant : ${data.montant} FCFA`);
+            location.reload(); // Recharge la page pour actualiser les données
+        } else {
+            alert("Erreur : " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Erreur :", error);
+        alert("Une erreur est survenue. Veuillez réessayer.");
+    });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

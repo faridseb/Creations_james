@@ -1,0 +1,189 @@
+<!-- templates/assistance_request.html -->
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}Demande d'Assistance{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+    .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(1, 0, 1, 0.1);
+        width: 750px;
+        margin: auto;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="number"],
+    input[type="date"],
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="container">
+    <h1>Demande d'Assistance</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="event_description">Suite à l'événement :</label>
+            <textarea id="event_description" name="event_description" placeholder="Veuillez décrire l'événement..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="social_share">Nombre total de tes filleuls :</label>
+            <input type="number" id="social_share" name="social_share" placeholder="Exemple : 25" required>
+        </div>
+
+        <div class="form-group">
+            <label for="social_share_percentage">Parts Sociaux (%) :</label>
+            <input type="number" id="social_share_percentage" name="social_share_percentage" value="25" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="profit_share_percentage">Parts Lucratifs (%) :</label>
+            <input type="number" id="profit_share_percentage" name="profit_share_percentage" value="75" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="last_six_month_contribution">Ta cotisation des 6 derniers mois :</label>
+            <input type="number" id="last_six_month_contribution" name="last_six_month_contribution" placeholder="Exemple : 200000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="interest_for_you">Leur intérêt pour vous (%) :</label>
+            <input type="number" id="interest_for_you" name="interest_for_you" value="10" required>
+        </div>
+
+        <div class="form-group">
+            <label for="interest_on_action_division">Intérêt sur la division par action (%) :</label>
+            <input type="number" id="interest_on_action_division" name="interest_on_action_division" value="2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="penalties">Pénalités :</label>
+            <input type="number" id="penalties" name="penalties" placeholder="Exemple : 10000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sanctions">Sanctions :</label>
+            <input type="number" id="sanctions" name="sanctions" placeholder="Exemple : 5000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="current_balance">Nouveau Solde :</label>
+            <input type="number" id="current_balance" name="current_balance" placeholder="Exemple : 500000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="previous_balance">Ancien Solde :</label>
+            <input type="number" id="previous_balance" name="previous_balance" placeholder="Exemple : 400000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="total_amount">Les Totaux :</label>
+            <input type="number" id="total_amount" name="total_amount" placeholder="Exemple : 600000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="assistance_reason">En cas de détresse :</label>
+            <textarea id="assistance_reason" name="assistance_reason" placeholder="Veuillez expliquer la raison de la demande d'assistance..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="assistance_requested">Demande d'assistance (Montant) :</label>
+            <input type="number" id="assistance_requested" name="assistance_requested" placeholder="Exemple : 300000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="loan_received">Nombre de prêts obtenus :</label>
+            <input type="number" id="loan_received" name="loan_received" placeholder="Exemple : 2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="current_loan">Prêt en cours :</label>
+            <input type="number" id="current_loan" name="current_loan" placeholder="Exemple : 150000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="remaining_to_pay">Reste à payer :</label>
+            <input type="number" id="remaining_to_pay" name="remaining_to_pay" placeholder="Exemple : 100000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="debt_reset_assistance">Remise à 0 dû à une assistance :</label>
+            <input type="number" id="debt_reset_assistance" name="debt_reset_assistance" placeholder="Exemple : 0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="debt_reset_loan">Remise à 0 dû à un prêt :</label>
+            <input type="number" id="debt_reset_loan" name="debt_reset_loan" placeholder="Exemple : 0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="six_month_income">Total encaissé ces 6 derniers mois :</label>
+            <input type="number" id="six_month_income" name="six_month_income" placeholder="Exemple : 500000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="total_withdrawn">Total Retiré :</label>
+            <input type="number" id="total_withdrawn" name="total_withdrawn" placeholder="Exemple : 300000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="current_cash">Caisse actuelle :</label>
+            <input type="number" id="current_cash" name="current_cash" placeholder="Exemple : 200000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="accounts_correct">Vos comptes sont-ils exacts ?</label>
+            <select id="accounts_correct" name="accounts_correct">
+                <option value="oui">Oui</option>
+                <option value="non">Non</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="committee_observations">Observation et Signature du Comité :</label>
+            <textarea id="committee_observations" name="committee_observations" placeholder="Veuillez entrer l'observation ici..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Envoyer la Demande d'Assistance</button>
+    </form>
+</div>
+
+{% endblock %}

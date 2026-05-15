@@ -1,0 +1,378 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {% load static %}
+ 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <title>Creationjames</title>
+</head>
+
+<body class="bg-white text-gray-900">
+
+<!-- NAVIGATION -->
+<nav class="bg-gray-900 text-white">
+  <div class="container mx-auto flex items-center justify-between p-4">
+    <!-- Logo + Nom -->
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
+      <a href="index.html" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu Desktop -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class=" hover:text-gray-300 ">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="text-yellow-400 font-semibold">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div id="menu" class="hidden md:hidden bg-gray-800 px-4 py-4">
+    <a href="{% url 'ecommerce:product_list' %}" class="block py-2 hover:bg-gray-700">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block py-2 hover:bg-gray-700">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block py-2 hover:bg-gray-700">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}" class="block py-2 bg-yellow-400 text-gray-900 font-semibold ">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block py-2 hover:bg-gray-700">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block py-2 hover:bg-gray-700">Contactez-nous</a>
+    <div class="flex space-x-4 pt-2 border-t border-gray-700 mt-2">
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</nav>
+  <!-- Fin de l'en-tête/navigation -->
+
+  <!-- Début de la section Héros -->
+  <!-- Section Héros -->
+<div class="bg-gray-100 py-16">
+  <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between">
+    <!-- Texte -->
+    <div class="lg:w-5/12 mb-8 lg:mb-0">
+      <div>
+        <h1 class="text-4xl font-bold mb-4">Nos Services</h1>
+          <p class="mb-6 text-gray-700">Nous sommes une entreprise artisanal qui offre des produits locaux pour le desing de votre interieur comme exterieur. Nous Formons et aidons Egalement les jeunes qui veulent apprendre un travail mais Qui n'ont pas les moyens</p>
+          <div class="space-x-4">
+            <a href="{% url 'ecommerce:shop' %}" class="inline-block bg-gray-700 text-white py-2 px-5 rounded hover:bg-gray-800 transition">Achetez maintenant</a>
+            <a href="{% url 'ecommerce:shop' %}" class="inline-block border border-gray-700 text-gray-700 py-2 px-5 rounded hover:bg-gray-100 transition">Explorer</a>
+
+        </div>
+      </div>
+    </div>
+    <!-- Image -->
+    <div class="lg:w-4/12">
+      <div>
+        <img src="{% static 'images/table.png' %}" alt="Couch" class="w-full h-auto object-cover">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Section Pourquoi nous choisir -->
+<div class="bg-white py-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- Élément -->
+
+
+      <!-- Les 4 suivants (identiques pour la démo) -->
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="{% static 'images/truck.svg' %}" alt="Livraison" class="mx-auto w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Livraison rapide</h3>
+        <p class="text-gray-600">Nous livrons sur l'etendu du territoire avec des frais de livraison.</p>
+      </div>
+
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="{% static 'images/bag.svg' %}" alt="Achat facile" class="mx-auto w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Facile à acheter</h3>
+        <p class="text-gray-600">Facilite d'achat et de commande chez nous .</p>
+      </div>
+
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="{% static 'images/support.svg' %}" alt="Support" class="mx-auto w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Support 24/7</h3>
+        <p class="text-gray-600">Disponible 24h/24h par Appel Message ou Sur notre Site.</p>
+      </div>
+
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="{% static 'images/return.svg' %}" alt="Retour" class="mx-auto w-16 h-16">
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Retours sans tracas</h3>
+        <p class="text-gray-600">Satisfaction assurer faites nous confiance avec nous rapidite efficacité.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Fin de la section Pourquoi nous choisir -->
+
+		<!-- Début de la section Produit -->
+<!-- Section Produits -->
+<div class="bg-white py-16">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap -mx-4">
+
+      <!-- Colonne texte (1/4) -->
+      <div class="w-full lg:w-1/4 px-4 mb-10 lg:mb-0">
+        <h2 class="text-2xl font-bold mb-4">Fabriqué avec des matériaux excellents.</h2>
+        <p class="text-gray-600 mb-4">Nos produits sont conçus pour durer et a la main.</p>
+        <a href="ecommerce:shop" class="inline-block bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition">Explorer</a>
+      </div>
+
+      <!-- Produits (3 cartes côte à côte) -->
+      <div class="w-full lg:w-3/4 px-4">
+        <div class="flex flex-wrap -mx-4">
+
+          <!-- Produit 1 -->
+          <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-6">
+            <a href="#" class="block group bg-gray-50 p-4 rounded shadow h-full">
+              <div class="w-full h-[200px] flex items-center justify-center mb-4">
+                <img src="{% static 'images/balance.png' %}" alt="Chaise nordique" class="h-full object-contain" />
+              </div>
+              <h3 class="text-lg font-semibold mb-1 group-hover:text-gray-800 text-center">Balançoire</h3>
+              <strong class="text-yellow-500 block text-center mb-2">50000 frc</strong>
+              <div class="flex justify-center mt-auto">
+                <img src="{% static 'images/cross.svg' %}" alt="Ajouter" class="w-5 h-5">
+              </div>
+            </a>
+          </div>
+
+          <!-- Produit 2 -->
+          <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-6">
+            <a href="#" class="block group bg-gray-50 p-4 rounded shadow h-full">
+              <div class="w-full h-[200px] flex items-center justify-center mb-4">
+                <img src="{% static 'images/chaise.png' %}" alt="Chaise Kruzo Aero" class="h-full object-contain" />
+              </div>
+              <h3 class="text-lg font-semibold mb-1 group-hover:text-gray-800 text-center">Chaise</h3>
+              <strong class="text-yellow-500 block text-center mb-2">18000 frc</strong>
+              <div class="flex justify-center mt-auto">
+                <img src="{% static 'images/cross.svg' %}" alt="Ajouter" class="w-5 h-5">
+              </div>
+            </a>
+          </div>
+
+          <!-- Produit 3 -->
+          <div class="w-full sm:w-1/2 lg:w-1/3 px-4 mb-6">
+            <a href="#" class="block group bg-gray-50 p-4 rounded shadow h-full">
+              <div class="w-full h-[200px] flex items-center justify-center mb-4">
+                <img src="{% static 'images/table1.png' %}" alt="Chaise ergonomique" class="h-full object-contain" />
+              </div>
+              <h3 class="text-lg font-semibold mb-1 group-hover:text-gray-800 text-center">Table</h3>
+              <strong class="text-yellow-500 block text-center mb-2">45000 frc </strong>
+              <div class="flex justify-center mt-auto">
+                <img src="{% static 'images/cross.svg' %}" alt="Ajouter" class="w-5 h-5">
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Section Témoignages
+<div class="bg-gray-100 py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold">Témoignages</h2>
+    </div>
+
+
+    <div class="max-w-4xl mx-auto relative">
+
+      <div class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10">
+        <button class="text-gray-600 hover:text-gray-800 p-2">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+      </div>
+      <div class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10">
+        <button class="text-gray-600 hover:text-gray-800 p-2">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+
+
+      <div class="space-y-12">
+
+        <div class="text-center bg-white shadow-md rounded-lg p-8">
+          <blockquote class="mb-6 text-gray-700">
+            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit.&rdquo;</p>
+          </blockquote>
+          <div class="flex flex-col items-center">
+            <img src="{% static 'images/person-1.png' %}" alt="Maria Jones" class="w-16 h-16 rounded-full mb-2">
+            <h3 class="text-lg font-semibold">Maria Jones</h3>
+            <span class="text-sm text-gray-500">PDG, Co-fondatrice, XYZ Inc.</span>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+ -->
+		
+
+		<!-- Début de la section Pied de page -->
+<footer class="bg-gray-900 relative text-white">
+  <div class="container mx-auto px-4 relative  ">
+
+    <!-- Image décorative -->
+    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2">
+      <img src="{% static 'images/chaise.png' %}" alt="Sofa" class="w-32 sm:w-48 lg:w-64">
+    </div>
+
+    <!-- Formulaire d'abonnement -->
+    <div class="flex flex-wrap mb-12 pt-24 ">
+      <div class="w-full lg:w-2/3">
+        <div class="bg-white text-black p-6 rounded-lg shadow">
+          <h3 class="flex items-center text-xl font-semibold mb-4">
+            <img src="{% static 'images/envelope-outline.svg' %}" alt="Email" class="w-6 h-6 mr-2">
+            <span>S'abonner à la newsletter</span>
+          </h3>
+          <form action="#" class="flex flex-wrap gap-4">
+            <input type="text" placeholder="Entrez votre nom" class="w-full md:w-auto flex-1 px-4 py-2 border rounded focus:outline-none focus:ring">
+            <input type="email" placeholder="Entrez votre email" class="w-full md:w-auto flex-1 px-4 py-2 border rounded focus:outline-none focus:ring">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informations & liens -->
+    <div class="flex flex-wrap gap-10 mb-10">
+      <!-- Logo + description -->
+      <div class="w-full lg:w-1/3">
+        <div class="mb-4 text-2xl font-bold text-white">
+          <a href="#" class="footer-logo">Creationjames<span class="text-blue-600">.</span></a>
+        </div>
+         <p class="mb-6 text-gray-300">L'art de Créer la Richesse</p>
+
+        <ul class="flex space-x-4">
+          <li>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+              <span class="fab fa-facebook-f text-white"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+              <span class="fab fa-twitter text-white"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+              <span class="fab fa-instagram text-white"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+              <span class="fab fa-linkedin text-white"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-8">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">À propos</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Services</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Base de connaissances</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Chat en direct</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Emplois</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Notre équipe</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Leadership</a></li>
+              <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Politique de confidentialité</a></li>
+            </ul>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pied de page -->
+    <div class="border-t border-gray-300 pt-6 text-sm text-gray-500">
+      <div class="flex flex-wrap justify-between items-center">
+
+        <div class="w-full lg:w-1/2 text-center lg:text-right">
+          <ul class="inline-flex space-x-4">
+            <li><a href="#" class="hover:text-blue-600">Termes & Conditions</a></li>
+            <li><a href="#" class="hover:text-blue-600">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    if (menuBtn && menu) {
+      menuBtn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+  });
+</script>
+
+
+
+</body>
+
+</html>

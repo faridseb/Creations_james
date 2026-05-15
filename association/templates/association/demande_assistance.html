@@ -1,0 +1,166 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Demande d'Assistance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #d0d3d4;
+        }
+        .letter {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fcf3cf;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .letter p {
+            margin: 10px 0;
+            color: #333;
+        }
+        input, textarea, select {
+            border: none;
+            border-bottom: 1px dotted #000;
+            background: none;
+            width: auto;
+            display: inline;
+            padding: 2px;
+            font-family: inherit;
+            font-size: inherit;
+            color: #056c08;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-bottom: 1px solid #000;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div class="letter">
+            <p>Lomé, le <input type="date" name="date" required></p>
+            <p>À</p>
+            <p>Monsieur le Président</p>
+            <p>du CEG CON PRO</p>
+            <p><strong>Objet : Demande d’Assistance</strong></p>
+            <p>Monsieur le Président,</p>
+            <p>Suite à un événement
+                <select name="evenement" id="evenement" required>
+                    <option value="Heureux">Heureux</option>
+                    <option value="Malheureux">Malheureux</option>
+                </select> que je vis,
+            </p>
+            <p>Suite au <textarea name="description" placeholder="Description de l'événement" required></textarea>,</p>
+            <p>Et selon mon statut de membre et nos règlements intérieurs du club,</p>
+            <p>Je vous prie de m'accorder une assistance de
+                <select name="quota" id="quota" required>
+                    <option value="1X">1X</option>
+                    <option value="2X">2X</option>
+                    <option value="3X">3X</option>
+                </select> le quota de ma part sociale.
+            </p>
+            <p>L'apport de 50% de la mise de mon parrain, et 25% de tous mes filleuls du club,</p>
+            <p>Une somme qui pourrait s'élever à <input type="number" id="montant" name="montant" placeholder="Montant en F CFA" required readonly> F CFA – 10% de commission.</p>
+            <p>Exact…. Non réclamation…. (Justifier)</p>
+            <p>Veuillez agréer, Monsieur le Président, l'expression de mes salutations distinguées.</p>
+            <p>Signature :</p>
+            <p>Nom et Prénom du Membre : <input type="text" name="membre_nom" placeholder="  {{ utilisateur.last_name|default:'Non renseigné' }} {{ utilisateur.first_name|default:'Non renseigné' }}" required ></p>
+
+            <!-- Partie Réponse du Président cachée par défaut -->
+            <div id="gris-section" class="hidden">
+                <p>Réponse du Président</p>
+                <p>Lu et approuvé… Votre requête est accordée et sera virée au plus tard le <input type="date" name="date_accord" >……. Désolé Demande non accordée………   Signature</p>
+                <p>Retirée, le <input type="date" name="date_retrait" ></p>
+            </div>
+
+            <!-- Partie Nom et Prénom du Comptable cachée par défaut -->
+            <div id="degris-section" class="hidden">
+
+                <p>Nom et Prénom du Comptable : <input type="text" name="comptable_nom" ></p>
+                <p>Signature :                                Signature :</p>
+            </div>
+        </div>
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const partSociale = {{ part_sociale }};
+            const montantParrain = {{ montant_parrain }};
+            const montantFilleuls = {{ montant_filleuls }};
+            const quotaSelect = document.getElementById('quota');
+            const montantInput = document.getElementById('montant');
+            const evenementSelect = document.getElementById('evenement');
+            const grisSection = document.getElementById('gris-section');
+            const degrisSection = document.getElementById('degris-section');
+
+            function calculateMontant() {
+                const quota = quotaSelect.value.replace('X', '');
+                const montant = (partSociale * parseFloat(quota)) + montantParrain + montantFilleuls;
+                montantInput.value = montant.toFixed(2);
+            }
+
+            function updateQuotaOptions() {
+                const evenement = evenementSelect.value;
+                quotaSelect.innerHTML = '';
+                if (evenement === 'Heureux') {
+                    for (let i = 1; i <= 3; i++) {
+                        const option = document.createElement('option');
+                        option.value = `${i}X`;
+                        option.textContent = `${i}X`;
+                        quotaSelect.appendChild(option);
+                    }
+                } else if (evenement === 'Malheureux') {
+                    for (let i = 1; i <= 7; i++) {
+                        const option = document.createElement('option');
+                        option.value = `${i}X`;
+                        option.textContent = `${i}X`;
+                        quotaSelect.appendChild(option);
+                    }
+                }
+                calculateMontant();
+            }
+
+            function toggleSections() {
+                grisSection.classList.toggle('hidden');
+                degrisSection.classList.toggle('hidden');
+            }
+
+            quotaSelect.addEventListener('change', calculateMontant);
+            evenementSelect.addEventListener('change', updateQuotaOptions);
+
+            // Uncomment to toggle sections on form submission
+            // document.querySelector('form').addEventListener('submit', toggleSections);
+
+            updateQuotaOptions(); // Initial setup
+            calculateMontant(); // Initial calculation
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

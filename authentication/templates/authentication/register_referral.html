@@ -1,0 +1,214 @@
+<!-- templates/authentication/register_referral.html -->
+{% extends 'use.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block title %}Inscrire un Filleul{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<!-- JS de Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@twilio/lookup"></script>
+<style>
+    body {
+        background-color: #f8f9fa; /* Couleur de fond */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        background-color: white; /* Couleur de fond du formulaire */
+        padding: 30px;
+        border-radius: 8px;
+        width: 750px; /* Largeur augmentée */
+        margin: auto; /* Centrer le formulaire horizontalement */
+    }
+    h1 {
+        text-align: center;
+    }
+    form {
+        margin-top: 20px;
+    }
+    label {
+        margin-bottom: 10px; /* Espacement entre les labels et les champs d'entrée */
+        display: block; /* Permet de décaler les labels */
+    }
+
+    button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #007bff; /* Couleur du bouton */
+        color: #ffffff; /* Couleur du texte du bouton */
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3; /* Couleur du bouton au survol */
+    }
+    .alert {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 4px;
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+    }
+    .alert ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+     input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select,
+input[type="date"],
+input[type="radio"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+ /* Media Queries pour petits écrans */
+    @media (max-width: 576px) {
+        .container {
+            padding: 15px;
+            margin: 10px; /* Ajout de marges latérales */
+            width: 100%; /* Largeur maximale du formulaire */
+        }
+        label {
+            font-size: 14px; /* Réduction de la taille des labels */
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select,
+        input[type="date"],
+        input[type="radio"],
+        textarea,
+        .form-control {
+            padding: 8px;
+            font-size: 14px; /* Réduction de la taille des champs d'entrée */
+        }
+        button[type="submit"] {
+            padding: 8px;
+            font-size: 14px; /* Réduction de la taille du bouton */
+        }
+    }
+</style>
+
+
+<div class="container">
+    <h1>Inscrire un Filleul</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+     {% if form.errors %}
+    <div class="alert">
+        <strong>Veuillez corriger les erreurs suivantes :</strong>
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+ <label for="{{ form.username.id_for_label }}"> <strong>Pseudo</strong> (Nom d'utilisateur)</label>
+        {{ form.username }}
+<label for="{{ form.email.id_for_label }}">Nom</label>
+        {{ form.nom }}
+        <label for="{{ form.email.id_for_label }}">Prenom</label>
+        {{ form.prenom }}
+         <label for="{{ form.email.id_for_label }}">Nom Populaire</label>
+        {{ form.nompop }}
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+
+
+        <label for="{{ form.nationalite.id_for_label }}">Nationalité</label>
+        {{ form.nationalite }}
+
+        <label for="{{ form.sexe.id_for_label }}">Sexe</label>
+        {{ form.sexe }}
+
+        <label for="{{ form.profession.id_for_label }}">Profession</label>
+        {{ form.profession }}
+
+        <label for="{{ form.lieu_travail.id_for_label }}">Lieu de Travail</label>
+        {{ form.lieu_travail }}
+
+       <label for="{{ form.country.id_for_label }}">Country</label>
+        {{ form.country }}
+
+        <label for="{{ form.ville.id_for_label }}">Ville</label>
+        {{ form.ville }}
+
+        <label for="{{ form.quartier.id_for_label }}">Quartier</label>
+        {{ form.quartier }}
+
+        <label for="{{ form.maison_non_loin_de.id_for_label }}">Maison Non Loin De</label>
+        {{ form.maison_non_loin_de }}
+
+        <label for="{{ form.contact.id_for_label }}">Contact</label>
+        {{ form.contact }}
+
+        <label for="{{ form.date_of_birth.id_for_label }}">Date de Naissance</label>
+        {{ form.date_of_birth }}
+
+        <label for="{{ form.referrer.id_for_label }}">Parrain</label>
+        {{ form.referrer }}
+
+        <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+        {{ form.password1 }}
+
+        <label for="{{ form.password2.id_for_label }}">Confirmer le mot de passe</label>
+        {{ form.password2 }}
+
+        <button type="submit">Inscrire</button>
+    </form>
+
+   
+</div>
+<script>
+    // Fonction pour obtenir l'indicatif téléphonique du pays
+    async function fetchCountryCode(countryCode) {
+        const url = `https://restcountries.com/v3.1/alpha/${countryCode}`;
+        const response = await fetch(url);
+        const country = await response.json();
+
+        // Vérifier si l'indicatif existe
+        if (country && country[0].idd && country[0].idd.root) {
+            return country[0].idd.root + country[0].idd.suffixes[0];  // Format du code téléphonique
+        }
+        return null;
+    }
+
+    // Mettre à jour le champ téléphone avec l'indicatif du pays sélectionné
+    document.getElementById('{{ form.country.id_for_label }}').addEventListener('change', async function() {
+        const selectedCountry = this.value;  // Code du pays sélectionné (par exemple, "TG" pour Togo)
+
+        if (selectedCountry) {
+            const phoneCode = await fetchCountryCode(selectedCountry);
+
+            // Si un code est trouvé, mettre à jour le champ du téléphone
+            if (phoneCode) {
+                const phoneField = document.getElementById('{{ form.contact.id_for_label }}');
+                phoneField.value = phoneCode;  // Pré-remplir avec l'indicatif du pays
+            }
+        }
+    });
+</script>
+{% endblock %}

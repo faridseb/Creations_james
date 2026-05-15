@@ -1,0 +1,145 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Shop</title>
+
+  <!-- Tailwind CSS (CDN stable) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  
+  <!-- Ta feuille CSS perso -->
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet" />
+   <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="" />
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-white text-gray-900">
+
+<!-- NAVIGATION -->
+<nav class="bg-gray-900 text-white">
+  <div class="container mx-auto flex items-center justify-between p-4">
+    <!-- Logo + Nom -->
+    <div class="flex items-center space-x-4">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
+      <a href="index.html" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu Desktop -->
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class=" hover:text-gray-300">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class=" text-yellow-400 font-semibold">Contactez-nous</a>
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div id="menu" class="hidden md:hidden bg-gray-800 px-4 py-4">
+    <a href="{% url 'ecommerce:product_list' %}" class="block py-2 hover:bg-gray-700">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block py-2 hover:bg-gray-700 ">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block py-2 hover:bg-gray-700">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}" class="block py-2 hover:bg-gray-700">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block py-2 hover:bg-gray-700">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block py-2 bg-yellow-400 text-gray-900 font-semibold">Contactez-nous</a>
+    <div class="flex space-x-4 pt-2 border-t border-gray-700 mt-2">
+      <a href="#" class="hover:text-gray-300">
+        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
+      </a>
+      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
+        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
+      </a>
+    </div>
+  </div>
+</nav>
+  <!-- Hero Section -->
+  <section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-6">
+      <div>
+        <h1 class="text-4xl font-bold mb-4">Contact</h1>
+        <p class="text-gray-600 mb-6"></p>
+        <div class="space-x-4">
+          <a href="#" class="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Acheter Maintenant</a>
+          <a href="#" class="px-5 py-2 border border-gray-600 text-gray-700 rounded hover:bg-gray-200">Explorer</a>
+        </div>
+      </div>
+      <div>
+        <img src="{% static 'images/filet.png' %}" alt="Couch" class="w-full h-72">
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <!-- Tu peux ici intégrer ton formulaire Tailwind -->
+
+  <!-- Footer -->
+   <footer class="bg-gray-900 text-white py-16 relative">
+    <div class="container mx-auto px-4">
+      <div class="absolute bottom-0 right-0 opacity-20">
+        <img src="{% static 'images/table.png' %}" alt="Sofa" class="w-48" />
+      </div>
+
+      <div class="max-w-3xl">
+        <div class="flex items-center mb-6 space-x-2">
+          <img src="{% static 'images/envelope-outline.svg' %}" alt="Envelope" class="w-6 h-6" />
+          <h3 class="text-xl font-semibold">Abonnez-vous à la newsletter</h3>
+        </div>
+
+        <form action="#" class="flex flex-wrap gap-4">
+          <input
+            type="text"
+            placeholder="Entrez votre nom"
+            class="flex-grow min-w-[200px] rounded border border-gray-700 px-4 py-2 text-gray-900"
+          />
+          <input
+            type="email"
+            placeholder="Entrez votre email"
+            class="flex-grow min-w-[200px] rounded border border-gray-700 px-4 py-2 text-gray-900"
+          />
+          <button
+            type="submit"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded flex items-center justify-center"
+          >
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    if (menuBtn && menu) {
+      menuBtn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+  });
+</script>
+
+
+</body>
+</html>

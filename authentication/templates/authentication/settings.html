@@ -1,0 +1,73 @@
+{% extends 'use.html' %}
+{% load static %}
+
+{% block title %}Paramètres du Compte{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Paramètres du Compte</h1>
+
+    <form method="post" action="" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        <div class="form-group mb-3">
+            <label for="username" class="form-label">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" class="form-control" value="{{ request.user.username }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="email" class="form-label">Adresse Email :</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ request.user.email }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="contact" class="form-label">Numéro de téléphone :</label>
+            <input type="tel" id="contact" name="contact" class="form-control" value="{{ request.user.contact }}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="nationalite" class="form-label">Nationalité :</label>
+            <input type="text" id="nationalite" name="nationalite" class="form-control" value="{{ request.user.nationalite }}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="sexe" class="form-label">Genre :</label>
+            <select id="sexe" name="sexe" class="form-control">
+                <option value="Homme" {% if request.user.sexe == 'Homme' %}selected{% endif %}>Homme</option>
+                <option value="Femme" {% if request.user.sexe == 'Femme' %}selected{% endif %}>Femme</option>
+                <option value="Autre" {% if request.user.sexe == 'Autre' %}selected{% endif %}>Autre</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="date_of_birth" class="form-label">Date de naissance :</label>
+            <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" value="{{ request.user.date_of_birth|date:'Y-m-d' }}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="ville" class="form-label">Ville :</label>
+            <input type="text" id="ville" name="ville" class="form-control" value="{{ request.user.ville }}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="quartier" class="form-label">Quartier :</label>
+            <input type="text" id="quartier" name="quartier" class="form-control" value="{{ request.user.quartier }}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="password" class="form-label">Changer de mot de passe :</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Laissez vide si inchangé">
+        </div>
+
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary w-100">Sauvegarder les modifications</button>
+    </form>
+</div>
+{% endblock %}

@@ -2,613 +2,1315 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   {% load static %}
-<!-- Font Awesome CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-  <!-- Tailwind CSS (CDN stable) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
-  
-  <!-- Ta feuille CSS perso -->
-  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet" />
-   
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
+  <title>Creationjames — Design d'Intérieur</title>
 
-  <title>E-commerce_Creationjames</title>
+  <style>
+    :root {
+      --bg:        #f5f5f5;
+      --bg-white:  #ffffff;
+      --bg-gray:   #eeeeee;
+      --navy:      #1a1f36;
+      --navy2:     #2d3454;
+      --blue:      #2563eb;
+      --blue-lt:   #3b82f6;
+      --yellow:    #f59e0b;
+      --yellow-lt: #fcd34d;
+      --text:      #1a1f36;
+      --muted:     #6b7280;
+      --border:    #e5e7eb;
+      --white:     #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-gray); }
+    ::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 3px; }
+
+    /* ══ NAV ══════════════════════════════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 2px 20px rgba(26,31,54,0.18);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 68px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-brand img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--yellow);
+    }
+
+    .nav-brand span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+    .nav-links a.active { color: var(--yellow); font-weight: 600; }
+
+    .nav-icons { display: flex; align-items: center; gap: 10px; }
+
+    .nav-icons a {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+
+    .nav-icons a:hover { background: rgba(255,255,255,0.16); }
+    .nav-icons img { width: 18px; height: 18px; filter: invert(1); }
+
+    #menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--white);
+    }
+
+    #mobile-menu {
+      display: none;
+      background: var(--navy2);
+      padding: 12px 20px 16px;
+    }
+
+    #mobile-menu.open { display: block; }
+
+    #mobile-menu a {
+      display: block;
+      padding: 10px 4px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s, padding-left 0.2s;
+    }
+
+    #mobile-menu a:hover { color: var(--yellow); padding-left: 8px; }
+
+    @media (max-width: 960px) {
+      #menu-btn { display: block; }
+      .nav-links, .nav-icons { display: none; }
+    }
+
+    /* ══ HERO ═════════════════════════════════════════════════ */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 72px 28px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cercle décoratif */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -100px; top: -100px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,158,11,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content { flex: 1; max-width: 540px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--yellow-lt);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--yellow-lt);
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--yellow);
+      color: var(--navy);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px 26px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.22s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(245,158,11,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--yellow-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245,158,11,0.4);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 26px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-decoration: none;
+      transition: border-color 0.22s, background 0.22s, transform 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    .hero-image {
+      flex: 0 0 360px;
+      height: 400px;
+    }
+
+    .hero-image-frame {
+      width: 100%; height: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+    }
+
+    .hero-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+    @media (max-width: 900px) { .hero-image { display: none; } }
+
+    /* ══ PRODUITS ═════════════════════════════════════════════ */
+    .products-section {
+      padding: 64px 28px;
+      background: var(--bg);
+    }
+
+    .products-section.alt { background: var(--bg-white); }
+
+    .section-wrap { max-width: 1280px; margin: 0 auto; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title-wrap {}
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .section-header a {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+
+    .section-header a:hover { gap: 8px; }
+
+    /* Layout produits */
+    .products-layout { display: flex; gap: 24px; align-items: flex-start; }
+
+    /* Sidebar */
+    .cat-sidebar {
+      flex: 0 0 190px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .cat-sidebar h3 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cat-sidebar ul { list-style: none; }
+
+    .cat-sidebar button {
+      width: 100%;
+      text-align: left;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 400;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 7px;
+      transition: all 0.2s;
+      margin-bottom: 2px;
+    }
+
+    .cat-sidebar button:hover { background: #f0f4ff; color: var(--blue); }
+
+    .cat-sidebar button.active {
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* Scroll produits */
+    .products-scroll-wrap { flex: 1; overflow: hidden; }
+
+    .products-scroll {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-behavior: smooth;
+    }
+
+    .products-scroll::-webkit-scrollbar { height: 4px; }
+    .products-scroll::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 2px; }
+    .products-scroll::-webkit-scrollbar-track { background: var(--border); }
+
+    /* Carte produit */
+    .product-card {
+      flex: 0 0 220px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.3s ease,
+                  border-color 0.25s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(26,31,54,0.12);
+      border-color: rgba(37,99,235,0.25);
+    }
+
+    .product-card-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .product-card:hover .product-card-img img { transform: scale(1.06); }
+
+    .product-card-body { padding: 12px 14px 14px; }
+
+    .product-card-body h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-card-body .price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    /* Badge "+" panier */
+    .add-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+      z-index: 2;
+    }
+
+    .add-btn:hover {
+      background: var(--yellow);
+      color: var(--navy);
+      border-color: var(--yellow);
+      transform: scale(1.1);
+    }
+
+    /* Pills mobile */
+    .cat-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 20px;
+    }
+
+    .cat-pills::-webkit-scrollbar { display: none; }
+
+    .cat-pills button {
+      flex-shrink: 0;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      padding: 7px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-pills button.active, .cat-pills button:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    /* Grille mobile */
+    .mobile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .mobile-grid .product-card { flex: none; }
+
+    /* ══ POURQUOI ══════════════════════════════════════════════ */
+    .why-section {
+      padding: 80px 28px;
+      background: var(--bg-white);
+    }
+
+    .why-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .why-content { flex: 1; }
+
+    .why-content .eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .why-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .why-content > p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .feature:hover {
+      border-color: rgba(37,99,235,0.2);
+      box-shadow: 0 4px 16px rgba(37,99,235,0.06);
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-icon img {
+      width: 20px; height: 20px;
+      filter: invert(1);
+    }
+
+    .feature h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+
+    .feature p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .why-image {
+      flex: 0 0 400px;
+      height: 370px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 48px rgba(26,31,54,0.1);
+    }
+
+    .why-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    @media (max-width: 900px) {
+      .why-inner { flex-direction: column; gap: 36px; }
+      .why-image { flex: none; width: 100%; height: 240px; }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══ POPULAIRES ═══════════════════════════════════════════ */
+    .popular-section {
+      padding: 64px 28px;
+      background: var(--bg-gray);
+    }
+
+    .popular-inner { max-width: 1280px; margin: 0 auto; }
+
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .popular-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      transition: box-shadow 0.25s, transform 0.28s, border-color 0.25s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .popular-card:hover {
+      box-shadow: 0 10px 32px rgba(26,31,54,0.1);
+      transform: translateY(-3px);
+      border-color: rgba(37,99,235,0.2);
+    }
+
+    .popular-thumb {
+      flex-shrink: 0;
+      width: 76px; height: 76px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .popular-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .popular-info h3 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .popular-info a {
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .popular-info a:hover { color: var(--blue-lt); }
+
+    @media (max-width: 860px) { .popular-grid { grid-template-columns: 1fr; } }
+
+    /* ══ FOOTER ═══════════════════════════════════════════════ */
+    footer {
+      background: var(--navy);
+      padding: 60px 28px 28px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1.4fr 1fr;
+      gap: 48px;
+    }
+
+    .footer-brand img {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--yellow);
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand .tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--yellow-lt);
+      margin-bottom: 8px;
+    }
+
+    .footer-brand p { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+    footer h4 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 9px; }
+
+    footer ul a {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer ul a:hover { color: var(--yellow-lt); }
+
+    .newsletter-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+    .newsletter-form input {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white);
+      font-family: 'Sora', sans-serif;
+      font-size: 0.83rem;
+      padding: 10px 14px;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter-form input:focus { border-color: var(--yellow); }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .newsletter-form button {
+      background: var(--yellow);
+      color: var(--navy);
+      font-family: 'Sora', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .newsletter-form button:hover { background: var(--yellow-lt); }
+
+    .footer-contact p { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 5px; }
+    .footer-contact a { color: var(--yellow-lt); text-decoration: none; }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 36px auto 0;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-bottom p { font-size: 0.77rem; color: rgba(255,255,255,0.35); }
+
+    .social-links { display: flex; gap: 10px; }
+
+    .social-links a {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .social-links a:hover {
+      background: var(--yellow);
+      color: var(--navy);
+      border-color: var(--yellow);
+    }
+
+    @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; } }
+    @media (max-width: 560px) { .footer-inner { grid-template-columns: 1fr; } }
+
+    /* ══ ANIMATIONS ═══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in { animation: fadeUp 0.55s ease both; }
+    .d1 { animation-delay: 0.08s; }
+    .d2 { animation-delay: 0.18s; }
+    .d3 { animation-delay: 0.28s; }
+  </style>
 </head>
+<body>
 
-<body class="bg-white text-gray-900">
+<!-- ══ NAV ════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="{% url 'ecommerce:product_list' %}">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo"/>
+      <span>Creationjames</span>
+    </a>
 
-  <!-- Début de l'en-tête / Navigation -->
- <nav class="bg-gray-900 text-white">
-  <div class="container mx-auto flex items-center justify-between p-4">
-    <!-- Logo + Nom -->
-    <div class="flex items-center space-x-4">
-      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
-      <a href="index.html" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
-    </div>
-
-    <!-- Hamburger -->
-    <button id="menu-btn" class="md:hidden focus:outline-none">
-      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    <button id="menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('open')">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
 
-    <!-- Menu Desktop -->
-    <div class="hidden md:flex space-x-6 items-center">
-      <a href="{% url 'ecommerce:product_list' %}" class=" text-yellow-400 font-semibold">Accueil</a>
-      <a href="{% url 'ecommerce:shop' %}" class="hover:text-gray-300">Boutique</a>
-      <a href="{% url 'ecommerce:about' %}" class="hover:text-gray-300">À propos de nous</a>
-      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
-      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
-      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
-      <a href="#" class="hover:text-gray-300">
-        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
-      </a>
-      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
-        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
-      </a>
+    <ul class="nav-links">
+      <li><a href="{% url 'ecommerce:product_list' %}" class="active">Accueil</a></li>
+      <li><a href="{% url 'ecommerce:shop' %}">Boutique</a></li>
+      <li><a href="{% url 'ecommerce:about' %}">À propos</a></li>
+      <li><a href="{% url 'ecommerce:services' %}">Services</a></li>
+      <li><a href="{% url 'ecommerce:blog' %}">Blog</a></li>
+      <li><a href="{% url 'ecommerce:contact' %}">Contact</a></li>
+    </ul>
+
+    <div class="nav-icons">
+      <a href="#" title="Profil"><img src="{% static 'images/user.svg' %}" alt="Profil"/></a>
+      <a href="{% url 'ecommerce:cart' %}" title="Panier"><img src="{% static 'images/cart.svg' %}" alt="Panier"/></a>
     </div>
   </div>
 
-  <!-- Menu Mobile -->
-  <div id="menu" class="hidden md:hidden bg-gray-800 px-4 py-4">
-    <a href="{% url 'ecommerce:product_list' %}" class="block py-2 bg-yellow-400 text-gray-900 font-semibold ">Accueil</a>
-    <a href="{% url 'ecommerce:shop' %}" class="block py-2 hover:bg-gray-700 ">Boutique</a>
-    <a href="{% url 'ecommerce:about' %}" class="block py-2 hover:bg-gray-700">À propos de nous</a>
-    <a href="{% url 'ecommerce:services' %}" class="block py-2 hover:bg-gray-700">Services</a>
-    <a href="{% url 'ecommerce:blog' %}" class="block py-2 hover:bg-gray-700">Blog</a>
-    <a href="{% url 'ecommerce:contact' %}" class="block py-2 hover:bg-gray-700">Contactez-nous</a>
-    <div class="flex space-x-4 pt-2 border-t border-gray-700 mt-2">
-      <a href="#" class="hover:text-gray-300">
-        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
-      </a>
-      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
-        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
-      </a>
+  <div id="mobile-menu">
+    <a href="{% url 'ecommerce:product_list' %}">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}">Services</a>
+    <a href="{% url 'ecommerce:blog' %}">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}">Contactez-nous</a>
+    <div style="display:flex;gap:12px;padding:12px 0 2px;">
+      <a href="#"><img src="{% static 'images/user.svg' %}" style="width:20px;filter:invert(1)" alt="Profil"/></a>
+      <a href="{% url 'ecommerce:cart' %}"><img src="{% static 'images/cart.svg' %}" style="width:20px;filter:invert(1)" alt="Panier"/></a>
     </div>
   </div>
 </nav>
 
-  <!-- Début de la section Hero -->
-  <div class="hero">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col lg:flex-row justify-between">
-        <div class="lg:w-5/12">
-          <div class="intro-excerpt">
-            <h1 class="text-4xl font-bold mb-6">
-              Design d'Intérieur Moderne
-            </h1>
-            <p class="mb-6">Sublimez vos salons et studios.</p>
-            <p>
-              <a href="{% url 'ecommerce:cart' %}" class="inline-block bg-gray-700 text-white py-2 px-4 rounded mr-2 hover:bg-gray-800">Acheter Maintenant</a>
-              <a href="{% url 'ecommerce:shop' %}" class="inline-block border border-gray-700 text-gray-700 py-2 px-4 rounded hover:bg-gray-100">Explorer</a>
-            </p>
-          </div>
-        </div>
-        <div class="lg:w-4/12">
-          <div class="hero-img-wrap">
-            {% if produit_image_5 %}
-    <img src="{{ produit_image_5.image_url.url }}" alt="{{ produit_image_5.name }}">
-{% else %}
-    <p>Produit non trouvé.</p>
-{% endif %}
-
-          </div>
-        </div>
+<!-- ══ HERO ════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge fade-in">✦ Artisanat Togolais</div>
+      <h1 class="fade-in d1">Design d'Intérieur <em>Moderne</em></h1>
+      <p class="fade-in d2">Sublimez vos salons et studios avec nos créations artisanales uniques, fabriquées à la main avec passion.</p>
+      <div class="hero-cta fade-in d3">
+        <a href="{% url 'ecommerce:cart' %}" class="btn-primary">Acheter Maintenant</a>
+        <a href="{% url 'ecommerce:shop' %}" class="btn-outline">Explorer →</a>
       </div>
-      
+    </div>
 
-<!-- Section Desktop Produits -->
- <!-- Section Desktop Produits Disponibles -->
-<section class="hidden lg:block py-12">
-  <h2 class="text-2xl font-semibold mb-4">Produit Disponible</h2>
+    <div class="hero-image">
+      <div class="hero-image-frame">
+        {% if produit_image_5 %}
+          <img src="{{ produit_image_5.image_url.url }}" alt="{{ produit_image_5.name }}"/>
+        {% else %}
+          <div style="width:100%;height:100%;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:0.9rem;">Produit non trouvé</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
 
-  <div class="container mx-auto px-4 flex gap-6 max-w-screen-xl">
-    <!-- Colonne gauche -->
-    <aside class="w-1/3 bg-white shadow rounded p-4 shrink-0 flex flex-col">
-      <h2 class="text-lg font-semibold mb-4">Catégories</h2>
-      <ul class="space-y-2 flex-1">
-        {% for category in categories %}
+<!-- ══ PRODUITS DISPONIBLES — DESKTOP ══════════════════════════ -->
+<section class="products-section hidden lg:block">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-eyebrow">Stock disponible</div>
+        <h2>Produits Disponibles</h2>
+      </div>
+      <a href="{% url 'ecommerce:shop' %}">Voir tout →</a>
+    </div>
+
+    <div class="products-layout">
+      <aside class="cat-sidebar">
+        <h3>Catégories</h3>
+        <ul>
+          {% for category in categories %}
           <li>
-            <button
-              onclick="afficherCategorie('{{ category.name|slugify }}', this)"
-              class="w-full text-left py-2 px-3 rounded bg-white hover:bg-green-500 hover:text-white text-gray-700 font-medium"
-              {% if forloop.first %} id="categorie-btn-active" {% endif %}
-            >
+            <button onclick="afficherCategorie('{{ category.name|slugify }}', this)"
+              class="{% if forloop.first %}active{% endif %}"
+              {% if forloop.first %}id="categorie-btn-active"{% endif %}>
               {{ category.name }}
             </button>
           </li>
-        {% endfor %}
-      </ul>
-    </aside>
+          {% endfor %}
+        </ul>
+      </aside>
 
-    <!-- Colonne droite -->
-    <div class="flex-1 overflow-x-auto">
-      <div class="min-w-[1024px] bg-white rounded p-6 h-full">
+      <div class="products-scroll-wrap">
         {% for category in categories %}
-          <div id="categorie-{{ category.name|slugify }}" class="categorie-produit hidden flex flex-nowrap gap-6">
+        <div id="categorie-{{ category.name|slugify }}" class="categorie-produit {% if not forloop.first %}hidden{% endif %}">
+          <div class="products-scroll">
             {% with category.products.all as products %}
               {% if products %}
                 {% for product in products %}
-                  <div class="w-64 flex-shrink-0 relative bg-white hover:shadow-lg transition rounded overflow-hidden">
-
-                    <!-- Image -->
-                    <div class="aspect-[4/3] w-full overflow-hidden">
-                      <img src="{{ product.image_url.url }}" alt="{{ product.name }}" class="w-full h-full object-cover rounded">
-                    </div>
-
-                    <!-- Détails produit -->
-                    <div class="p-3">
-                      <h3 class="text-md font-semibold truncate">{{ product.name }}</h3>
-                      <strong class="block mt-1 text-blue-600 font-bold">{{ product.price }} CFA</strong>
-                    </div>
-
-                    <!-- Ajouter au panier -->
-                    <a href="{% url 'ecommerce:cart' %}?add={{ product.id }}&type=available"
-                       class="absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer group"
-                       title="Ajouter au panier">
-                      <svg class="w-6 h-6 transition-transform group-hover:scale-110" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
-                        <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
+                <div class="product-card">
+                  <div class="product-card-img">
+                    <img src="{{ product.image_url.url }}" alt="{{ product.name }}"/>
+                    <a href="{% url 'ecommerce:cart' %}?add={{ product.id }}&type=available" class="add-btn" title="Ajouter au panier">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
                       </svg>
                     </a>
-
                   </div>
+                  <div class="product-card-body">
+                    <h3>{{ product.name }}</h3>
+                    <span class="price">{{ product.price }} CFA</span>
+                  </div>
+                </div>
                 {% endfor %}
               {% else %}
-                <p class="text-gray-500 italic">Aucun produit disponible dans cette catégorie.</p>
+                <p style="color:var(--muted);font-style:italic;padding:20px 0;">Aucun produit dans cette catégorie.</p>
               {% endif %}
             {% endwith %}
           </div>
+        </div>
         {% endfor %}
       </div>
     </div>
   </div>
 </section>
 
-<!-- Section Mobile Produits Disponibles -->
-<section class="block lg:hidden w-full px-4">
-  <h2 class="text-2xl font-semibold mb-4">Produit Disponible</h2>
+<!-- ══ PRODUITS DISPONIBLES — MOBILE ══════════════════════════ -->
+<section class="products-section block lg:hidden">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">Stock disponible</div>
+        <h2>Produits Disponibles</h2>
+      </div>
+    </div>
 
-  <aside class="w-full bg-white shadow rounded p-4 mb-4">
-    <h2 class="text-lg font-semibold mb-4">Catégories</h2>
-    <ul class="flex overflow-x-auto space-x-4">
+    <div class="cat-pills">
       {% for category in categories %}
-        <li>
-          <button
-            onclick="afficherCategorieMobile('{{ category.name|slugify }}', this)"
-            class="whitespace-nowrap py-2 px-3 rounded hover:bg-green-500 hover:text-white text-gray-700 font-medium
-            {% if forloop.first %} bg-orange-500 text-white {% else %} bg-white {% endif %}"
-            {% if forloop.first %} id="mobile-categorie-btn-active" {% endif %}
-          >
-            {{ category.name }}
-          </button>
-        </li>
+      <button onclick="afficherCategorieMobile('{{ category.name|slugify }}', this)"
+        class="{% if forloop.first %}active{% endif %}"
+        {% if forloop.first %}id="mobile-categorie-btn-active"{% endif %}>
+        {{ category.name }}
+      </button>
       {% endfor %}
-    </ul>
-  </aside>
+    </div>
 
-  <div class="w-full bg-white rounded p-6">
     {% for category in categories %}
-      <div id="mobile-categorie-{{ category.name|slugify }}" class="categorie-produit-mobile hidden flex flex-wrap -mx-4">
+    <div id="mobile-categorie-{{ category.name|slugify }}" class="categorie-produit-mobile {% if not forloop.first %}hidden{% endif %}">
+      <div class="mobile-grid">
         {% with category.products.all as products %}
           {% if products %}
             {% for product in products %}
-              <div class="w-full sm:w-1/2 px-2 mb-6">
-                <a class="product-item block border rounded overflow-hidden hover:shadow-lg transition relative bg-white h-full" href="{% url 'ecommerce:cart' %}">
-                  <div class="aspect-[4/3] w-full overflow-hidden">
-                    <img src="{{ product.image_url.url }}" alt="{{ product.name }}" class="w-full h-full object-cover rounded">
-                  </div>
-                  <div class="px-2 pb-3">
-                    <h3 class="mt-4 text-base font-semibold">{{ product.name }}</h3>
-                    <strong class="block mt-1 text-blue-600 font-bold">{{ product.price }} CFA</strong>
-                  </div>
-                  <span class="icon-cross absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer">
-                    <svg class="w-6 h-6" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
-                      <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                  </span>
+            <div class="product-card">
+              <div class="product-card-img">
+                <img src="{{ product.image_url.url }}" alt="{{ product.name }}"/>
+                <a href="{% url 'ecommerce:cart' %}?add={{ product.id }}&type=available" class="add-btn">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
                 </a>
               </div>
+              <div class="product-card-body">
+                <h3>{{ product.name }}</h3>
+                <span class="price">{{ product.price }} CFA</span>
+              </div>
+            </div>
             {% endfor %}
           {% else %}
-            <p class="text-gray-500 italic px-4">Aucun produit disponible dans cette catégorie.</p>
+            <p style="color:var(--muted);font-style:italic;">Aucun produit disponible.</p>
           {% endif %}
         {% endwith %}
       </div>
+    </div>
     {% endfor %}
   </div>
 </section>
 
-<!-- Section Desktop Produits Spécifiques -->
-<section class="hidden lg:block py-12">
-  <h2 class="text-2xl font-semibold mb-4">Produit Spécifique Sur commande</h2>
+<!-- ══ PRODUITS SUR COMMANDE — DESKTOP ════════════════════════ -->
+<section class="products-section alt hidden lg:block">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-eyebrow">Fait sur mesure</div>
+        <h2>Produits Spécifiques Sur Commande</h2>
+      </div>
+      <a href="{% url 'ecommerce:shop' %}">Voir tout →</a>
+    </div>
 
-  <div class="container mx-auto px-4 flex gap-6 max-w-screen-xl">
-
-    <!-- Colonne gauche -->
-    <aside class="w-1/3 bg-white shadow rounded p-4 shrink-0 flex flex-col">
-      <h2 class="text-lg font-semibold mb-4">Catégories</h2>
-      <ul class="space-y-2 flex-1 article-liste-desktop">
-        {% for articles_category in article_categories %}
+    <div class="products-layout">
+      <aside class="cat-sidebar">
+        <h3>Catégories</h3>
+        <ul class="article-liste-desktop">
+          {% for articles_category in article_categories %}
           <li>
-            <button
-              onclick="afficherarticleCategorie('{{ articles_category.name|slugify }}', this, 'desktop')"
-              class="w-full text-left py-2 px-3 rounded bg-white hover:bg-green-500 hover:text-white text-gray-700 font-medium
-              {% if forloop.first %} bg-orange-500 text-white {% endif %}"
-              {% if forloop.first %} id="article-btn-active-desktop" {% endif %}
-            >
+            <button onclick="afficherarticleCategorie('{{ articles_category.name|slugify }}', this, 'desktop')"
+              class="{% if forloop.first %}active{% endif %}"
+              {% if forloop.first %}id="article-btn-active-desktop"{% endif %}>
               {{ articles_category.name }}
             </button>
           </li>
-        {% endfor %}
-      </ul>
-    </aside>
+          {% endfor %}
+        </ul>
+      </aside>
 
-    <!-- Colonne droite -->
-    <div class="flex-1 overflow-x-auto">
-      <div class="min-w-[1024px] bg-white rounded p-6 h-full">
+      <div class="products-scroll-wrap">
         {% for articles_category in article_categories %}
-          <div id="articlecategorie-desktop-{{ articles_category.name|slugify }}" class="categorie-article-desktop hidden flex flex-nowrap gap-6">
+        <div id="articlecategorie-desktop-{{ articles_category.name|slugify }}" class="categorie-article-desktop {% if not forloop.first %}hidden{% endif %}">
+          <div class="products-scroll">
             {% with articles_category.articles.all as articles %}
               {% if articles %}
                 {% for article in articles %}
-                  <div class="w-64 flex-shrink-0 relative bg-white hover:shadow-lg transition rounded overflow-hidden">
-
-                    <!-- Image -->
-                    <div class="aspect-[4/3] w-full overflow-hidden">
-                      <img src="{{ article.image_url.url }}" alt="{{ article.name }}" class="w-full h-full object-cover rounded">
-                    </div>
-
-                    <!-- Infos article -->
-                    <div class="p-3">
-                      <h3 class="text-md font-semibold truncate">{{ article.name }}</h3>
-                      <strong class="block mt-1 text-blue-600 font-bold">{{ article.price }} CFA</strong>
-                    </div>
-
-                    <!-- Ajouter au panier -->
-                    <a href="{% url 'ecommerce:cart' %}?add={{ article.id }}"
-                       class="absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer group"
-                       title="Ajouter au panier">
-                      <svg class="w-6 h-6 transition-transform group-hover:scale-110" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
-                        <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
+                <div class="product-card">
+                  <div class="product-card-img">
+                    <img src="{{ article.image_url.url }}" alt="{{ article.name }}"/>
+                    <a href="{% url 'ecommerce:cart' %}?add={{ article.id }}" class="add-btn" title="Ajouter au panier">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
                       </svg>
                     </a>
-
                   </div>
+                  <div class="product-card-body">
+                    <h3>{{ article.name }}</h3>
+                    <span class="price">{{ article.price }} CFA</span>
+                  </div>
+                </div>
                 {% endfor %}
               {% else %}
-                <p class="text-gray-500 italic">Aucun article disponible dans cette catégorie.</p>
+                <p style="color:var(--muted);font-style:italic;padding:20px 0;">Aucun article disponible.</p>
               {% endif %}
             {% endwith %}
           </div>
+        </div>
         {% endfor %}
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- Section Mobile Produits Spécifiques -->
-<section class="block lg:hidden w-full px-4">
-  <h2 class="text-2xl font-semibold mb-4">Produit Spécifique Sur commande</h2>
+<!-- ══ PRODUITS SUR COMMANDE — MOBILE ═════════════════════════ -->
+<section class="products-section alt block lg:hidden">
+  <div class="section-wrap">
+    <div class="section-header">
+      <div>
+        <div class="section-eyebrow">Fait sur mesure</div>
+        <h2>Sur Commande</h2>
+      </div>
+    </div>
 
-  <aside class="w-full bg-white shadow rounded p-4 mb-4">
-    <h2 class="text-lg font-semibold mb-4">Catégories</h2>
-    <ul class="flex overflow-x-auto space-x-4 article-liste-mobile">
+    <div class="cat-pills article-liste-mobile">
       {% for articles_category in article_categories %}
-        <li>
-          <button
-            onclick="afficherarticleCategorie('{{ articles_category.name|slugify }}', this, 'mobile')"
-            class="whitespace-nowrap py-2 px-3 rounded hover:bg-green-500 hover:text-white text-gray-700 font-medium
-            {% if forloop.first %} bg-orange-500 text-white {% else %} bg-white {% endif %}"
-            {% if forloop.first %} id="article-btn-active-mobile" {% endif %}
-          >
-            {{ articles_category.name }}
-          </button>
-        </li>
+      <button onclick="afficherarticleCategorie('{{ articles_category.name|slugify }}', this, 'mobile')"
+        class="{% if forloop.first %}active{% endif %}"
+        {% if forloop.first %}id="article-btn-active-mobile"{% endif %}>
+        {{ articles_category.name }}
+      </button>
       {% endfor %}
-    </ul>
-  </aside>
+    </div>
 
-  <div class="w-full bg-white rounded p-6">
     {% for articles_category in article_categories %}
-      <div id="articlecategorie-mobile-{{ articles_category.name|slugify }}" class="categorie-article-mobile hidden flex flex-wrap -mx-4">
+    <div id="articlecategorie-mobile-{{ articles_category.name|slugify }}" class="categorie-article-mobile {% if not forloop.first %}hidden{% endif %}">
+      <div class="mobile-grid">
         {% with articles_category.articles.all as articles %}
           {% if articles %}
             {% for article in articles %}
-              <div class="w-full sm:w-1/2 px-2 mb-6">
-                <a class="product-item block border rounded overflow-hidden hover:shadow-lg transition relative bg-white h-full" href="{% url 'ecommerce:cart' %}">
-                  <div class="aspect-[4/3] w-full overflow-hidden">
-                    <img src="{{ article.image_url.url }}" alt="{{ article.name }}" class="w-full h-full object-cover rounded">
-                  </div>
-                  <div class="px-2 pb-3">
-                    <h3 class="mt-4 text-base font-semibold">{{ article.name }}</h3>
-                    <strong class="block mt-1 text-blue-600 font-bold">{{ article.price }} CFA</strong>
-                  </div>
-                  <span class="icon-cross absolute top-2 right-2 text-black hover:text-red-500 cursor-pointer">
-                    <svg class="w-6 h-6" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <line x1="9" y1="0" x2="9" y2="18" stroke="currentColor" stroke-width="2" />
-                      <line y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                  </span>
+            <div class="product-card">
+              <div class="product-card-img">
+                <img src="{{ article.image_url.url }}" alt="{{ article.name }}"/>
+                <a href="{% url 'ecommerce:cart' %}?add={{ article.id }}" class="add-btn">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
                 </a>
               </div>
+              <div class="product-card-body">
+                <h3>{{ article.name }}</h3>
+                <span class="price">{{ article.price }} CFA</span>
+              </div>
+            </div>
             {% endfor %}
           {% else %}
-            <p class="text-gray-500 italic px-4">Aucun article disponible dans cette catégorie.</p>
+            <p style="color:var(--muted);font-style:italic;">Aucun article disponible.</p>
           {% endif %}
         {% endwith %}
       </div>
+    </div>
     {% endfor %}
   </div>
 </section>
 
+<!-- ══ POURQUOI NOUS CHOISIR ═══════════════════════════════════ -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-content">
+      <div class="eyebrow">Notre Engagement</div>
+      <h2>Pourquoi Nous Choisir</h2>
+      <p>Nous sommes basés dans l'artisanat et créons nos propres articles de qualité, fabriqués à la main avec des matériaux soigneusement sélectionnés.</p>
 
-
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">
+            <img src="{% static 'images/truck.svg' %}" alt="Expédition"/>
+          </div>
+          <div>
+            <h3>Expédition Rapide & Gratuite</h3>
+            <p>Livraison soignée partout au Togo.</p>
+          </div>
         </div>
-    </div>
-</div>
-
-</div>
-</div>
-</div>
-
-<!-- Début Section Pourquoi Choisir Nous -->
-<div class="why-choose-section py-12">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-wrap justify-between -mx-4">
-            <div class="w-full lg:w-1/2 px-4">
-                <h2 class="section-title text-2xl font-semibold mb-4">Pourquoi Nous Choisir</h2>
-                <p class="mb-6">Nous sommes basés dans l'artisanat et créons nos propres articles de qualité.</p>
-
-                <div class="flex flex-wrap my-5 -mx-4">
-                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
-                        <div class="feature space-y-3">
-                            <div class="icon">
-                                <img src="{% static 'images/truck.svg' %}" alt="Expédition Rapide & Gratuite" class="w-1/3 h-auto">
-                            </div>
-                            <h3 class="text-lg font-semibold">Expédition Rapide & Gratuite</h3>
-
-                        </div>
-                    </div>
-
-                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
-                        <div class="feature space-y-3">
-                            <div class="icon">
-                                <img src="{% static 'images/bag.svg' %}" alt="Facilité d'Achat" class="w-1/3 h-auto">
-                            </div>
-                            <h3 class="text-lg font-semibold">Facilité d'Achat</h3>
-
-                        </div>
-                    </div>
-
-                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
-                        <div class="feature space-y-3">
-                            <div class="icon">
-                                <img src="{% static 'images/support.svg' %}" alt="Support 24/7" class="w-1/3 h-auto">
-                            </div>
-                            <h3 class="text-lg font-semibold">Support 24/7</h3>
-
-                        </div>
-                    </div>
-
-                    <div class="w-1/2 md:w-1/2 px-4 mb-6">
-                        <div class="feature space-y-3">
-                            <div class="icon">
-                                <img src="{% static 'images/return.svg' %}" alt="Retours Sans Tracas" class="w-1/3 h-auto">
-                            </div>
-                            <h3 class="text-lg font-semibold">Retours Sans Tracas</h3>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="h-72 w-full lg:w-1/2 px-4">
-                <div class=" img-wrap">
-                    <img src="{% static 'images/filet.png' %}" alt="Pourquoi Choisir Nous" class="w-full h-auto rounded">
-                </div>
-            </div>
-
+        <div class="feature">
+          <div class="feature-icon">
+            <img src="{% static 'images/bag.svg' %}" alt="Achat"/>
+          </div>
+          <div>
+            <h3>Facilité d'Achat</h3>
+            <p>Commande simple, paiement sécurisé.</p>
+          </div>
         </div>
-    </div>
-</div>
-
-<!-- Fin Section Pourquoi Choisir Nous -->
-
-
-
-<!-- Début Section Produits Populaires -->
-<div class="popular-product py-12">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-wrap -mx-4">
-
-            <div class="w-full md:w-1/2 lg:w-1/3 mb-4 lg:mb-0 px-4">
-                <div class="product-item-sm flex space-x-4">
-                    <div class="thumbnail flex-shrink-0">
-                        <img src="{% static 'images/chaise.png' %}" alt="Chaise Nordique" class="w-24 h-24 object-cover rounded">
-                    </div>
-                    <div class="pt-3">
-                        <h3 class="text-lg font-semibold">Chaise de Qualite en filet</h3>
-                        <p class="text-sm mb-2"></p>
-                        <p><a href="#" class="text-blue-600 hover:underline">En savoir plus</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full md:w-1/2 lg:w-1/3 mb-4 lg:mb-0 px-4">
-                <div class="product-item-sm flex space-x-4">
-                    <div class="thumbnail flex-shrink-0">
-                        <img src="{% static 'images/boure.png' %}" alt="Chaise Kruzo Aero" class="w-24 h-24 object-cover rounded">
-                    </div>
-                    <div class="pt-3">
-                        <h3 class="text-lg font-semibold">Table en filet pour vos salon</h3>
-                        <p class="text-sm mb-2"></p>
-                        <p><a href="#" class="text-blue-600 hover:underline">En savoir plus</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full md:w-1/2 lg:w-1/3 mb-4 lg:mb-0 px-4">
-                <div class="product-item-sm flex space-x-4">
-                    <div class="thumbnail flex-shrink-0">
-                        <img src="{% static 'images/balance1.png' %}" alt="Chaise Ergonomique" class="w-24 h-24 object-cover rounded">
-                    </div>
-                    <div class="pt-3">
-                        <h3 class="text-lg font-semibold">Balancoire en filet</h3>
-                        <p class="text-sm mb-2"></p>
-                        <p><a href="#" class="text-blue-600 hover:underline">En savoir plus</a></p>
-                    </div>
-                </div>
-            </div>
-
+        <div class="feature">
+          <div class="feature-icon">
+            <img src="{% static 'images/support.svg' %}" alt="Support"/>
+          </div>
+          <div>
+            <h3>Support 24/7</h3>
+            <p>Toujours disponibles pour vous aider.</p>
+          </div>
         </div>
-    </div>
-</div>
-
-<!-- Fin Section Produits Populaires -->
-
-
-<!-- Début Section Footer -->
-<footer class="bg-gray-100 pt-12 pb-8">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-      <!-- Logo & Description -->
-      <div>
-        <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="w-16 mb-3">
-        <p class="text-sm text-gray-700">L’art de créer la richesse !</p>
-        <p class="mt-2 text-sm text-gray-600">
-          Total D’Action Sur Le Site : <strong class="text-black">0</strong>
-        </p>
-      </div>
-
-      <!-- Liens utiles -->
-      <div>
-        <h4 class="font-semibold text-gray-800 mb-3">Liens utiles</h4>
-        <ul class="space-y-2 text-sm text-gray-600">
-          <li><a href="{% url 'ecommerce:product_list' %}" class="hover:text-blue-600">Accueil</a></li>
-          <li><a href="{% url 'ecommerce:shop' %}" class="hover:text-blue-600">Boutique</a></li>
-          <li><a href="{% url 'ecommerce:about' %}" class="hover:text-blue-600">À propos de nous</a></li>
-          <li><a href="{% url 'ecommerce:services' %}" class="hover:text-blue-600">Services</a></li>
-          <li><a href="{% url 'ecommerce:blog' %}" class="hover:text-blue-600">Blog</a></li>
-          <li><a href="{% url 'ecommerce:contact' %}" class="hover:text-blue-600">Contactez-nous</a></li>
-        </ul>
-      </div>
-
-      <!-- Newsletter -->
-      <div>
-        <h4 class="font-semibold text-gray-800 mb-3">Rester informé</h4>
-        <form>
-          <input type="email" placeholder="Votre email" class="w-full px-3 py-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-          <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Soumettre</button>
-        </form>
-        <p class="text-sm text-gray-600 mt-3">Téléphone : +228 90 12 17 64</p>
-        <p class="text-sm text-gray-600">Email : creationjames9@gmail.com</p>
-      </div>
-
-      <!-- Réseaux sociaux -->
-      <div>
-        <h4 class="font-semibold text-gray-800 mb-3">Suivez-nous</h4>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="text-gray-600 hover:text-blue-600 text-xl"><i class="fab fa-linkedin"></i></a>
+        <div class="feature">
+          <div class="feature-icon">
+            <img src="{% static 'images/return.svg' %}" alt="Retours"/>
+          </div>
+          <div>
+            <h3>Retours Sans Tracas</h3>
+            <p>Satisfaction garantie ou remboursé.</p>
+          </div>
         </div>
       </div>
-
     </div>
+
+    <div class="why-image">
+      <img src="{% static 'images/filet.png' %}" alt="Artisanat Creationjames"/>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUITS POPULAIRES ═════════════════════════════════════ -->
+<section class="popular-section">
+  <div class="popular-inner">
+    <div class="section-header" style="margin-bottom:28px;">
+      <div>
+        <div class="section-eyebrow">Nos best-sellers</div>
+        <h2>Produits Populaires</h2>
+      </div>
+    </div>
+
+    <div class="popular-grid">
+      <div class="popular-card">
+        <div class="popular-thumb">
+          <img src="{% static 'images/chaise.png' %}" alt="Chaise"/>
+        </div>
+        <div class="popular-info">
+          <h3>Chaise de Qualité en filet</h3>
+          <a href="#">En savoir plus →</a>
+        </div>
+      </div>
+      <div class="popular-card">
+        <div class="popular-thumb">
+          <img src="{% static 'images/boure.png' %}" alt="Table"/>
+        </div>
+        <div class="popular-info">
+          <h3>Table en filet pour votre salon</h3>
+          <a href="#">En savoir plus →</a>
+        </div>
+      </div>
+      <div class="popular-card">
+        <div class="popular-thumb">
+          <img src="{% static 'images/balance1.png' %}" alt="Balançoire"/>
+        </div>
+        <div class="popular-info">
+          <h3>Balançoire en filet</h3>
+          <a href="#">En savoir plus →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="{% static 'images/logo.jpg' %}" alt="Logo"/>
+      <p class="tagline">L'art de créer la richesse !</p>
+      <p>Artisan togolais spécialisé dans le design d'intérieur en filet.</p>
+    </div>
+
+    <div>
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="{% url 'ecommerce:product_list' %}">Accueil</a></li>
+        <li><a href="{% url 'ecommerce:shop' %}">Boutique</a></li>
+        <li><a href="{% url 'ecommerce:about' %}">À propos de nous</a></li>
+        <li><a href="{% url 'ecommerce:services' %}">Services</a></li>
+        <li><a href="{% url 'ecommerce:blog' %}">Blog</a></li>
+        <li><a href="{% url 'ecommerce:contact' %}">Contactez-nous</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Rester informé</h4>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Votre adresse email"/>
+        <button type="submit">S'abonner</button>
+      </form>
+      <div class="footer-contact">
+        <p>📞 <a href="tel:+22890121764">+228 90 12 17 64</a></p>
+        <p>✉️ <a href="mailto:creationjames9@gmail.com">creationjames9@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div>
+      <h4>Suivez-nous</h4>
+      <div class="social-links" style="flex-wrap:wrap;">
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="Twitter">𝕏</a>
+        <a href="#" title="Instagram">▣</a>
+        <a href="#" title="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Creationjames — Tous droits réservés.</p>
+    <p>Artisanat Togolais · Fabriqué à la main</p>
   </div>
 </footer>
 
+<!-- ══ SCRIPTS ═════════════════════════════════════════════════ -->
 <script>
 function afficherCategorie(slug, btn) {
-  const sections = document.querySelectorAll('.categorie-produit');
-  sections.forEach(section => section.classList.add('hidden'));
-
-  const target = document.getElementById('categorie-' + slug);
-  if (target) target.classList.remove('hidden');
-
-  const btnActive = document.getElementById('categorie-btn-active');
-  if (btnActive) {
-    btnActive.classList.remove('bg-orange-500', 'text-white');
-    btnActive.classList.add('bg-white', 'text-gray-700');
-    btnActive.removeAttribute('id');
-  }
-
-  btn.classList.add('bg-orange-500', 'text-white');
-  btn.classList.remove('bg-white', 'text-gray-700');
-  btn.id = 'categorie-btn-active';
+  document.querySelectorAll('.categorie-produit').forEach(s => s.classList.add('hidden'));
+  const t = document.getElementById('categorie-' + slug);
+  if (t) t.classList.remove('hidden');
+  document.querySelectorAll('.cat-sidebar button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 }
 
 function afficherCategorieMobile(slug, btn) {
-  const sections = document.querySelectorAll('.categorie-produit-mobile');
-  sections.forEach(section => section.classList.add('hidden'));
-
-  const target = document.getElementById('mobile-categorie-' + slug);
-  if (target) target.classList.remove('hidden');
-
-  const btnActive = document.getElementById('mobile-categorie-btn-active');
-  if (btnActive) {
-    btnActive.classList.remove('bg-orange-500', 'text-white');
-    btnActive.classList.add('bg-white', 'text-gray-700');
-    btnActive.removeAttribute('id');
-  }
-
-  btn.classList.add('bg-orange-500', 'text-white');
-  btn.classList.remove('bg-white', 'text-gray-700');
-  btn.id = 'mobile-categorie-btn-active';
+  document.querySelectorAll('.categorie-produit-mobile').forEach(s => s.classList.add('hidden'));
+  const t = document.getElementById('mobile-categorie-' + slug);
+  if (t) t.classList.remove('hidden');
+  btn.closest('.cat-pills').querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 }
-</script>
-<script>
+
 function afficherarticleCategorie(slug, btn, mode) {
-  const sectionClass = mode === 'desktop' ? '.categorie-article-desktop' : '.categorie-article-mobile';
-  const targetId = mode === 'desktop' ? 'articlecategorie-desktop-' + slug : 'articlecategorie-mobile-' + slug;
-  const activeBtnId = mode === 'desktop' ? 'article-btn-active-desktop' : 'article-btn-active-mobile';
-
-  document.querySelectorAll(sectionClass).forEach(section => section.classList.add('hidden'));
-
-  const target = document.getElementById(targetId);
-  if (target) target.classList.remove('hidden');
-
-  const oldActiveBtn = document.getElementById(activeBtnId);
-  if (oldActiveBtn) {
-    oldActiveBtn.classList.remove('bg-orange-500', 'text-white');
-    oldActiveBtn.classList.add('bg-white', 'text-gray-700');
-    oldActiveBtn.removeAttribute('id');
-  }
-
-  btn.classList.add('bg-orange-500', 'text-white');
-  btn.classList.remove('bg-white', 'text-gray-700');
-  btn.id = activeBtnId;
+  const cls    = mode === 'desktop' ? '.categorie-article-desktop' : '.categorie-article-mobile';
+  const prefix = mode === 'desktop' ? 'articlecategorie-desktop-' : 'articlecategorie-mobile-';
+  document.querySelectorAll(cls).forEach(s => s.classList.add('hidden'));
+  const t = document.getElementById(prefix + slug);
+  if (t) t.classList.remove('hidden');
+  const parent = btn.closest('ul, .cat-pills');
+  if (parent) parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 }
-</script>
-<script>
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialisation catégories produits (desktop & mobile)
-  document.querySelector('aside ul button')?.click();
+  document.querySelector('.cat-sidebar ul button')?.click();
   document.querySelector('.article-liste-desktop button')?.click();
   document.querySelector('.article-liste-mobile button')?.click();
-
-  // Menu hamburger
-  const menuBtn = document.getElementById('menu-btn');
-  const menu = document.getElementById('menu');
-  if (menuBtn && menu) {
-    menuBtn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  }
 });
 </script>
-
-
-
 </body>
 </html>

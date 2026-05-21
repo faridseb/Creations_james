@@ -2,78 +2,400 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>LeaderShip</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leadership et Relations</title>
   {% load static %}
-  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Sora', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      /* background: linear-gradient(160deg, #1a6b30 0%, #22a34b 55%, #2dc25a 100%); */
+      background: linear-gradient(160deg, #0d1b3e 0%, #1a3a8c 55%, #1a56db 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ===== HEADER ===== */
+    .page-header {
+      text-align: center;
+      padding: 52px 24px 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      color: #ffffff;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.4;
+      max-width: 620px;
+      margin: 0 auto 8px;
+    }
+
+    .page-title .heart {
+      font-size: 22px;
+    }
+
+    .page-subtitle {
+      color: rgba(255, 255, 255, 0.60);
+      font-size: 13px;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    /* Badges thématiques */
+    .theme-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .btn-audio {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-audio:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    /* ===== CORPS PRINCIPAL ===== */
+    .main-body {
+      flex: 1;
+      background: #f4f6f3;
+      border-radius: 28px 28px 0 0;
+      padding: 44px 40px 64px;
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ===== CARD INTRO ===== */
+    .intro-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 28px 26px;
+      border-left: 4px solid #22a34b;
+      box-shadow: 0 4px 20px rgba(34, 163, 75, 0.10);
+      margin-bottom: 36px;
+    }
+
+    .intro-card p {
+      font-size: 14px;
+      color: #444;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    /* ===== GRILLE THÈMES ===== */
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .theme-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 22px 18px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(34, 163, 75, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(34, 163, 75, 0.15);
+    }
+
+    .theme-icon {
+      width: 46px; height: 46px;
+      border-radius: 13px;
+      background: #e6f7ed;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 20px;
+      color: #22a34b;
+    }
+
+    .theme-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a6b30;
+      line-height: 1.4;
+    }
+
+    /* ===== TEXTE ARTICLE ===== */
+    .article-text p {
+      font-size: 14px;
+      color: #444;
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .article-text strong {
+      font-weight: 700;
+      color: #1a6b30;
+    }
+
+    /* ===== MODAL AUDIO ===== */
+    .audio-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .audio-modal-backdrop.open {
+      display: flex;
+    }
+
+    .audio-modal-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      margin: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .audio-modal-box h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .audio-modal-box audio {
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+      transition: background 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: #e0e0e0;
+      color: #c00;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: rgba(0, 0, 0, 0.35);
+      padding: 22px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 12px;
+      font-weight: 300;
+      margin: 4px 0;
+    }
+
+    footer p strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .page-title { font-size: 17px; }
+      .main-body { padding: 28px 18px 48px; }
+      .intro-card { padding: 20px 16px; }
+      .themes-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
 
-  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-    <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mb-4 text-center leading-relaxed">
-      LE LEADERSHIP FÉMININ / LE LEADERSHIP MASCULIN / <br />
-      LES RELATIONS FAMILIALES / LES RELATIONS AMICALES ET LES RELATIONS AMOUREUSES 🧡
-    </h2>
+<body>
 
-    <!-- Introduction -->
-    <p class="text-gray-700 text-lg leading-relaxed mb-6 text-justify">
-      Ce programme a été conçu pour explorer les dimensions profondes du leadership, qu'il soit féminin ou masculin,
-      et pour améliorer la qualité des relations humaines dans toutes leurs formes. À travers des thématiques riches
-      et variées, nous vous invitons à réfléchir, à apprendre et à évoluer personnellement et collectivement.
-      Découvrez comment renforcer vos liens familiaux, entretenir des amitiés sincères, et bâtir des relations amoureuses
-      saines et équilibrées. Le leadership commence par la connaissance de soi et des autres.
-    </p>
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      Leadership Féminin &amp; Masculin / Relations Familiales,
+      Amicales &amp; Amoureuses <span class="heart">🧡</span>
+    </h1>
+    <p class="page-subtitle">Explorer, apprendre et évoluer ensemble</p>
 
-    <div class="text-center mt-6">
-      <button
-        id="openAudioBtn"
-        class="inline-flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v16l-12-3z" />
-        </svg>
-        Écouter l'audio
-      </button>
+    <!-- Badges thématiques -->
+    <div class="theme-badges">
+      <span class="badge"><i class="ti ti-woman" style="font-size:13px;"></i> Leadership féminin</span>
+      <span class="badge"><i class="ti ti-man" style="font-size:13px;"></i> Leadership masculin</span>
+      <span class="badge"><i class="ti ti-home-heart" style="font-size:13px;"></i> Relations familiales</span>
+      <span class="badge"><i class="ti ti-users" style="font-size:13px;"></i> Relations amicales</span>
+      <span class="badge"><i class="ti ti-heart" style="font-size:13px;"></i> Relations amoureuses</span>
     </div>
+
+    <button class="btn-audio" onclick="openAudioModal()">
+      <i class="ti ti-headphones" style="font-size: 16px;"></i>
+      Écouter l'audio
+    </button>
   </div>
 
-  <!-- Modal audio -->
-  <div
-    id="audioModal"
-    class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
-  >
-    <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md relative mx-4">
-      <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
-      <audio controls class="w-full mb-4">
+  <!-- Corps principal -->
+  <div class="main-body">
+
+    <!-- Carte intro -->
+    <div class="intro-card">
+      <p>Ce programme a été conçu pour explorer les dimensions profondes du leadership, qu'il soit féminin ou masculin, et pour améliorer la qualité des relations humaines dans toutes leurs formes. À travers des thématiques riches et variées, nous vous invitons à réfléchir, à apprendre et à évoluer personnellement et collectivement. Découvrez comment renforcer vos liens familiaux, entretenir des amitiés sincères, et bâtir des relations amoureuses saines et équilibrées. Le leadership commence par la connaissance de soi et des autres.</p>
+    </div>
+
+    <!-- Grille des thèmes -->
+    <div class="themes-grid">
+      <div class="theme-card">
+        <div class="theme-icon"><i class="ti ti-woman" aria-hidden="true"></i></div>
+        <h3>Leadership Féminin</h3>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon"><i class="ti ti-man" aria-hidden="true"></i></div>
+        <h3>Leadership Masculin</h3>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon"><i class="ti ti-home-heart" aria-hidden="true"></i></div>
+        <h3>Relations Familiales</h3>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
+        <h3>Relations Amicales</h3>
+      </div>
+      <div class="theme-card">
+        <div class="theme-icon"><i class="ti ti-heart" aria-hidden="true"></i></div>
+        <h3>Relations Amoureuses</h3>
+      </div>
+    </div>
+
+    <!-- Contenu article — à compléter -->
+    <div class="article-text">
+      <p>Le contenu détaillé de cette section sera ajouté ici. Vous pouvez enrichir cette page avec vos analyses, témoignages, leçons et documentaires sur le leadership et les relations humaines.</p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Total d'actions sur le site : <strong>{{ total_global_users }}</strong></p>
+    <p>📍 AGOE CAMPS GP — LOMÉ, TOGO &nbsp;·&nbsp; 📞 +228 90121764 &nbsp;·&nbsp; ✉️ creationjames@gmail.com</p>
+  </footer>
+
+  <!-- Modal Audio -->
+  <div id="audioModal" class="audio-modal-backdrop">
+    <div class="audio-modal-box">
+      <button class="modal-close-btn" onclick="closeAudioModal()" aria-label="Fermer">&times;</button>
+
+      <h3>🎧 Audio — Français</h3>
+      <audio controls>
         <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
         Votre navigateur ne supporte pas la lecture audio.
       </audio>
-      <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
-      <audio controls class="w-full">
+
+      <h3>🎧 Audio — Anglais</h3>
+      <audio controls>
         <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
         Votre navigateur ne supporte pas la lecture audio.
       </audio>
-      <button
-        id="closeAudioBtn"
-        class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold"
-        aria-label="Fermer le modal"
-      >&times;</button>
     </div>
   </div>
 
   <script>
-    const openAudioBtn = document.getElementById('openAudioBtn');
-    const closeAudioBtn = document.getElementById('closeAudioBtn');
-    const audioModal = document.getElementById('audioModal');
-
-    openAudioBtn.addEventListener('click', () => {
-      audioModal.classList.remove('hidden');
-      audioModal.classList.add('flex');
+    function openAudioModal() {
+      document.getElementById('audioModal').classList.add('open');
+    }
+    function closeAudioModal() {
+      document.getElementById('audioModal').classList.remove('open');
+    }
+    document.getElementById('audioModal').addEventListener('click', function(e) {
+      if (e.target === this) closeAudioModal();
     });
+  </script>
 
-    closeAudioBtn.addEventListener('click', () => {
-      audioModal.classList.add('hidden');
-      audioModal.classList.remove('flex');
-    });
-
-    audioMo
+</body>
+</html>

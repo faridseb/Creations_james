@@ -1,64 +1,454 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Santé et Environnement</title>
-  {% load static %}
-
   <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Variables ── */
+    :root {
+      --green-dark:  #14532d;
+      --green-mid:   #16a34a;
+      --green-light: #4ade80;
+      --green-pale:  #dcfce7;
+      --green-bg:    #f0fdf4;
+      --white:       #ffffff;
+      --text:        #1a2e1a;
+      --muted:       #4b7a5a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      /* background: linear-gradient(160deg, #14532d 0%, #166534 45%, #15803d 100%); */
+      background: linear-gradient(160deg, #0d1b3e 0%, #1a3a8c 55%, #1a56db 100%);
+      min-height: 100vh;
+      padding: 48px 16px 64px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Décoration fond */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 70%);
+      top: -200px; right: -180px;
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,222,128,.12) 0%, transparent 70%);
+      bottom: -100px; left: -120px;
+      pointer-events: none;
+    }
+
+    /* ── Conteneur principal ── */
+    .page-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .breadcrumb a {
+      color: rgba(255,255,255,.55);
+      font-size: .82rem;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .breadcrumb a:hover { color: rgba(255,255,255,.9); }
+    .breadcrumb span {
+      color: rgba(255,255,255,.3);
+      font-size: .8rem;
+    }
+    .breadcrumb .current {
+      color: var(--gold);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    /* ── Card principale ── */
+    .main-card {
+      background: rgba(255,255,255,.09);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 24px;
+      padding: 52px 56px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 64px rgba(0,0,0,.25);
+    }
+
+    /* Accent vert en haut de la card */
+    .main-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #16a34a, #4ade80, #16a34a);
+      border-radius: 24px 24px 0 0;
+    }
+
+    /* Lueur décorative */
+    .main-card::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(22,163,74,.08) 0%, transparent 70%);
+      top: -80px; right: -60px;
+      pointer-events: none;
+    }
+
+    /* ── Icône thème ── */
+    .topic-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px; height: 52px;
+      background: rgba(22,163,74,.15);
+      border: 1px solid rgba(22,163,74,.30);
+      border-radius: 14px;
+      margin-bottom: 20px;
+    }
+    .topic-icon svg { width: 26px; height: 26px; }
+
+    /* ── Badge catégorie ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(22,163,74,.15);
+      border: 1px solid rgba(22,163,74,.30);
+      color: #4ade80;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Titre ── */
+    .main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .main-title span { color: #4ade80; }
+
+    /* Ligne décorative sous le titre */
+    .title-line {
+      width: 56px; height: 3px;
+      background: linear-gradient(90deg, #4ade80, transparent);
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    /* ── Texte ── */
+    .main-text {
+      color: rgba(255,255,255,.82);
+      font-size: .97rem;
+      line-height: 1.85;
+      text-align: justify;
+      margin-bottom: 36px;
+    }
+    .main-text strong { color: #4ade80; font-weight: 600; }
+
+    /* ── Séparateur ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+      margin-bottom: 32px;
+    }
+
+    /* ── Bouton Audio (glassmorphism) ── */
+    .btn-audio {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.30);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: .92rem;
+      padding: 13px 32px;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .25s, border-color .25s, box-shadow .25s, transform .15s;
+      letter-spacing: .3px;
+    }
+    .btn-audio:hover {
+      background: rgba(255,255,255,.20);
+      border-color: rgba(255,255,255,.55);
+      box-shadow: 0 4px 20px rgba(255,255,255,.10);
+      transform: translateY(-2px);
+    }
+    .btn-audio:active { transform: scale(.97); }
+
+    .btn-audio .icon-wrap {
+      width: 32px; height: 32px;
+      background: rgba(22,163,74,.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-audio .icon-wrap svg { width: 15px; height: 15px; }
+
+    /* Pulsation sur l'icône audio */
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(74,222,128,.35); }
+      70%  { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+      100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+    }
+    .btn-audio:hover .icon-wrap { animation: pulse-ring 1.2s infinite; }
+
+    /* ── Zone boutons ── */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ══════════════════════════════════════
+       MODAL AUDIO
+    ══════════════════════════════════════ */
+    #audioModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 16px;
+    }
+    #audioModal.open { display: flex; }
+
+    .modal-box {
+      background: linear-gradient(160deg, #0f2354 0%, #1a3a8c 100%);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 20px;
+      padding: 36px 40px;
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4);
+      animation: modalIn .3s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.6);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, color .2s;
+    }
+    .modal-close:hover { background: rgba(220,38,38,.25); color: #fff; }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 24px;
+      padding-right: 32px;
+    }
+
+    .audio-block { margin-bottom: 24px; }
+    .audio-block:last-of-type { margin-bottom: 0; }
+
+    .audio-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #4ade80;
+      font-weight: 600;
+      font-size: .82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .audio-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      flex-shrink: 0;
+    }
+
+    audio {
+      width: 100%;
+      border-radius: 8px;
+      outline: none;
+      filter: brightness(1.1);
+    }
+    /* Style custom de l'audio player */
+    audio::-webkit-media-controls-panel {
+      background: rgba(255,255,255,.08);
+      border-radius: 8px;
+    }
+
+    .modal-divider {
+      height: 1px;
+      background: rgba(255,255,255,.10);
+      margin: 20px 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .main-card { padding: 32px 22px; }
+      .modal-box { padding: 28px 20px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body>
 
-  <!-- Contenu principal -->
-  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-    <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mb-4 text-center">
-      PARLONS A FOND DE LA SANTÉ ET DE L’ENVIRONNEMENT
-    </h2>
-    <p class="text-gray-700 mb-6 text-justify leading-relaxed">
-      La santé et l’environnement sont intimement liés. Un environnement sain contribue à une meilleure qualité de vie et prévient de nombreuses maladies. 
-      La pollution de l’air, de l’eau et des sols, ainsi que le changement climatique, impactent directement notre santé. 
-      Protéger la nature, réduire nos déchets, favoriser les énergies renouvelables et adopter des habitudes responsables 
-      sont des actions essentielles pour préserver notre planète et notre bien-être. 
-      Ensemble, nous pouvons construire un avenir plus durable et plus sain pour tous.
-    </p>
+  <div class="page-wrapper">
 
-    <div class="flex justify-center">
-      <button onclick="openAudioModal()" class="text-blue-600 font-semibold hover:underline flex items-center gap-2">
-        <i class="fa-solid fa-headphones"></i> Écouter en Audio
-      </button>
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="/">Accueil</a>
+      <span>›</span>
+      <a href="#">Catégories</a>
+      <span>›</span>
+      <span class="current">Santé et Environnement</span>
+    </nav>
+
+    <!-- Card principale -->
+    <div class="main-card">
+
+      <!-- Badge -->
+      <div class="badge">
+        <svg viewBox="0 0 16 16" fill="currentColor" width="10" height="10">
+          <circle cx="8" cy="8" r="4"/>
+        </svg>
+        Santé &amp; Environnement
+      </div>
+
+      <!-- Titre -->
+      <h1 class="main-title">
+        Parlons à fond de la <span>Santé</span><br/>et de l'<span>Environnement</span>
+      </h1>
+      <div class="title-line"></div>
+
+      <!-- Texte -->
+      <p class="main-text">
+        La santé et l'environnement sont intimement liés. Un environnement sain contribue à une
+        <strong>meilleure qualité de vie</strong> et prévient de nombreuses maladies.
+        La pollution de l'air, de l'eau et des sols, ainsi que le
+        <strong>changement climatique</strong>, impactent directement notre santé.
+        Protéger la nature, réduire nos déchets, favoriser les
+        <strong>énergies renouvelables</strong> et adopter des habitudes responsables
+        sont des actions essentielles pour préserver notre planète et notre bien-être.
+        Ensemble, nous pouvons construire un avenir plus durable et plus sain pour tous.
+      </p>
+
+      <div class="divider"></div>
+
+      <!-- Bouton audio -->
+      <div class="actions">
+        <button class="btn-audio" onclick="openAudioModal()">
+          <span class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+              <path d="M3 18v-6a9 9 0 0118 0v6"/>
+              <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/>
+            </svg>
+          </span>
+          Écouter en Audio
+        </button>
+      </div>
+
+    </div><!-- /main-card -->
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ══════ MODAL AUDIO ══════ -->
+  <div id="audioModal">
+    <div class="modal-box">
+
+      <button class="modal-close" onclick="closeAudioModal()">✕</button>
+
+      <h2 class="modal-title">🎧 Écouter le contenu audio</h2>
+
+      <!-- Français -->
+      <div class="audio-block">
+        <div class="audio-label">Français</div>
+        <audio controls>
+          <source src="{% static 'audios/sante_environnement_fr.mp3' %}" type="audio/mpeg">
+          Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <!-- Anglais -->
+      <div class="audio-block">
+        <div class="audio-label">Anglais</div>
+        <audio controls>
+          <source src="{% static 'audios/sante_environnement_en.mp3' %}" type="audio/mpeg">
+          Votre navigateur ne supporte pas la lecture audio.
+        </audio>
+      </div>
+
     </div>
   </div>
 
-  <!-- Modal Audio -->
-  <div id="audioModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative mx-4">
-      
-      <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
-        <audio controls class="w-full">
-            <source src="{% static 'audios/sante_environnement_fr.mp3' %}" type="audio/mpeg">
-            Votre navigateur ne supporte pas la lecture audio.
-        </audio>
-        <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
-          <audio controls class="w-full">
-            <source src="{% static 'audios/sante_environnement_en.mp3' %}" type="audio/mpeg">
-            Votre navigateur ne supporte pas la lecture audio.
-        </audio>
-      <button onclick="closeAudioModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
-    </div>
-  </div>
-
-  <!-- Scripts -->
   <script>
     function openAudioModal() {
-      document.getElementById('audioModal').classList.remove('hidden');
-      document.getElementById('audioModal').classList.add('flex');
+      document.getElementById('audioModal').classList.add('open');
     }
     function closeAudioModal() {
-      document.getElementById('audioModal').classList.remove('flex');
-      document.getElementById('audioModal').classList.add('hidden');
+      document.getElementById('audioModal').classList.remove('open');
     }
+    // Fermer en cliquant en dehors
+    document.getElementById('audioModal').addEventListener('click', function(e) {
+      if (e.target === this) closeAudioModal();
+    });
+    // Fermer avec Echap
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeAudioModal();
+    });
   </script>
 
 </body>

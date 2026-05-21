@@ -5,81 +5,472 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donateurs et Bienfaiteurs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Sora', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* background: linear-gradient(160deg, #1a7a3a 0%, #22a34b 55%, #2dc25a 100%); */
+            background: linear-gradient(160deg, #0d1b3e 0%, #1a3a8c 55%, #1a56db 100%);
+
+            overflow-x: hidden;
+        }
+
+        /* Cercles décoratifs */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -80px; right: -80px;
+            width: 320px; height: 320px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -60px; left: -60px;
+            width: 220px; height: 220px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            text-align: center;
+            padding: 52px 24px 44px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* ===== BODY BLANC ARRONDI ===== */
+        .main-body {
+            flex: 1;
+            background: #f4f6f3;
+            border-radius: 28px 28px 0 0;
+            padding: 40px 32px 56px;
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===== TITRES DE SECTION ===== */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a6b30;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            font-size: 18px;
+            color: #22a34b;
+        }
+
+        /* ===== GRILLE STATS ===== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 26px 22px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(34, 163, 75, 0.10);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(34, 163, 75, 0.18);
+        }
+
+        .stat-card.danger {
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.10);
+        }
+
+        .stat-card.danger:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(220, 38, 38, 0.18);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: #e6f7ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 22px;
+            color: #22a34b;
+        }
+
+        .stat-card.danger .stat-icon {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #bbb;
+            font-weight: 300;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .stat-count {
+            font-size: 30px;
+            font-weight: 700;
+            color: #22a34b;
+            margin-bottom: 6px;
+        }
+
+        .stat-card.danger .stat-count {
+            color: #dc2626;
+        }
+
+        .stat-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #22a34b;
+            margin-bottom: 16px;
+        }
+
+        .stat-card.danger .stat-name {
+            color: #dc2626;
+        }
+
+        /* ===== BOUTONS ===== */
+        .btn-green {
+            display: inline-block;
+            background: #22a34b;
+            color: #ffffff;
+            border: none;
+            border-radius: 11px;
+            padding: 10px 26px;
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.15s ease;
+        }
+
+        .btn-green:hover {
+            background: #1a7a3a;
+            transform: translateY(-1px);
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .btn-red {
+            display: inline-block;
+            background: #dc2626;
+            color: #ffffff;
+            border: none;
+            border-radius: 11px;
+            padding: 10px 26px;
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.15s ease;
+        }
+
+        .btn-red:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* ===== SECTION PROJETS ===== */
+        .projects-section {
+            margin-bottom: 36px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 22px 20px;
+            box-shadow: 0 4px 16px rgba(34, 163, 75, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .project-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .project-card p {
+            font-size: 13px;
+            color: #888;
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .btn-blue {
+            display: inline-block;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 18px;
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .btn-blue:hover {
+            background: #1d4ed8;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .proj-empty {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 36px;
+            text-align: center;
+            color: #ccc;
+            font-size: 13px;
+            font-weight: 300;
+            border: 1.5px dashed #d4ead9;
+        }
+
+        .proj-empty i {
+            font-size: 36px;
+            color: #d4ead9;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* ===== SIGNALEMENT ===== */
+        .signalement-section {
+            margin-bottom: 8px;
+        }
+
+        .signalement-box {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 26px 24px;
+            border-left: 4px solid #22a34b;
+            box-shadow: 0 4px 16px rgba(34, 163, 75, 0.08);
+        }
+
+        .signalement-box p {
+            font-size: 13px;
+            color: #666;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .badge-indispo {
+            display: inline-block;
+            font-size: 11px;
+            background: #f0faf4;
+            color: #22a34b;
+            border: 1px solid #b8e8c8;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 22px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 12px;
+            font-weight: 300;
+            margin: 4px 0;
+        }
+
+        footer p strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 640px) {
+            .page-title { font-size: 20px; }
+            .main-body { padding: 28px 18px 40px; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 400px) {
+            .stat-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans">
+
+<body>
 
     <!-- Header -->
-    <div class="bg-green-600 text-white text-center py-6 shadow">
-        <h1 class="text-3xl font-bold">Donateurs, Sponsors et Bienfaiteurs</h1>
-        <p class="mt-2">Soutenez nos œuvres sociales et découvrez nos partenaires généreux.</p>
+    <div class="page-header">
+        <h1 class="page-title">Donateurs, Sponsors &amp; Bienfaiteurs</h1>
+        <p class="page-subtitle">Soutenez nos œuvres sociales et découvrez nos partenaires généreux.</p>
     </div>
 
-    <!-- Container -->
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Donateurs & Sponsors -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
-                <h2 class="text-2xl font-bold text-green-600 mb-4">Les Donateurs : {{ donateurs_count }}</h2>
-                <a href="{% url 'homepage:donateurs_list' %}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
+    <!-- Corps principal -->
+    <div class="main-body">
+
+        <!-- Section : Soutiens & Partenaires -->
+        <p class="section-title">
+            <i class="ti ti-heart"></i>
+            Soutiens &amp; Partenaires
+        </p>
+
+        <div class="stat-grid">
+            <!-- Donateurs -->
+            <div class="stat-card">
+                <div class="stat-icon"><i class="ti ti-hand-heart"></i></div>
+                <p class="stat-label">Total enregistrés</p>
+                <p class="stat-count">{{ donateurs_count }}</p>
+                <p class="stat-name">Les Donateurs</p>
+                <a href="{% url 'homepage:donateurs_list' %}" class="btn-green">Voir plus</a>
             </div>
 
-            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
-                <h2 class="text-2xl font-bold text-green-600 mb-4">Les Sponsors : {{ sponsors_count }}</h2>
-                <a href="{% url 'homepage:sponsors_list' %}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
+            <!-- Sponsors -->
+            <div class="stat-card">
+                <div class="stat-icon"><i class="ti ti-award"></i></div>
+                <p class="stat-label">Total enregistrés</p>
+                <p class="stat-count">{{ sponsors_count }}</p>
+                <p class="stat-name">Les Sponsors</p>
+                <a href="{% url 'homepage:sponsors_list' %}" class="btn-green">Voir plus</a>
+            </div>
+
+            <!-- Bienfaiteurs -->
+            <div class="stat-card">
+                <div class="stat-icon"><i class="ti ti-star"></i></div>
+                <p class="stat-label">Total enregistrés</p>
+                <p class="stat-count">{{ bienfaiteurs_count }}</p>
+                <p class="stat-name">Les Bienfaiteurs</p>
+                <a href="{% url 'homepage:bienfaiteurs_list' %}" class="btn-green">Voir plus</a>
+            </div>
+
+            <!-- Torpilleurs -->
+            <div class="stat-card danger">
+                <div class="stat-icon"><i class="ti ti-alert-triangle"></i></div>
+                <p class="stat-label">Total enregistrés</p>
+                <p class="stat-count">{{ torpilleurs_count }}</p>
+                <p class="stat-name">Les Torpilleurs</p>
+                <a href="{% url 'homepage:torpilleurs_list' %}" class="btn-red">Voir plus</a>
             </div>
         </div>
 
-        <!-- Bienfaiteurs & Torpilleurs -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
-                <h2 class="text-2xl font-bold text-green-600 mb-4">Les Bienfaiteurs : {{ bienfaiteurs_count }}</h2>
-                <a href="{% url 'homepage:bienfaiteurs_list' %}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
-            </div>
+        <!-- Section : Projets -->
+        <div class="projects-section">
+            <p class="section-title">
+                <i class="ti ti-photo"></i>
+                Nos Œuvres Sociales en Images et Vidéo
+            </p>
 
-            <div class="bg-white rounded-lg shadow hover:scale-105 transform transition p-6 text-center">
-                <h2 class="text-2xl font-bold text-red-600 mb-4">Les Torpilleurs : {{ torpilleurs_count }}</h2>
-                <a href="{% url 'homepage:torpilleurs_list' %}" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">Voir plus</a>
-            </div>
-        </div>
-
-        <!-- Projets -->
-        <div class="mb-12">
-            <h2 class="text-center text-2xl font-bold text-green-600 mb-6">Nos Œuvres Sociales en Images et Vidéo</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="projects-grid">
                 {% for projet in projets %}
-                    <div class="bg-white rounded-lg shadow p-4 hover:scale-105 transform transition">
-                        <h3 class="text-xl font-semibold mb-2">{{ projet.titre }}</h3>
-                        <p class="text-gray-600 mb-4">{{ projet.description|slice:":100" }}...</p>
-                        <a href="{% url 'homepage:projet_detail' projet.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded inline-block">Voir le projet</a>
+                    <div class="project-card">
+                        <h3>{{ projet.titre }}</h3>
+                        <p>{{ projet.description|slice:":100" }}...</p>
+                        <a href="{% url 'homepage:projet_detail' projet.id %}" class="btn-blue">Voir le projet</a>
                     </div>
                 {% empty %}
-                    <p>Aucun projet n'a été encore réalisé.</p>
+                    <div class="proj-empty" style="grid-column: 1 / -1;">
+                        <i class="ti ti-mood-empty"></i>
+                        Aucun projet n'a encore été réalisé.
+                    </div>
                 {% endfor %}
             </div>
         </div>
 
-        <!-- Signalement -->
-        <div class="mb-12">
-            <h2 class="text-center text-2xl font-bold text-green-600 mb-4">Signaler les failles & Poser des questions</h2>
-            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-900 p-6 rounded">
-                <p class="mb-2">Si vous avez trouvé une faille dans le système ou si vous avez des questions, n'hésitez pas à nous en faire part en remplissant le formulaire ci-dessous.</p>
-                <h5 class="font-semibold">Pas encore disponible</h5>
+        <!-- Section : Signalement -->
+        <div class="signalement-section">
+            <p class="section-title">
+                <i class="ti ti-bug"></i>
+                Signaler les failles &amp; Poser des questions
+            </p>
+
+            <div class="signalement-box">
+                <p>Si vous avez trouvé une faille dans le système ou si vous avez des questions, n'hésitez pas à nous en faire part en remplissant le formulaire ci-dessous.</p>
+                <span class="badge-indispo">Pas encore disponible</span>
             </div>
         </div>
-    </div>
+
+    </div><!-- fin .main-body -->
 
     <!-- Footer -->
-    <footer class="bg-black text-white py-6">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p>Total d'action sur le site : <strong>{{ total_global_users }}</strong></p>
-            <p>Adresse : AGOE CAMPS GP LOME-TOGO</p>
-            <p>Téléphone : +228 90121764</p>
-            <p>Email : creationjames@gmail.com</p>
-        </div>
+    <footer>
+        <p>Total d'actions sur le site : <strong>{{ total_global_users }}</strong></p>
+        <p>📍 AGOE CAMPS GP — LOMÉ, TOGO &nbsp;·&nbsp; 📞 +228 90121764 &nbsp;·&nbsp; ✉️ creationjames@gmail.com</p>
     </footer>
+
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
 </body>
 </html>

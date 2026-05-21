@@ -6,849 +6,1151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CREATION JAMES</title>
     <script src="https://cdn.tailwindcss.com"></script>
-<link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
-<link rel="icon" type="image/jpg" href="{% static 'images/logo.jpg' %}">
+    <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo.jpg' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-/>
 <style>
-  .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 22px;
-            border-radius: 50px;
-            background: rgba(209, 209, 209, 0.18);
-            border: 1.5px solid rgba(255,255,255,.4);
-            color: #fff;
-            font-family: 'Syne', sans-serif;
-            font-size: .85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background .2s, transform .15s;
-            letter-spacing: .03em;
-        }
+/* ══════════════════════════════════════════════
+   PALETTE UNIFIÉE — CRÉATION JAMES
+   Navy #0d1b3e  |  Bleu #1a3a8c  |  Bleu vif #2563eb
+   Or  #f5a623   |  Fond clair #f0f4fc  |  Blanc #ffffff
+══════════════════════════════════════════════ */
 
-    .cta-btne {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 22px;
-            border-radius: 50px;
-            background: rgba(255,255,255,.18);
-            border: 1.5px solid rgba(255,255,255,.4);
-            color: #fff;
-            font-family: 'Syne', sans-serif;
-            font-size: .85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background .2s, transform .15s;
-            letter-spacing: .03em;
-        }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .cta-btn:hover ,.cta-btne:hover {
-            background: rgba(255,255,255,.32);
-            transform: scale(1.04);
-            border : 1px solid black;
-        }
+:root {
+  --navy:        #0d1b3e;
+  --navy-mid:    #122350;
+  --blue:        #1a3a8c;
+  --blue-vif:    #2563eb;
+  --blue-light:  #3b82f6;
+  --gold:        #f5a623;
+  --gold-dark:   #d4880f;
+  --white:       #ffffff;
+  --light:       #f0f4fc;
+  --light-2:     #e4ecf9;
+  --text:        #1e293b;
+  --text-muted:  #64748b;
+  --text-white:  rgba(255,255,255,0.85);
+  --radius:      16px;
+  --radius-sm:   10px;
+  --shadow:      0 6px 28px rgba(13,27,62,0.13);
+}
 
-        .cta-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: var(--light);
+  color: var(--text);
+  overflow-x: hidden;
+}
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-    :root {
-      --blue-deep: #1a2e7a;
-      --blue-main: #1e3a9f;
-      --blue-bright: #2350d4;
-      --blue-light: #3a6bff;
-      --blue-glow: #4d7fff;
-      --accent: #f0c040;
-      --white: #ffffff;
-      --text-muted: rgba(255,255,255,0.72);
-    }
- 
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background: var(--blue-deep);
-    }
- 
-    /* ── SECTION ── */
-    .comptes-section {
-      background: linear-gradient(135deg, #0d1f5c 0%, #1e3a9f 50%, #0d1f5c 100%);
-      padding: 60px 20px 80px;
-      position: relative;
-      overflow: hidden;
-    }
- 
-    /* subtle background pattern */
-    .comptes-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 15% 85%, rgba(74,124,255,0.18) 0%, transparent 45%),
-        radial-gradient(circle at 85% 20%, rgba(74,124,255,0.15) 0%, transparent 40%);
-      pointer-events: none;
-    }
- 
-    /* floating grid lines */
-    .comptes-section::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-    }
- 
-    /* ── TITLE ── */
-    .section-header {
-      text-align: center;
-      margin-bottom: 50px;
-      position: relative;
-      z-index: 2;
-    }
- 
-    .section-header h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 900;
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      color: var(--white);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      position: relative;
-      display: inline-block;
-    }
- 
-    .section-header h1::after {
-      content: '';
-      display: block;
-      margin: 10px auto 0;
-      width: 70px;
-      height: 4px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, var(--blue-glow), var(--accent));
-    }
- 
-    /* ── CAROUSEL WRAPPER ── */
-    .carousel-wrapper {
-      position: relative;
-      max-width: 1000px;
-      margin: 0 auto;
-      z-index: 2;
-    }
- 
-    .carousel-overflow {
-      overflow: hidden;
-      border-radius: 20px;
-    }
- 
-    .carousel-track {
-      display: flex;
-      transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
-    }
- 
-    /* ── SLIDE ── */
-    .slide {
-      min-width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      padding: 48px 56px;
-      background: linear-gradient(135deg,
-        rgba(255,255,255,0.07) 0%,
-        rgba(255,255,255,0.03) 100%);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      backdrop-filter: blur(6px);
-      position: relative;
-      overflow: hidden;
-    }
- 
-    /* corner accent */
-    .slide::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(74,124,255,0.2), transparent 70%);
-      pointer-events: none;
-    }
- 
-    .slide-badge { display: none; }
- 
-    /* ── SLIDE CONTENT ── */
-    .slide-content {
-      flex: 1;
-      min-width: 0;
-    }
- 
-    .slide-content h2 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(1rem, 2.5vw, 1.45rem);
-      color: var(--white);
-      margin-bottom: 22px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border-left: 4px solid var(--accent);
-      padding-left: 14px;
-    }
- 
-    .slide-content p {
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-    }
- 
-    .slide-content ul {
-      list-style: none;
-      space-y: 8px;
-      margin-bottom: 28px;
-    }
- 
-    .slide-content ul li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.88rem;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.85);
-      margin-bottom: 9px;
-    }
- 
-    .slide-content ul li::before {
-      content: '▸';
-      color: var(--accent);
-      font-size: 0.8rem;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
- 
-    .slide-content ul li:first-child {
-      font-weight: 700;
-      color: var(--white);
-      font-size: 0.82rem;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .slide-content ul li:first-child::before { content: ''; display: none; }
- 
-    /* CTA Link */
-    .cta-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--white);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.82rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-decoration: none;
-      background: linear-gradient(90deg, var(--blue-light), var(--blue-glow));
-      padding: 10px 22px;
-      border-radius: 8px;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 18px rgba(74,124,255,0.35);
-    }
- 
-    .cta-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(74,124,255,0.55);
-    }
- 
-    .cta-link::after {
-      content: '→';
-      transition: transform 0.2s;
-    }
- 
-    .cta-link:hover::after { transform: translateX(4px); }
- 
-    /* ── IMAGE AREA ── */
-    .slide-image {
-      flex-shrink: 0;
-      width: 210px;
-      height: 210px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      position: relative;
-      overflow: hidden;
-    }
- 
-    .slide-image::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(74,124,255,0.15), transparent 70%);
-    }
- 
-    .slide-image img {
-      width: 140px;
-      height: 140px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-      position: relative;
-      z-index: 1;
-      transition: transform 0.4s ease;
-    }
- 
-    .slide:hover .slide-image img {
-      transform: scale(1.07);
-    }
- 
-    /* SVG fallback icons */
-    .icon-svg {
-      width: 130px;
-      height: 130px;
-      position: relative;
-      z-index: 1;
-      transition: transform 0.4s ease;
-    }
- 
-    .slide:hover .icon-svg { transform: scale(1.07); }
- 
-    /* ── NAVIGATION ── */
-    .carousel-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 28px;
-    }
- 
-    .nav-btn {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--white);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 10px 26px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      backdrop-filter: blur(4px);
-    }
- 
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.18);
-      border-color: rgba(255,255,255,0.4);
-      transform: translateY(-1px);
-    }
- 
-    /* dots */
-    .nav-dots {
-      display: flex;
-      gap: 8px;
-    }
- 
-    .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-    }
- 
-    .dot.active {
-      background: var(--accent);
-      width: 24px;
-      border-radius: 4px;
-    }
- 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      .slide { flex-direction: column; padding: 36px 28px; }
-      .slide-image { width: 150px; height: 150px; }
-      .icon-svg { width: 90px; height: 90px; }
-    }
- 
-    /* entrance animation */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .comptes-section { animation: fadeUp 0.6s ease both; }
+/* ══ BOUTON CTA UNIFIÉ ══ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 24px;
+  border-radius: 50px;
+  background: var(--blue-vif);
+  border: none;
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  background: var(--blue-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.35);
+}
+
+/* Variante outline (sur fond sombre) */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 24px;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .15s;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+}
+
+/* ══ HEADER ══ */
+.site-header {
+  position: relative;
+}
+.site-header img.hero-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+.header-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(13,27,62,0.88) 0%, rgba(26,58,140,0.75) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-inner {
+  text-align: center;
+  color: var(--white);
+  padding: 0 20px;
+  max-width: 560px;
+}
+.header-inner img.logo {
+  width: 88px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+}
+.header-inner h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.header-inner .tagline {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.header-inner p {
+  font-size: .9rem;
+  color: var(--text-white);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.search-bar {
+  display: flex;
+  justify-content: center;
+}
+.search-bar input {
+  padding: 10px 18px;
+  border-radius: 50px 0 0 50px;
+  border: none;
+  font-size: .88rem;
+  width: 240px;
+  outline: none;
+  color: var(--text);
+}
+.search-bar button {
+  padding: 10px 20px;
+  background: var(--gold);
+  border: none;
+  border-radius: 0 50px 50px 0;
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .84rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.search-bar button:hover { background: var(--gold-dark); }
+
+/* ══ SECTION FORMATIONS ══ */
+.section-formations {
+  background: var(--white);
+  padding: 72px 20px;
+}
+.formations-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+.formations-inner img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  flex: 1 1 280px;
+}
+.formations-text {
+  flex: 1 1 280px;
+}
+.formations-text h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: 16px;
+  padding-left: 14px;
+  border-left: 4px solid var(--gold);
+}
+.formations-text p {
+  color: var(--text-muted);
+  font-size: .93rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+/* ══ BOUTIQUE EN LIGNE ══ */
+.section-boutique {
+  background: var(--light);
+  padding: 64px 20px;
+}
+.boutique-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.boutique-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.boutique-header h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.product-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(13,27,62,0.16);
+}
+.product-card .swiper { height: 200px; }
+.product-card img { width: 100%; height: 100%; object-fit: cover; }
+.product-card-body {
+  padding: 16px 18px 20px;
+  text-align: center;
+}
+.product-card-body p.name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .92rem;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.product-card-body p.price {
+  color: var(--blue-vif);
+  font-weight: 700;
+  font-size: .9rem;
+  margin-bottom: 14px;
+}
+
+/* ══ COMPTES — CAROUSEL ══ */
+.comptes-section {
+  background: linear-gradient(155deg, var(--navy) 0%, var(--blue) 55%, var(--navy-mid) 100%);
+  padding: 72px 20px 80px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.6s ease both;
+}
+.comptes-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 85%, rgba(37,99,235,0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(245,166,35,0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+.comptes-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 52px;
+  position: relative;
+  z-index: 2;
+}
+.section-header h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--white);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.section-header h1::after {
+  content: '';
+  display: block;
+  margin: 12px auto 0;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+.carousel-wrapper {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  z-index: 2;
+}
+.carousel-overflow {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.52s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.slide {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 52px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(245,166,35,0.1), transparent 70%);
+  pointer-events: none;
+}
+.slide-badge {
+  position: absolute;
+  top: 18px; right: 22px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+.slide-content { flex: 1; min-width: 0; }
+.slide-content h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: var(--white);
+  margin-bottom: 20px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border-left: 4px solid var(--gold);
+  padding-left: 14px;
+}
+.slide-content p {
+  font-size: .9rem;
+  line-height: 1.72;
+  color: var(--text-white);
+  margin-bottom: 18px;
+}
+.slide-content ul {
+  list-style: none;
+  margin-bottom: 28px;
+}
+.slide-content ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .88rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 9px;
+}
+.slide-content ul li::before {
+  content: '▸';
+  color: var(--gold);
+  font-size: .8rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.slide-content ul li:first-child {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.slide-content ul li:first-child::before { display: none; }
+.slide-content ul li strong { color: var(--gold); }
+
+/* CTA dans slide */
+.cta-slide {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  padding: 11px 26px;
+  border-radius: 50px;
+  text-decoration: none;
+  letter-spacing: .04em;
+  transition: transform .2s, box-shadow .2s;
+}
+.cta-slide:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(245,166,35,0.4);
+}
+.cta-slide::after { content: ' →'; }
+
+.slide-image {
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+.slide-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(37,99,235,0.15), transparent 70%);
+}
+.icon-svg {
+  width: 120px; height: 120px;
+  position: relative; z-index: 1;
+  transition: transform .4s ease;
+}
+.slide:hover .icon-svg { transform: scale(1.07); }
+
+/* Navigation carousel */
+.carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+}
+.nav-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 10px 26px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background .22s, transform .15s;
+}
+.nav-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+.nav-dots { display: flex; gap: 8px; }
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all .3s ease;
+  border: none;
+  padding: 0;
+}
+.dot.active {
+  background: var(--gold);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ══ OEUVRES SOCIALES ══ */
+.section-oeuvres {
+  padding: 64px 20px;
+  background: var(--light);
+}
+.section-cat {
+  padding: 64px 20px;
+  background: var(--white);
+}
+.grid-center {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-cat-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 36px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  display: block;
+}
+.section-cat-title::after {
+  content: '';
+  display: block;
+  width: 48px; height: 4px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin: 10px auto 0;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.img-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+  height: 260px;
+  background: var(--light-2);
+  display: flex;
+  align-items: flex-end;
+  transition: transform .3s, box-shadow .3s;
+}
+.img-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 44px rgba(13,27,62,0.18);
+}
+.img-card .card-bg {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%; height: 100%;
+  transition: transform .5s;
+}
+.img-card:hover .card-bg { transform: scale(1.06); }
+.img-card .ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ph svg { opacity: .3; width: 72px; height: 72px; }
+.card-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(8px);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  border-top: 1px solid rgba(255,255,255,0.6);
+}
+.card-overlay p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .88rem;
+  color: var(--navy);
+}
+.card-overlay a {
+  color: var(--blue-vif);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .8rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap .2s;
+}
+.card-overlay a:hover { gap: 8px; color: var(--blue); }
+
+/* Fallback placeholders */
+.bg-social   { background: linear-gradient(135deg, #0d1b3e, #2563eb); }
+.bg-recomp   { background: linear-gradient(135deg, #064e3b, #10b981); }
+.bg-artisan  { background: linear-gradient(135deg, #7c2d12, #f97316); }
+.bg-educ     { background: linear-gradient(135deg, #1a3a8c, #06b6d4); }
+.bg-leader   { background: linear-gradient(135deg, #312e81, #8b5cf6); }
+.bg-droit    { background: linear-gradient(135deg, #0f172a, #334155); }
+.bg-sante    { background: linear-gradient(135deg, #064e3b, #059669); }
+.bg-biblio   { background: linear-gradient(135deg, #7c3aed, #1d4ed8); }
+
+/* ══ FOOTER ══ */
+.site-footer {
+  background: var(--navy);
+  color: var(--white);
+  padding: 56px 20px 32px;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+.footer-inner .footer-logo img {
+  width: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  margin-bottom: 12px;
+}
+.footer-inner p {
+  font-size: .88rem;
+  color: var(--text-white);
+  line-height: 1.65;
+}
+.footer-inner strong { color: var(--gold); }
+.footer-col h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: .85rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a {
+  font-size: .88rem;
+  color: var(--text-white);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-col ul li a:hover { color: var(--gold); }
+.footer-col input[type="email"] {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  font-size: .88rem;
+  margin-bottom: 10px;
+  outline: none;
+}
+.footer-col input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+.footer-col input[type="email"]:focus { border-color: var(--gold); }
+.footer-col .btn-submit {
+  width: 100%;
+  padding: 10px;
+  background: var(--blue-vif);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: background .2s;
+  margin-bottom: 16px;
+}
+.footer-col .btn-submit:hover { background: var(--blue-light); }
+.footer-bottom {
+  max-width: 1100px;
+  margin: 32px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  font-size: .8rem;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 768px) {
+  .formations-inner { flex-direction: column; }
+  .products-grid { grid-template-columns: 1fr; }
+  .slide { flex-direction: column; padding: 32px 24px; }
+  .slide-image { display: none; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .carousel-nav { gap: 12px; }
+  .nav-btn { padding: 9px 16px; font-size: .72rem; }
+}
+@media (max-width: 480px) {
+  .boutique-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+}
 </style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
 
-    <!-- Header Section -->
-    <section class="relative">
-        <img src="static/images/art.jpg" alt="Bureau" class="w-full h-[400px] object-cover opacity-80">
-        <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 flex items-center justify-center">
-            <div class="text-center text-white px-4 max-w-xl">
-                <img src="static/images/logo.jpg" alt="Logo" class="mx-auto mb-4 w-24">
-                <h1 class="text-4xl font-bold">CREATION JAMES</h1>
-                <p class="italic text-xl mt-1 mb-4">L’art de créer la richesse !</p>
-                <p>La Structure Création James débat sur plusieurs thèmes dans le domaine social, économique, éducatif, artisanal, entrepreneurial, leadership et politique.</p>
-                <div class="mt-4">
-                    <input type="text" placeholder="Taper votre recherche ici" class="px-4 py-2 rounded-l-md">
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md">Search</button>
-                </div>
+<body>
+
+<!-- ══ HEADER ══ -->
+<section class="site-header">
+    <img src="static/images/art.jpg" alt="Bureau" class="hero-img">
+    <div class="header-overlay">
+        <div class="header-inner">
+            <img src="static/images/logo.jpg" alt="Logo" class="logo">
+            <h1>CREATION JAMES</h1>
+            <p class="tagline">L'art de créer la richesse !</p>
+            <p>La Structure Création James débat sur plusieurs thèmes dans le domaine social, économique, éducatif, artisanal, entrepreneurial, leadership et politique.</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Taper votre recherche ici">
+                <button type="button">Rechercher</button>
             </div>
         </div>
-    </section>
-
-    <!-- Formations -->
-    <section class="py-12 bg-gray-50">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center">
-            <img src="static/images/concept-de-technologie-d-innovation-et-de-cyberespace.jpg" alt="VR" class="w-full md:w-1/2 mb-4 md:mb-0">
-            <div class="md:ml-8">
-                <h2 class="text-2xl font-bold">NOS FORMATIONS ET INFORMATIONS </h2>
-                <p class="my-4">La Structure Création James débat sur plusieurs thèmes sociaux, éducatifs, économiques, etc.</p>
-                <a href="{% url 'homepage:formation' %}" class="text-black font-semibold cta-btn">Visiter catalogue →</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Boutique en ligne -->
-  <section class="py-12">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl font-bold">BOUTIQUE EN LIGNE</h2>
-      <a href="{% url 'ecommerce:product_list' %}" class="text-black cta-btn">Visiter boutique →</a>
     </div>
-
-    <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Produit avec mini carrousel -->
-      <div class="bg-white shadow rounded p-4 text-center">
-        <div class="swiper produit-swiper mb-4">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="static/images/lit.png" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/lit2.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/lit3.jpg" class="w-full h-48 object-cover">
-            </div>
-          </div>
-        </div>
-        <p class="font-semibold mb-2">Révolution de la vue</p>
-        <p class="mb-2">15 000 FCFA</p>
-        <button class="text-blue-600 cta-btn">Ajouter au panier →</button>
-      </div>
-
-
-       <div class="bg-white shadow rounded p-4 text-center">
-        <div class="swiper produit-swiper mb-4">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="static/images/FACE-2.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/FACE-4.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/FACE-2.jpg" class="w-full h-48 object-cover">
-            </div>
-          </div>
-        </div>
-        <p class="font-semibold mb-2">Révolution de la vue</p>
-        <p class="mb-2">15 000 FCFA</p>
-        <button class="text-blue-600 cta-btn">Ajouter au panier →</button>
-      </div>
-
-      <div class="bg-white shadow rounded p-4 text-center">
-        <div class="swiper produit-swiper mb-4">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="static/images/images.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/VU-DESSUS.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/BO70.jpg" class="w-full h-48 object-cover">
-            </div>
-             <div class="swiper-slide">
-              <img src="static/images/BASKET.jpg" class="w-full h-48 object-cover">
-            </div>
-          </div>
-        </div>
-        <p class="font-semibold mb-2">Révolution de la vue</p>
-        <p class="mb-2">15 000 FCFA</p>
-        <button class="text-blue-600 cta-btn" >Ajouter au panier →</button>
-      </div>
-    </div>
-
-      <div class="block md:hidden">
-  <div class="swiper global-swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <img src="{% static 'images/lit.png' %}" class="w-full h-48 object-cover">
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/lit2.jpg' %}" class="w-full h-48 object-cover">
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/lit3.jpg' %}" class="w-full h-48 object-cover">
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/FACE-2.jpg' %}" class="w-full h-48 object-cover">
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/FACE-4.jpg' %}" class="w-full h-48 object-cover">
-      </div>
-      <div class="swiper-slide">
-              <img src="static/images/images.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/VU-DESSUS.jpg" class="w-full h-48 object-cover">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/BO70.jpg" class="w-full h-48 object-cover">
-            </div>
-             <div class="swiper-slide">
-              <img src="static/images/BASKET.jpg" class="w-full h-48 object-cover">
-            </div>
-    </div>
-  </div>
-</div>
-
-  </div>
 </section>
 
+<!-- ══ FORMATIONS ══ -->
+<section class="section-formations">
+    <div class="formations-inner">
+        <img src="static/images/concept-de-technologie-d-innovation-et-de-cyberespace.jpg" alt="VR Formation">
+        <div class="formations-text">
+            <h2>Nos Formations et Informations</h2>
+            <p>La Structure Création James débat sur plusieurs thèmes sociaux, éducatifs, économiques, et bien plus encore. Accédez à notre catalogue complet de formations.</p>
+            <a href="{% url 'homepage:formation' %}" class="btn-primary">Visiter le catalogue →</a>
+        </div>
+    </div>
+</section>
 
+<!-- ══ BOUTIQUE EN LIGNE ══ -->
+<section class="section-boutique">
+    <div class="boutique-inner">
+        <div class="boutique-header">
+            <h2>Boutique en ligne</h2>
+            <a href="{% url 'ecommerce:product_list' %}" class="btn-primary">Visiter la boutique →</a>
+        </div>
 
+        <!-- Desktop grid -->
+        <div class="products-grid hidden md:grid">
 
-    <!-- Compte Marchand -->
+            <div class="product-card">
+                <div class="swiper produit-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="static/images/lit.png" alt="Produit 1"></div>
+                        <div class="swiper-slide"><img src="static/images/lit2.jpg" alt="Produit 1b"></div>
+                        <div class="swiper-slide"><img src="static/images/lit3.jpg" alt="Produit 1c"></div>
+                    </div>
+                </div>
+                <div class="product-card-body">
+                    <p class="name">Révolution de la vue</p>
+                    <p class="price">15 000 FCFA</p>
+                    <button class="btn-primary">Ajouter au panier →</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="swiper produit-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="static/images/FACE-2.jpg" alt="Produit 2"></div>
+                        <div class="swiper-slide"><img src="static/images/FACE-4.jpg" alt="Produit 2b"></div>
+                        <div class="swiper-slide"><img src="static/images/FACE-2.jpg" alt="Produit 2c"></div>
+                    </div>
+                </div>
+                <div class="product-card-body">
+                    <p class="name">Révolution de la vue</p>
+                    <p class="price">15 000 FCFA</p>
+                    <button class="btn-primary">Ajouter au panier →</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="swiper produit-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="static/images/images.jpg" alt="Produit 3"></div>
+                        <div class="swiper-slide"><img src="static/images/VU-DESSUS.jpg" alt="Produit 3b"></div>
+                        <div class="swiper-slide"><img src="static/images/BO70.jpg" alt="Produit 3c"></div>
+                        <div class="swiper-slide"><img src="static/images/BASKET.jpg" alt="Produit 3d"></div>
+                    </div>
+                </div>
+                <div class="product-card-body">
+                    <p class="name">Révolution de la vue</p>
+                    <p class="price">15 000 FCFA</p>
+                    <button class="btn-primary">Ajouter au panier →</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Mobile swiper -->
+        <div class="block md:hidden">
+            <div class="swiper global-swiper" style="border-radius: var(--radius); overflow: hidden;">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="{% static 'images/lit.png' %}" style="width:100%;height:220px;object-fit:cover"></div>
+                    <div class="swiper-slide"><img src="{% static 'images/lit2.jpg' %}" style="width:100%;height:220px;object-fit:cover"></div>
+                    <div class="swiper-slide"><img src="{% static 'images/FACE-2.jpg' %}" style="width:100%;height:220px;object-fit:cover"></div>
+                    <div class="swiper-slide"><img src="{% static 'images/FACE-4.jpg' %}" style="width:100%;height:220px;object-fit:cover"></div>
+                    <div class="swiper-slide"><img src="{% static 'images/images.jpg' %}" style="width:100%;height:220px;object-fit:cover"></div>
+                    <div class="swiper-slide"><img src="{% static 'images/BASKET.jpg' %}" style="width:100%;height:220px;object-fit:cover"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══ NOS DIFFÉRENTS COMPTES ══ -->
 <section class="comptes-section">
-  <div class="section-header">
-    <h1>Nos Différents Comptes</h1>
-  </div>
- 
-  <div class="carousel-wrapper">
-    <div class="carousel-overflow">
-      <div class="carousel-track" id="carouselTrack">
- 
-        <!-- SLIDE 1 — MARCHAND -->
-        <div class="slide">
-          <span class="slide-badge">01 / 04</span>
-          <div class="slide-content">
-            <h2>Compte Marchand</h2>
-            <ul>
-              <li>Conditions d'adhésion</li>
-              <li>Achetez des produits pour obtenir vos numéros marchands.</li>
-              <li>Gagnez 3 % de commissions en partageant.</li>
-              <li>Création de compte : <strong>2 000 FCFA</strong>.</li>
-              <li>Commissions versées directement sur votre compte.</li>
-              <li>Ouverture possible même sans fonds initiaux.</li>
-            </ul>
-            <a href="#" class="cta-link">Se connecter</a>
-          </div>
-          <div class="slide-image">
-            <!-- Shopping cart SVG -->
-            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 18h10l14 44h42l8-30H28" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="42" cy="74" r="6" stroke="white" stroke-width="4"/>
-              <circle cx="68" cy="74" r="6" stroke="white" stroke-width="4"/>
-              <path d="M28 34h52" stroke="white" stroke-width="3" stroke-dasharray="5 4"/>
-            </svg>
-          </div>
-        </div>
- 
-        <!-- SLIDE 2 — ASSOCIATION -->
-        <div class="slide">
-          <span class="slide-badge">02 / 04</span>
-          <div class="slide-content">
-            <h2>Compte Association</h2>
-            <ul>
-              <li>Conditions d'adhésion</li>
-              <li>Création d'une interface dédiée à votre association.</li>
-              <li>Transparence et fluidité totale pour tous les membres.</li>
-              <li>Cotisation de base : à partir de <strong>500 FCFA / mois</strong>.</li>
-              <li>Prêts disponibles selon le niveau des cotisations.</li>
-            </ul>
-            <a href="#" class="cta-link">Se connecter</a>
-          </div>
-          <div class="slide-image">
-            <!-- People/group SVG -->
-            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="28" r="12" stroke="white" stroke-width="4"/>
-              <path d="M26 76c0-13.3 10.7-24 24-24s24 10.7 24 24" stroke="white" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="22" cy="38" r="8" stroke="white" stroke-width="3.5" opacity=".7"/>
-              <path d="M8 70c0-7.7 6.3-14 14-14" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
-              <circle cx="78" cy="38" r="8" stroke="white" stroke-width="3.5" opacity=".7"/>
-              <path d="M92 70c0-7.7-6.3-14-14-14" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
-            </svg>
-          </div>
-        </div>
- 
-        <!-- SLIDE 3 — MLG -->
-        <div class="slide">
-          <span class="slide-badge">03 / 04</span>
-          <div class="slide-content">
-            <h2>Compte MLG</h2>
-            <p>Deuxième volet de notre association, permettant aux personnes éloignées de faire des dons pour soutenir nos œuvres sociales et recevoir des récompenses selon leurs efforts de recrutement.</p>
-            <ul>
-              <li>Conditions d'adhésion</li>
-              <li>Formations et ressources disponibles (vidéos, audio, PowerPoint).</li>
-              <li>Inscription ouverte à tous, sans restriction.</li>
-            </ul>
-            <a href="#" class="cta-link">Se connecter</a>
-          </div>
-          <div class="slide-image">
-            <!-- Network/research SVG -->
-            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="14" stroke="white" stroke-width="4"/>
-              <circle cx="18" cy="25" r="8" stroke="white" stroke-width="3.5"/>
-              <circle cx="82" cy="25" r="8" stroke="white" stroke-width="3.5"/>
-              <circle cx="18" cy="75" r="8" stroke="white" stroke-width="3.5"/>
-              <circle cx="82" cy="75" r="8" stroke="white" stroke-width="3.5"/>
-              <line x1="26" y1="29" x2="38" y2="42" stroke="white" stroke-width="2.5"/>
-              <line x1="74" y1="29" x2="62" y2="42" stroke="white" stroke-width="2.5"/>
-              <line x1="26" y1="71" x2="38" y2="58" stroke="white" stroke-width="2.5"/>
-              <line x1="74" y1="71" x2="62" y2="58" stroke="white" stroke-width="2.5"/>
-            </svg>
-          </div>
-        </div>
- 
-        <!-- SLIDE 4 — PP -->
-        <div class="slide">
-          <span class="slide-badge">04 / 04</span>
-          <div class="slide-content">
-            <h2>Compte PP</h2>
-            <ul>
-              <li>Conditions d'adhésion</li>
-              <li>Inscription libre pour tous ceux qui adhèrent à notre vision.</li>
-              <li>Adhésion : <strong>5 000 FCFA</strong>.</li>
-              <li>Lecture obligatoire du PP et des règlements intérieurs.</li>
-            </ul>
-            <a href="#" class="cta-link">Se connecter</a>
-          </div>
-          <div class="slide-image">
-            <!-- Document/policy SVG -->
-            <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="22" y="12" width="56" height="76" rx="6" stroke="white" stroke-width="4"/>
-              <line x1="34" y1="32" x2="66" y2="32" stroke="white" stroke-width="3" stroke-linecap="round"/>
-              <line x1="34" y1="46" x2="66" y2="46" stroke="white" stroke-width="3" stroke-linecap="round"/>
-              <line x1="34" y1="60" x2="54" y2="60" stroke="white" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="66" cy="68" r="10" stroke="white" stroke-width="3"/>
-              <path d="M62 68l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
- 
-      </div><!-- /track -->
-    </div><!-- /overflow -->
- 
-    <!-- Navigation -->
-    <div class="carousel-nav">
-      <button class="nav-btn" id="prevBtn">← Précédent</button>
-      <div class="nav-dots" id="navDots">
-        <button class="dot active" data-index="0"></button>
-        <button class="dot" data-index="1"></button>
-        <button class="dot" data-index="2"></button>
-        <button class="dot" data-index="3"></button>
-      </div>
-      <button class="nav-btn" id="nextBtn">Suivant →</button>
+    <div class="section-header">
+        <h1>Nos Différents Comptes</h1>
     </div>
-  </div><!-- /wrapper -->
-</section>
 
-      <section class="py-12 bg-gray-200 mt-12">
-    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Bloc 1 -->
-        <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-            <img src="static/images/community.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Oeuvre sociale">
-            <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 backdrop-blur-sm rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                <p class="font-semibold text-gray-800 text-lg mb-2">Nos œuvres sociales</p>
-                <a href="{% url 'homepage:oeuvreSocial' %}" class="text-blue-600 font-medium">Voir plus →</a>
+    <div class="carousel-wrapper">
+        <div class="carousel-overflow">
+            <div class="carousel-track" id="carouselTrack">
+
+                <!-- SLIDE 1 — MARCHAND -->
+                <div class="slide">
+                    <span class="slide-badge">01 / 04</span>
+                    <div class="slide-content">
+                        <h2>Compte Marchand</h2>
+                        <ul>
+                            <li>Conditions d'adhésion</li>
+                            <li>Achetez des produits pour obtenir vos numéros marchands.</li>
+                            <li>Gagnez <strong>3 %</strong> de commissions en partageant.</li>
+                            <li>Création de compte : <strong>2 000 FCFA</strong>.</li>
+                            <li>Commissions versées directement sur votre compte.</li>
+                            <li>Ouverture possible même sans fonds initiaux.</li>
+                        </ul>
+                        <a href="{% url 'homepage:login' %}" class="cta-slide">Se connecter</a>
+                    </div>
+                    <div class="slide-image">
+                        <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 18h10l14 44h42l8-30H28" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="42" cy="74" r="6" stroke="white" stroke-width="4"/>
+                            <circle cx="68" cy="74" r="6" stroke="white" stroke-width="4"/>
+                            <path d="M28 34h52" stroke="white" stroke-width="3" stroke-dasharray="5 4"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- SLIDE 2 — ASSOCIATION -->
+                <div class="slide">
+                    <span class="slide-badge">02 / 04</span>
+                    <div class="slide-content">
+                        <h2>Compte Association</h2>
+                        <ul>
+                            <li>Conditions d'adhésion</li>
+                            <li>Création d'une interface dédiée à votre association.</li>
+                            <li>Transparence et fluidité totale pour tous les membres.</li>
+                            <li>Cotisation de base : à partir de <strong>500 FCFA / mois</strong>.</li>
+                            <li>Prêts disponibles selon le niveau des cotisations.</li>
+                        </ul>
+                        <a href="{% url 'homepage:login' %}" class="cta-slide">Se connecter</a>
+                    </div>
+                    <div class="slide-image">
+                        <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="28" r="12" stroke="white" stroke-width="4"/>
+                            <path d="M26 76c0-13.3 10.7-24 24-24s24 10.7 24 24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="22" cy="38" r="8" stroke="white" stroke-width="3.5" opacity=".7"/>
+                            <path d="M8 70c0-7.7 6.3-14 14-14" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
+                            <circle cx="78" cy="38" r="8" stroke="white" stroke-width="3.5" opacity=".7"/>
+                            <path d="M92 70c0-7.7-6.3-14-14-14" stroke="white" stroke-width="3.5" stroke-linecap="round" opacity=".7"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3 — Projet demunie -->
+                <div class="slide">
+                    <span class="slide-badge">03 / 04</span>
+                    <div class="slide-content">
+                        <h2>Compte Projet demunie</h2>
+                        <p>Deuxième volet de notre association, permettant aux personnes éloignées de faire des dons pour soutenir nos œuvres sociales et recevoir des récompenses selon leurs efforts de recrutement.</p>
+                        <ul>
+                            <li>Conditions d'adhésion</li>
+                            <li>Formations et ressources disponibles (vidéos, audio, PowerPoint).</li>
+                            <li>Inscription ouverte à tous, sans restriction.</li>
+                        </ul>
+                        <a href="{% url 'homepage:login' %}" class="cta-slide">Se connecter</a>
+                    </div>
+                    <div class="slide-image">
+                        <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="14" stroke="white" stroke-width="4"/>
+                            <circle cx="18" cy="25" r="8" stroke="white" stroke-width="3.5"/>
+                            <circle cx="82" cy="25" r="8" stroke="white" stroke-width="3.5"/>
+                            <circle cx="18" cy="75" r="8" stroke="white" stroke-width="3.5"/>
+                            <circle cx="82" cy="75" r="8" stroke="white" stroke-width="3.5"/>
+                            <line x1="26" y1="29" x2="38" y2="42" stroke="white" stroke-width="2.5"/>
+                            <line x1="74" y1="29" x2="62" y2="42" stroke="white" stroke-width="2.5"/>
+                            <line x1="26" y1="71" x2="38" y2="58" stroke="white" stroke-width="2.5"/>
+                            <line x1="74" y1="71" x2="62" y2="58" stroke="white" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- SLIDE 4 — PP -->
+                <div class="slide">
+                    <span class="slide-badge">04 / 04</span>
+                    <div class="slide-content">
+                        <h2>Compte PP</h2>
+                        <ul>
+                            <li>Conditions d'adhésion</li>
+                            <li>Inscription libre pour tous ceux qui adhèrent à notre vision.</li>
+                            <li>Adhésion : <strong>5 000 FCFA</strong>.</li>
+                            <li>Lecture obligatoire du PP et des règlements intérieurs.</li>
+                        </ul>
+                        <a href="{% url 'homepage:login' %}" class="cta-slide">Se connecter</a>
+                    </div>
+                    <div class="slide-image">
+                        <svg class="icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="22" y="12" width="56" height="76" rx="6" stroke="white" stroke-width="4"/>
+                            <line x1="34" y1="32" x2="66" y2="32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="34" y1="46" x2="66" y2="46" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="34" y1="60" x2="54" y2="60" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="66" cy="68" r="10" stroke="white" stroke-width="3"/>
+                            <path d="M62 68l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Bloc 2 -->
-        <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-            <img src="static/images/accord.webp" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Récompenses">
-            <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 backdrop-blur-sm rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                <p class="font-semibold text-gray-800 text-lg mb-2">Récompenses et bénéficiaire</p>
-                <a href="#" class="text-blue-600 font-medium">Voir plus →</a>
+        <div class="carousel-nav">
+            <button class="nav-btn" id="prevBtn">← Précédent</button>
+            <div class="nav-dots" id="navDots">
+                <button class="dot active" data-index="0"></button>
+                <button class="dot" data-index="1"></button>
+                <button class="dot" data-index="2"></button>
+                <button class="dot" data-index="3"></button>
             </div>
+            <button class="nav-btn" id="nextBtn">Suivant →</button>
         </div>
     </div>
 </section>
 
+<!-- ══ OEUVRES SOCIALES ══ -->
+<section class="section-oeuvres">
+    <div class="grid-center">
+        <span class="section-cat-title">Nos Actions</span>
+        <div class="grid-2">
 
-    <!-- Catégories -->
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-                <img src="static/images/perlage.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
-
-                <!-- Overlay texte sur image -->
-                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                    <p class="font-semibold text-gray-800 text-lg mb-2">Artisanat Et Entrepreneuriat</p>
-                    <a href="{% url 'homepage:artisEntrep' %}" class="text-blue-600 font-medium">Voir plus →</a>
+            <div class="img-card">
+                <img src="{% static 'images/community.jpg' %}" class="card-bg" alt="Oeuvre sociale"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-social" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" stroke="white" stroke-width="3"/><path d="M20 32c0-6.6 5.4-12 12-12s12 5.4 12 12" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="24" r="5" stroke="white" stroke-width="3"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Nos œuvres sociales</p>
+                    <a href="{% url 'homepage:oeuvreSocial' %}">Voir plus →</a>
                 </div>
             </div>
-           <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-                <img src="static/images/educ.png" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
 
-                <!-- Overlay texte sur image -->
-                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                    <p class="font-semibold text-gray-800 text-lg mb-2">Education et Economie</p>
-                    <a href="{% url 'homepage:educationEconomie' %}" class="text-blue-600 font-medium">Voir plus →</a>
+            <div class="img-card">
+                <img src="{% static 'images/accord.webp' %}" class="card-bg" alt="Récompenses"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-recomp" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M32 8l4.9 14.9H52l-12.5 9.1 4.9 14.9L32 37.9l-12.4 9 4.9-14.9L12 23h15.1z" stroke="white" stroke-width="3" stroke-linejoin="round"/></svg>
                 </div>
-            </div>
-            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-                <img src="static/images/leder.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
-
-                <!-- Overlay texte sur image -->
-                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                    <p class="font-semibold text-gray-800 text-lg mb-2">Leadership</p>
-                    <a href="{% url 'homepage:leadershipMF' %}" class="text-blue-600 font-medium">Voir plus →</a>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-<!-- Catégories -->
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-                <img src="static/images/talk.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
-
-                <!-- Overlay texte sur image -->
-                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                    <p class="font-semibold text-gray-800 text-lg mb-2">Droit-Devoir-Politique</p>
-                    <a href="{% url 'homepage:politique' %}" class="text-blue-600 font-medium">Voir plus →</a>
-                </div>
-            </div>
-             <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-                <img src="static/images/snate.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
-
-                <!-- Overlay texte sur image -->
-                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                    <p class="font-semibold text-gray-800 text-lg mb-2">Santé et Environnement</p>
-                    <a href="{% url 'homepage:sante' %}" class="text-blue-600 font-medium">Voir plus →</a>
-                </div>
-            </div>
-            <div class="relative w-full h-64 overflow-hidden rounded-xl shadow-lg">
-                <img src="static/images/work.jpg" class="absolute inset-0 w-full h-full object-cover rounded-xl" alt="Artisanat">
-
-                <!-- Overlay texte sur image -->
-                <div class="absolute bottom-0 left-0 w-full h-1/4 bg-white/70 rounded-b-xl flex flex-col justify-center items-center text-center p-4">
-                    <p class="font-semibold text-gray-800 text-lg mb-2">Bibliographie Du Fondateur </p>
-                    <a href="{% url 'homepage:bibliographie' %}" class="text-blue-600 font-medium">Voir plus →</a>
+                <div class="card-overlay">
+                    <p>Récompenses et bénéficiaires</p>
+                    <a href="#">Voir plus →</a>
                 </div>
             </div>
 
         </div>
+    </div>
+</section>
 
-    </section>
+<!-- ══ CATÉGORIES ══ -->
+<section class="section-cat">
+    <div class="grid-center">
+        <span class="section-cat-title">Nos Thématiques</span>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-10 mt-10">
-        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-                <img src="static/images/logo.jpg" class="w-16 mb-2">
-                <p>L’art de créer la richesse !</p>
-                <p class="mt-2">Total D’Action Sur Le Site : <strong>0</strong></p>
+        <div class="grid-3" style="margin-bottom: 22px;">
+
+            <div class="img-card">
+                <img src="{% static 'images/perlage.jpg' %}" class="card-bg" alt="Artisanat"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-artisan" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M12 52l8-16 8 8 8-20 8 12 8-8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Artisanat Et Entrepreneuriat</p>
+                    <a href="{% url 'homepage:artisEntrep' %}">Voir plus →</a>
+                </div>
             </div>
-            <div>
-                <h4 class="font-bold mb-2">LIENS UTILES</h4>
-                <ul class="space-y-1 text-sm">
-                    <li><a href="{% url 'homepage:home' %}">Accueil</a></li>
-                    <li><a href="#">Politique</a></li>
-                    <li><a href="#">Comptes</a></li>
-                    <li><a href="#">Leadership</a></li>
-                    <li><a href="#">Boutique en ligne</a></li>
-                </ul>
+
+            <div class="img-card">
+                <img src="{% static 'images/educ.png' %}" class="card-bg" alt="Education"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-educ" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><rect x="10" y="18" width="44" height="32" rx="4" stroke="white" stroke-width="3"/><path d="M22 18V14a2 2 0 012-2h16a2 2 0 012 2v4" stroke="white" stroke-width="3"/><line x1="10" y1="28" x2="54" y2="28" stroke="white" stroke-width="2.5"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Education et Economie</p>
+                    <a href="{% url 'homepage:educationEconomie' %}">Voir plus →</a>
+                </div>
             </div>
-            <div>
-                <h4 class="font-bold mb-2">RESTER INFORMÉ</h4>
-                <form>
-                    <input type="email" placeholder="Email" class="px-3 py-2 rounded w-full mb-2">
-                    <button class="w-full bg-blue-600 py-2 rounded">Soumettre</button>
-                </form>
-                <p class="text-sm mt-2">Téléphone : +228 90 12 17 64</p>
-                <p class="text-sm">Email : creationjames9@gmail.com</p>
+
+            <div class="img-card">
+                <img src="{% static 'images/leder.jpg' %}" class="card-bg" alt="Leadership"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-leader" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><polygon points="32,8 40,26 58,26 44,38 50,56 32,44 14,56 20,38 6,26 24,26" stroke="white" stroke-width="3" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Leadership</p>
+                    <a href="{% url 'homepage:leadershipMF' %}">Voir plus →</a>
+                </div>
             </div>
+
         </div>
-    </footer>
 
-    <script>
-    const carousel = document.querySelector('#carousel > div');
-    let currentIndex = 0;
-    const totalSlides = carousel.children.length;
+        <div class="grid-3">
 
-    function updateSlide() {
-        const offset = -100 * currentIndex;
-        carousel.style.transform = `translateX(${offset}%)`;
-    }
+            <div class="img-card">
+                <img src="{% static 'images/talk.jpg' %}" class="card-bg" alt="Droit"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-droit" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><path d="M32 10v44M16 20l16-10 16 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 28l9 14H14zM50 28l-9 14h9z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Droit — Devoir — Politique</p>
+                    <a href="{% url 'homepage:politique' %}">Voir plus →</a>
+                </div>
+            </div>
 
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        updateSlide();
-    }
+            <div class="img-card">
+                <img src="{% static 'images/snate.jpg' %}" class="card-bg" alt="Santé"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-sante" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><rect x="24" y="10" width="16" height="44" rx="4" stroke="white" stroke-width="3"/><rect x="10" y="24" width="44" height="16" rx="4" stroke="white" stroke-width="3"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Santé et Environnement</p>
+                    <a href="{% url 'homepage:sante' %}">Voir plus →</a>
+                </div>
+            </div>
 
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-        updateSlide();
-    }
-</script>
+            <div class="img-card">
+                <img src="{% static 'images/work.jpg' %}" class="card-bg" alt="Bibliographie"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+                <div class="ph bg-biblio" style="display:none">
+                    <svg viewBox="0 0 64 64" fill="none"><rect x="12" y="8" width="28" height="38" rx="3" stroke="white" stroke-width="3"/><path d="M20 8V46M24 14h10M24 22h10M24 30h6" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M36 36l14 14" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="44" cy="44" r="8" stroke="white" stroke-width="3"/></svg>
+                </div>
+                <div class="card-overlay">
+                    <p>Bibliographie Du Fondateur</p>
+                    <a href="{% url 'homepage:bibliographie' %}">Voir plus →</a>
+                </div>
+            </div>
 
-<!-- Swiper JS -->
+        </div>
+    </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+    <div class="footer-inner">
+
+        <div class="footer-logo">
+            <img src="static/images/logo.jpg" alt="Logo">
+            <p>L'art de créer la richesse !</p>
+            <p style="margin-top:10px;">Total d'actions sur le site : <strong>0</strong></p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Liens utiles</h4>
+            <ul>
+                <li><a href="{% url 'homepage:home' %}">Accueil</a></li>
+                <li><a href="#">Politique</a></li>
+                <li><a href="#">Comptes</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Boutique en ligne</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Rester informé</h4>
+            <input type="email" placeholder="Votre email">
+            <button class="btn-submit">Soumettre</button>
+            <p>📞 +228 90 12 17 64</p>
+            <p style="margin-top:6px;">✉️ creationjames9@gmail.com</p>
+        </div>
+
+    </div>
+    <div class="footer-bottom">
+        © 2024 Création James — Tous droits réservés
+    </div>
+</footer>
+
+<!-- ══ SCRIPTS ══ -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script>
-  // Initialiser les Swiper des grands écrans (chacun)
-  document.querySelectorAll('.produit-swiper').forEach((el) => {
-    new Swiper(el, {
-      loop: true,
-      autoplay: { delay: 3000 },
+    // Swiper produits desktop
+    document.querySelectorAll('.produit-swiper').forEach(el => {
+        new Swiper(el, { loop: true, autoplay: { delay: 3000 } });
     });
-  });
 
-  // Initialiser le Swiper mobile (global)
-  new Swiper('.global-swiper', {
-    loop: true,
-    autoplay: { delay: 2500 },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-  });
+    // Swiper mobile global
+    new Swiper('.global-swiper', {
+        loop: true,
+        autoplay: { delay: 2500 },
+        pagination: { el: '.swiper-pagination', clickable: true },
+    });
 
-  const track  = document.getElementById('carouselTrack');
-  const dots   = document.querySelectorAll('.dot');
-  let current  = 0;
-  const total  = 4;
- 
-  function goTo(index) {
-    current = (index + total) % total;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-  }
- 
-  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
-  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
-  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.index)));
- 
-  // auto-advance
-  setInterval(() => goTo(current + 1), 6000);
+    // Carousel comptes
+    const track = document.getElementById('carouselTrack');
+    const dots  = document.querySelectorAll('.dot');
+    let current = 0;
+    const total = 4;
+
+    function goTo(index) {
+        current = (index + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.index)));
+    setInterval(() => goTo(current + 1), 6000);
 </script>
-
 
 </body>
 </html>
-

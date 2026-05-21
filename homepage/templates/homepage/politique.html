@@ -1,67 +1,463 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nos Droits et Devoirs</title>
   {% load static %}
 
-  <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</head>
-<body class="bg-gray-100 font-sans">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
-  <!-- Barre supérieure avec Connexion -->
-  <div class="flex justify-end items-center px-6 py-4 bg-white shadow-md">
-    <a href="{% url 'parti:login' %}" class="text-green-700 hover:text-green-900 font-semibold flex items-center gap-2">
-      <i class="fas fa-user-circle text-xl"></i>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Sora', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      /* background: linear-gradient(160deg, #1a6b30 0%, #22a34b 55%, #2dc25a 100%); */
+      background: linear-gradient(160deg, #0d1b3e 0%, #1a3a8c 55%, #1a56db 100%);
+
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 14px 28px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      position: relative;
+      z-index: 2;
+    }
+
+    .navbar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50px;
+      padding: 8px 18px;
+      transition: background 0.2s ease;
+    }
+
+    .navbar a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ===== HEADER ===== */
+    .page-header {
+      text-align: center;
+      padding: 48px 24px 42px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.4;
+      max-width: 580px;
+      margin: 0 auto 20px;
+    }
+
+    /* Badges thématiques */
+    .theme-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .btn-audio {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-audio:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    /* ===== CORPS PRINCIPAL ===== */
+    .main-body {
+      flex: 1;
+      background: #f4f6f3;
+      border-radius: 28px 28px 0 0;
+      padding: 44px 40px 64px;
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ===== CARD INTRO ===== */
+    .intro-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 28px 26px;
+      border-left: 4px solid #22a34b;
+      box-shadow: 0 4px 20px rgba(34, 163, 75, 0.10);
+      margin-bottom: 32px;
+    }
+
+    .intro-card p {
+      font-size: 14px;
+      color: #444;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    /* ===== GRILLE DROITS/DEVOIRS ===== */
+    .dd-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .dd-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 16px rgba(34, 163, 75, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .dd-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(34, 163, 75, 0.14);
+    }
+
+    .dd-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .dd-icon {
+      width: 40px; height: 40px;
+      border-radius: 11px;
+      background: #e6f7ed;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      color: #22a34b;
+      flex-shrink: 0;
+    }
+
+    .dd-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a6b30;
+    }
+
+    .dd-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .dd-card ul li {
+      font-size: 12.5px;
+      color: #555;
+      font-weight: 300;
+      line-height: 1.6;
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .dd-card ul li:last-child {
+      border-bottom: none;
+    }
+
+    .dd-card ul li::before {
+      content: '✓';
+      color: #22a34b;
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ===== TEXTE ARTICLE ===== */
+    .article-text p {
+      font-size: 14px;
+      color: #444;
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    /* ===== MODAL AUDIO ===== */
+    .audio-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .audio-modal-backdrop.open {
+      display: flex;
+    }
+
+    .audio-modal-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      margin: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .audio-modal-box h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .audio-modal-box audio {
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+      transition: background 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: #e0e0e0;
+      color: #c00;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: rgba(0, 0, 0, 0.35);
+      padding: 22px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 12px;
+      font-weight: 300;
+      margin: 4px 0;
+    }
+
+    footer p strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .page-title { font-size: 17px; }
+      .main-body { padding: 28px 18px 48px; }
+      .dd-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="{% url 'parti:login' %}">
+      <i class="ti ti-user-circle" style="font-size: 16px;"></i>
       Connexion
     </a>
-  </div>
+  </nav>
 
-  <!-- Contenu principal -->
-  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-    <h2 class="text-2xl sm:text-3xl font-bold text-green-700 mb-4 text-center">
-      NOS DROITS ET DEVOIRS DANS LA SOCIÉTÉ ET LA POLITIQUE
-    </h2>
-    <p class="text-gray-700 mb-6 text-justify leading-relaxed">
-      Dans une société démocratique, chaque citoyen a des droits fondamentaux, tels que la liberté d’expression, le droit de vote, ou encore l’accès à l’éducation. En contrepartie, il a aussi des devoirs : respecter les lois, contribuer à la communauté et participer activement à la vie politique. Une société équilibrée repose sur cette réciprocité entre droits et devoirs.
-    </p>
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">Nos Droits et Devoirs dans la Société et la Politique</h1>
 
-    <div class="flex justify-center">
-      <button onclick="openAudioModal()" class="text-blue-600 font-semibold hover:underline flex items-center gap-2">
-        <i class="fa-solid fa-headphones"></i> Écouter en Audio
-      </button>
+    <div class="theme-badges">
+      <span class="badge"><i class="ti ti-scale" style="font-size:13px;"></i> Droits civiques</span>
+      <span class="badge"><i class="ti ti-building-community" style="font-size:13px;"></i> Société</span>
+      <span class="badge"><i class="ti ti-flag" style="font-size:13px;"></i> Politique</span>
+      <span class="badge"><i class="ti ti-shield-check" style="font-size:13px;"></i> Devoirs citoyens</span>
     </div>
+
+    <button class="btn-audio" onclick="openAudioModal()">
+      <i class="ti ti-headphones" style="font-size: 16px;"></i>
+      Écouter en Audio
+    </button>
   </div>
+
+  <!-- Corps principal -->
+  <div class="main-body">
+
+    <!-- Carte intro -->
+    <div class="intro-card">
+      <p>Dans une société démocratique, chaque citoyen a des droits fondamentaux, tels que la liberté d'expression, le droit de vote, ou encore l'accès à l'éducation. En contrepartie, il a aussi des devoirs : respecter les lois, contribuer à la communauté et participer activement à la vie politique. Une société équilibrée repose sur cette réciprocité entre droits et devoirs.</p>
+    </div>
+
+    <!-- Grille Droits / Devoirs -->
+    <div class="dd-grid">
+      <div class="dd-card">
+        <div class="dd-card-header">
+          <div class="dd-icon"><i class="ti ti-scale" aria-hidden="true"></i></div>
+          <h3>Nos Droits</h3>
+        </div>
+        <ul>
+          <li>Liberté d'expression</li>
+          <li>Droit de vote</li>
+          <li>Accès à l'éducation</li>
+          <li>Droit à la santé</li>
+          <li>Liberté de réunion</li>
+          <li>Égalité devant la loi</li>
+        </ul>
+      </div>
+
+      <div class="dd-card">
+        <div class="dd-card-header">
+          <div class="dd-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+          <h3>Nos Devoirs</h3>
+        </div>
+        <ul>
+          <li>Respecter les lois</li>
+          <li>Payer ses impôts</li>
+          <li>Participer à la vie civique</li>
+          <li>Respecter autrui</li>
+          <li>Contribuer à la communauté</li>
+          <li>Préserver l'environnement</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contenu article — à compléter -->
+    <div class="article-text">
+      <p>Le contenu détaillé de cette section sera ajouté ici. Vous pouvez enrichir cette page avec vos analyses, témoignages et leçons sur les droits et devoirs dans la société et la politique.</p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Total d'actions sur le site : <strong>{{ total_global_users }}</strong></p>
+    <p>📍 AGOE CAMPS GP — LOMÉ, TOGO &nbsp;·&nbsp; 📞 +228 90121764 &nbsp;·&nbsp; ✉️ creationjames@gmail.com</p>
+  </footer>
 
   <!-- Modal Audio -->
-  <div id="audioModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative mx-4">
-      <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
-        <audio controls class="w-full">
-            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
-            Votre navigateur ne supporte pas la lecture audio.
-        </audio>
-        <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
-          <audio controls class="w-full">
-            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
-            Votre navigateur ne supporte pas la lecture audio.
-        </audio>
-      <button onclick="closeAudioModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+  <div id="audioModal" class="audio-modal-backdrop">
+    <div class="audio-modal-box">
+      <button class="modal-close-btn" onclick="closeAudioModal()" aria-label="Fermer">&times;</button>
+
+      <h3>🎧 Audio — Français</h3>
+      <audio controls>
+        <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
+
+      <h3>🎧 Audio — Anglais</h3>
+      <audio controls>
+        <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
     function openAudioModal() {
-      document.getElementById('audioModal').classList.remove('hidden');
-      document.getElementById('audioModal').classList.add('flex');
+      document.getElementById('audioModal').classList.add('open');
     }
     function closeAudioModal() {
-      document.getElementById('audioModal').classList.remove('flex');
-      document.getElementById('audioModal').classList.add('hidden');
+      document.getElementById('audioModal').classList.remove('open');
     }
+    document.getElementById('audioModal').addEventListener('click', function(e) {
+      if (e.target === this) closeAudioModal();
+    });
   </script>
 
 </body>

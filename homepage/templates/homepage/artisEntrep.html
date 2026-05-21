@@ -2,237 +2,400 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artisanat et Entrepreneuriat</title>
   {% load static %}
 
-<link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Sora', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      /* background: linear-gradient(160deg, #1a6b30 0%, #22a34b 55%, #2dc25a 100%); */
+      background: linear-gradient(160deg, #0d1b3e 0%, #1a3a8c 55%, #1a56db 100%);
+      overflow-x: hidden;
+    }
+
+    /* Cercles décoratifs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ===== HEADER ===== */
+    .page-header {
+      text-align: center;
+      padding: 52px 24px 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-top {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      line-height: 1.35;
+      max-width: 560px;
+    }
+
+    .btn-audio {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 16px;
+    }
+
+    .btn-audio:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    /* ===== CORPS PRINCIPAL ===== */
+    .main-body {
+      flex: 1;
+      background: #f4f6f3;
+      border-radius: 28px 28px 0 0;
+      padding: 44px 40px 64px;
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ===== MODAL AUDIO ===== */
+    .audio-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .audio-modal-backdrop.open {
+      display: flex;
+    }
+
+    .audio-modal-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      margin: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .audio-modal-box h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    .audio-modal-box audio {
+      width: 100%;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50%;
+      width: 32px; height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+      transition: background 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: #e0e0e0;
+      color: #c00;
+    }
+
+    /* ===== CARD INTRO ===== */
+    .intro-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 28px 26px;
+      border-left: 4px solid #22a34b;
+      box-shadow: 0 4px 20px rgba(34, 163, 75, 0.10);
+      margin-bottom: 36px;
+    }
+
+    .intro-card p {
+      font-size: 14px;
+      color: #444;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    /* ===== TEXTE ARTICLE ===== */
+    .article-text p {
+      font-size: 14px;
+      color: #444;
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .article-text strong {
+      font-weight: 700;
+      color: #1a6b30;
+    }
+
+    .article-text em {
+      font-style: italic;
+      color: #555;
+    }
+
+    /* ===== LISTE DES CHAPITRES ===== */
+    .chapter-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 26px 24px;
+      margin: 10px 0 24px;
+      box-shadow: 0 4px 16px rgba(34, 163, 75, 0.08);
+    }
+
+    .chapter-card p {
+      font-size: 13.5px;
+      color: #555;
+      font-weight: 300;
+      line-height: 2;
+      margin: 0;
+      text-align: left;
+    }
+
+    .chapter-card strong {
+      color: #1a6b30;
+      font-weight: 600;
+    }
+
+    /* ===== NOTE COMMENTAIRE ===== */
+    .comment-note {
+      background: #e6f7ed;
+      border-radius: 14px;
+      padding: 18px 22px;
+      text-align: center;
+      font-size: 13.5px;
+      color: #1a6b30;
+      font-weight: 500;
+      margin-top: 28px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: rgba(0, 0, 0, 0.35);
+      padding: 22px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 12px;
+      font-weight: 300;
+      margin: 4px 0;
+    }
+
+    footer p strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .page-title { font-size: 18px; }
+      .main-body { padding: 28px 18px 48px; }
+      .intro-card { padding: 20px 16px; }
+      .chapter-card { padding: 18px 16px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
 
-  <!-- Contenu principal -->
-  
-    <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-  <div class="flex items-center justify-center mb-4 relative">
-    <!-- Bouton à droite -->
-    <button onclick="openAudioModal()" 
-            class="absolute right-0 text-blue-600 font-semibold hover:underline flex items-center gap-2">
-      <i class="fa-solid fa-headphones"></i> Écouter en Audio
+<body>
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">Parlons à fond de l'Artisanat et de l'Entrepreneuriat</h1>
+    <button class="btn-audio" onclick="openAudioModal()">
+      <i class="ti ti-headphones" style="font-size: 16px;"></i>
+      Écouter en Audio
     </button>
-
-    <!-- Titre centré -->
-    <h2 class="text-2xl sm:text-3xl font-bold text-green-700 text-center max-w-3xl mx-auto">
-      PARLONS A FOND DE L'ARTISANAT ET DE L'ENTREPRENEURIAT
-    </h2>
   </div>
-<p class="text-gray-700 mb-6 text-justify leading-relaxed">
-      L’artisanat et l’entrepreneuriat sont des piliers essentiels du développement économique. Ils permettent la création de richesse, de valeur locale, et l’autonomie des communautés. L’artisanat permet à des individus de valoriser leur savoir-faire, tandis que l’entrepreneuriat favorise la création de projets durables. Ensemble, ils participent activement à la lutte contre le chômage et à l’épanouissement personnel et collectif.
-    </p>
 
-  </div>
-    
-    
+  <!-- Corps principal -->
+  <div class="main-body">
 
-    <div class="space-y-4 text-justify leading-relaxed max-w-3xl mx-auto">
+    <!-- Carte intro -->
+    <div class="intro-card">
+      <p>L'artisanat et l'entrepreneuriat sont des piliers essentiels du développement économique. Ils permettent la création de richesse, de valeur locale, et l'autonomie des communautés. L'artisanat permet à des individus de valoriser leur savoir-faire, tandis que l'entrepreneuriat favorise la création de projets durables. Ensemble, ils participent activement à la lutte contre le chômage et à l'épanouissement personnel et collectif.</p>
+    </div>
 
-  <p>
-    Dans cette partie parlons à fond de l'artisanat et de l'entrepreneuriat.
-    Nous allons parler des problèmes qui sont liés à l'artisanat et à l’entrepreneuriat ;
-    les apports de notre structure : probablement ça doit être nos formations, des documents, des leçons,
-    qu'ils vont trouver sur cette page. La promotion et le soutien des jeunes entrepreneurs et artisans,
-    leur orientation socio-professionnelle. Les documentaires et des histoires des entrepreneurs et artisans à succès,
-    des histoires d'échec pourquoi pas pour que les autres puissent apprendre d’eux.
-    Bref tout ce qui va vous permettre de devenir un grand artisan ou un grand entrepreneur.
-  </p>
+    <!-- Texte de l'article -->
+    <div class="article-text">
 
-  <p>
-    L’introduction déjà vous éclaire sur l'importance de ces deux entités.
-    Comme écrit : l'artisanat et l'entrepreneuriat sont des piliers essentiels du développement économique,
-    ils permettent la création de richesse, de valeur locale, et l'autonomie des communautés.
-    L’artisanat permet à des individus de valoriser leur savoir-faire tandis que l'entrepreneuriat
-    favorise la création de projet durable. Ensemble ils participent activement à la lutte contre le chômage
-    et à l'épanouissement personnel et collectif.
-  </p>
+      <p>Dans cette partie parlons à fond de l'artisanat et de l'entrepreneuriat. Nous allons parler des problèmes qui sont liés à l'artisanat et à l'entrepreneuriat ; les apports de notre structure : probablement ça doit être nos formations, des documents, des leçons, qu'ils vont trouver sur cette page. La promotion et le soutien des jeunes entrepreneurs et artisans, leur orientation socio-professionnelle. Les documentaires et des histoires des entrepreneurs et artisans à succès, des histoires d'échec pourquoi pas pour que les autres puissent apprendre d'eux. Bref tout ce qui va vous permettre de devenir un grand artisan ou un grand entrepreneur.</p>
 
-  <p>
-    Sortant du mot <strong>Artisanat</strong>, ce radical <strong>Art</strong> signifie :
-    l'ensemble des œuvres humaines qui tend à la création d'un idéal de beauté ou d'harmonie.
-    Ou l’ensemble des connaissances et de techniques nécessaires pour maîtriser une pratique donnée.
-    Pour ainsi dire, tout humain est né artiste, il suffit pour certains encore de le développer plus,
-    pour en faire un métier. C'est pour cette raison que vous verrez qu'il y a plusieurs types d’art :
-    l'art de parler, l'art de chanter, l'art de cuisiner qui est (Art culinaire) et plusieurs types d'arts.
-  </p>
+      <p>L'introduction déjà vous éclaire sur l'importance de ces deux entités. Comme écrit : l'artisanat et l'entrepreneuriat sont des piliers essentiels du développement économique, ils permettent la création de richesse, de valeur locale, et l'autonomie des communautés. L'artisanat permet à des individus de valoriser leur savoir-faire tandis que l'entrepreneuriat favorise la création de projet durable. Ensemble ils participent activement à la lutte contre le chômage et à l'épanouissement personnel et collectif.</p>
 
-  <p>
-    Toutes ces actions concourent à la création d'un idéal de beauté, d'harmonie ou de connaissance
-    pour maîtriser une pratique donnée. C'est ainsi que la plupart des artistes tirent leur inspiration
-    des œuvres harmonieuses que la nature Dieu a déjà créées et la plupart de ces artistes profitent
-    des objets de cette dame nature harmonieuse, magnifique, splendide pour créer leur œuvre d'art.
-  </p>
+      <p>Sortant du mot <strong>Artisanat</strong>, ce radical <strong>Art</strong> signifie : l'ensemble des œuvres humaines qui tend à la création d'un idéal de beauté ou d'harmonie. Ou l'ensemble des connaissances et de techniques nécessaires pour maîtriser une pratique donnée. Pour ainsi dire, tout humain est né artiste, il suffit pour certains encore de le développer plus, pour en faire un métier. C'est pour cette raison que vous verrez qu'il y a plusieurs types d'art : l'art de parler, l'art de chanter, l'art de cuisiner qui est (Art culinaire) et plusieurs types d'arts.</p>
 
-  <p>
-    Retenons que : <em>Un artiste c'est quelqu'un qui pratique l'art.</em><br>
-    Un artiste peut aller juste dans une brousse ou une forêt, couper des bois, chercher des fibres,
-    même des herbes pour sortir un objet talentueux d'art, qui sera apprécié et vendu à des centaines
-    ou des milliers de francs, sans que cet artiste n’ait investi aucun franc dans l’achat du matériel
-    de base de 1re nécessité.  
-    C’est pourquoi dans cette partie nous lions l'artisanat à l'entrepreneuriat.
-  </p>
+      <p>Toutes ces actions concourent à la création d'un idéal de beauté, d'harmonie ou de connaissance pour maîtriser une pratique donnée. C'est ainsi que la plupart des artistes tirent leur inspiration des œuvres harmonieuses que la nature Dieu a déjà créées et la plupart de ces artistes profitent des objets de cette dame nature harmonieuse, magnifique, splendide pour créer leur œuvre d'art.</p>
 
-  <p>
-    Que l'art puisse nous permettre de devenir un grand entrepreneur à partir de 0 franc juste avec
-    des objets de la nature plus nos savoir-faire ou talents artistiques qui sont en nous.
-  </p>
+      <p>Retenons que : <em>Un artiste c'est quelqu'un qui pratique l'art.</em><br>
+      Un artiste peut aller juste dans une brousse ou une forêt, couper des bois, chercher des fibres, même des herbes pour sortir un objet talentueux d'art, qui sera apprécié et vendu à des centaines ou des milliers de francs, sans que cet artiste n'ait investi aucun franc dans l'achat du matériel de base de 1re nécessité. C'est pourquoi dans cette partie nous lions l'artisanat à l'entrepreneuriat.</p>
 
-  <p>
-    Ce fut le cas du fondateur de ce projet, depuis son enfance.
-    Né dans une famille de peu de moyens et n'ayant pas grandi auprès de sa mère, cette anxiété lui procura
-    un sentiment de solitude. Pour assouvir ce sentiment de solitude, qui l'amena souvent à vouloir rester seul
-    dans son coin, il s'amusait souvent avec tout objet de la nature qu'il trouvait déjà usagé,
-    tels que : les bûchettes d'allumettes, les brindilles de balais, le support métallique de la spirale,
-    des feuilles de papier, etc... pour sortir des petits objets harmonieux.
-  </p>
+      <p>Que l'art puisse nous permettre de devenir un grand entrepreneur à partir de 0 franc juste avec des objets de la nature plus nos savoir-faire ou talents artistiques qui sont en nous.</p>
 
-  <p>
-    Et pour les objets de la nature : il coupait parfois les petites feuilles de Rônier pour l'éventail,
-    les chiendents à balai, pour les balais et l'éventail et tout autre chose.
-  </p>
+      <p>Ce fut le cas du fondateur de ce projet, depuis son enfance. Né dans une famille de peu de moyens et n'ayant pas grandi auprès de sa mère, cette anxiété lui procura un sentiment de solitude. Pour assouvir ce sentiment de solitude, qui l'amena souvent à vouloir rester seul dans son coin, il s'amusait souvent avec tout objet de la nature qu'il trouvait déjà usagé, tels que : les bûchettes d'allumettes, les brindilles de balais, le support métallique de la spirale, des feuilles de papier, etc... pour sortir des petits objets harmonieux.</p>
 
-  <p>
-    Nous ouvrons cette parenthèse ici pour dire que beaucoup d'artistes ont développé leur talent
-    suite à une situation malheureuse qu'ils traversaient ou à la recherche d’un mieux-être
-    d’une condition de vie déplorable ou pour tuer la solitude ou le chagrin.
-    Ils développaient leur talent caché en eux, surtout dans les années avant 2010 où les réseaux sociaux
-    et les smartphones Android n'étaient pas abondants. Beaucoup faisaient des activités manuelles
-    et si le goût et l'habitude s'harmonisaient, ils les transformaient en activité génératrice de revenus.
-    Mais malheureusement dans cette génération, la plupart des moments de distraction sont occupés
-    par les réseaux sociaux avec leurs effets néfastes.
-  </p>
+      <p>Et pour les objets de la nature : il coupait parfois les petites feuilles de Rônier pour l'éventail, les chiendents à balai, pour les balais et l'éventail et tout autre chose.</p>
 
-  <p>
-    Et poursuivons l'histoire du fondateur de ce projet.
-    Il continuait toujours ses petites œuvres artisanales étant sur les bancs de l’école,
-    qu'il vendait à ses camarades et s'approchait de toute personne qui faisait un travail artisanal.
-    Le fait qu'il s'approchait d'eux pour quelque temps, il mémorisait en partie ce qu'il avait vu,
-    et quand il était chez lui, il essayait de reproduire presque la même chose, souvent en ajoutant
-    sa touche particulière.
-  </p>
+      <p>Nous ouvrons cette parenthèse ici pour dire que beaucoup d'artistes ont développé leur talent suite à une situation malheureuse qu'ils traversaient ou à la recherche d'un mieux-être d'une condition de vie déplorable ou pour tuer la solitude ou le chagrin. Ils développaient leur talent caché en eux, surtout dans les années avant 2010 où les réseaux sociaux et les smartphones Android n'étaient pas abondants.</p>
 
-  <p>
-    Quand les conditions financières défavorables de ses parents n'ont plus permis qu’il continue l'école,
-    il s’installa en ouvrant un atelier d'artisanat. Puisque déjà le weekend (samedi et dimanche)
-    il restait au bord d'une ruelle pour exposer ses petites œuvres artisanales et les matières premières
-    qu'il utilisait étaient cherchées parfois dans des dépotoirs, les cordes jetées aux poubelles
-    pour faire ses œuvres d'art.
-  </p>
+      <p>Et poursuivons l'histoire du fondateur de ce projet. Il continuait toujours ses petites œuvres artisanales étant sur les bancs de l'école, qu'il vendait à ses camarades et s'approchait de toute personne qui faisait un travail artisanal. Le fait qu'il s'approchait d'eux pour quelque temps, il mémorisait en partie ce qu'il avait vu, et quand il était chez lui, il essayait de reproduire presque la même chose, souvent en ajoutant sa touche particulière.</p>
 
-  <p>
-    Et c'est dans cet élan de s'en sortir financièrement avec ses œuvres d'art que ça lui devint un défi à relever.
-    Puisque les œuvres d'art ne sont pas bien valorisées et bien payées surtout par les Africains eux-mêmes,
-    du coup ça devint un défi à relever si l'on voulait vraiment rester dans ce domaine et vivre de son art.
-  </p>
+      <p>Quand les conditions financières défavorables de ses parents n'ont plus permis qu'il continue l'école, il s'installa en ouvrant un atelier d'artisanat. Puisque déjà le weekend (samedi et dimanche) il restait au bord d'une ruelle pour exposer ses petites œuvres artisanales et les matières premières qu'il utilisait étaient cherchées parfois dans des dépotoirs, les cordes jetées aux poubelles pour faire ses œuvres d'art.</p>
 
-  <p>
-    À ce moment nous étions un peu soulagés par les achats de certains occidentaux plus ou moins acceptables
-    qui venaient dans nos pays Africains que par les achats des locaux. Et surtout que le début de ses œuvres
-    artistiques dans les années 1997 ne constituait seulement qu’à des tricotages des tapis,
-    les cache-cols et à tisser les sacs en nylon. Cela était considéré par ses proches comme
-    un travail sans lendemain surtout pour un homme, se référant au pouvoir d'achat des citoyens
-    dans ce domaine d'art.
-  </p>
+      <p>Et c'est dans cet élan de s'en sortir financièrement avec ses œuvres d'art que ça lui devint un défi à relever. Puisque les œuvres d'art ne sont pas bien valorisées et bien payées surtout par les Africains eux-mêmes, du coup ça devint un défi à relever si l'on voulait vraiment rester dans ce domaine et vivre de son art.</p>
 
-  <p>
-    Oui ses proches n'avaient pas tort parce que vite il s'était confronté à des achats de certains clients
-    qui le décourageaient. Après son dur travail, parfois des jours pour sortir un seul produit artisanal,
-    les prix que donnaient certains clients n'étaient pas à la hauteur de ses efforts.
-    Mais au lieu de se décourager, il promit à ses proches qu'il pourra laver ce domaine pour prouver aux gens
-    qu'il n’y a pas de sot métier et que grâce à ce travail, il pourrait devenir une grande personnalité
-    importante de son pays.
-  </p>
+      <p>Oui ses proches n'avaient pas tort parce que vite il s'était confronté à des achats de certains clients qui le décourageaient. Après son dur travail, parfois des jours pour sortir un seul produit artisanal, les prix que donnaient certains clients n'étaient pas à la hauteur de ses efforts. Mais au lieu de se décourager, il promit à ses proches qu'il pourra laver ce domaine pour prouver aux gens qu'il n'y a pas de sot métier.</p>
 
-  <p>
-    Le chemin n'a pas été facile pour lui depuis ses années de 1997 quand il embrassa ce domaine de l'artisanat,
-    jusqu'à nos jours en ce 2025 lorsque cette histoire est racontée. Mais il peut être fier d'avoir maintenu
-    le cap malgré les hauts et les bas sur son chemin. Et aujourd'hui il peut être compté parmi
-    les entrepreneurs de son pays qui évoluent avec de grandes ambitions.
-  </p>
+      <p>Il est à noter que la réussite et l'échec d'un entrepreneur dépendent de l'environnement dans lequel il a grandi, ses parents, leur situation financière, l'amour et la stabilité au sein de la famille, les proches parents, le type d'amitié qui nous entoure, l'éducation académique et familiale reçue, l'environnement social et politique d'un pays. Tout ça compte.</p>
 
-  <p>
-    Pour l'entrepreneuriat, causons un peu de son parcours.  
-    Il est à noter que la réussite et l'échec d'un entrepreneur dépendent de l'environnement dans lequel il a grandi,
-    ses parents, leur situation financière, l'amour et la stabilité au sein de la famille, les proches parents,
-    le type d'amitié qui nous entoure, l’éducation académique et familiale reçue, l’environnement social et politique
-    d’un pays, l’ambiance autour de soi, joie, tristesse, anxiété. Tout ça compte.
-  </p>
+      <p>C'est pour cette raison que vous trouverez sur ce site toute l'histoire de vie artisanale et entrepreneuriale du fondateur de ce projet, M. James ; se liant à tous ces facteurs précités, dans la partie biographie du fondateur.</p>
 
-  <p>
-    C'est pour cette raison que vous trouverez sur ce site toute l’histoire de vie artisanale et entrepreneuriale
-    du fondateur de ce projet, M. James ; se liant à tous ces facteurs précités, dans la partie biographie du fondateur.
-  </p>
+      <p>Voici les grandes lignes de son histoire que vous allez découvrir en détail :</p>
 
-  <p>
-    Mais nous voulons vous donner ici un avant-goût des grandes lignes de son histoire fabuleuse que vous allez écouter
-    de l’autre côté dans son entièreté ; puisque l'identité d'une personne se lie par rapport aux activités qu'il mène
-    dans sa vie.
-  </p>
+      <div class="chapter-card">
+        <p>
+          <strong>1.</strong> L'environnement familial, l'abandon qu'il a senti depuis son enfance, les effets relatifs que cela a eu sur toute sa vie.<br>
+          <strong>2.</strong> Comment à la recherche d'une activité supplémentaire, il a été enroulé par un monsieur cupide dans un début de microfinance tontine ; ce qui mit injustement une énorme dette sur sa tête très jeune.<br>
+          <strong>3.</strong> Comment pour redresser sa vie il a fait violence sur lui-même en s'imposant un emploi du temps strict.<br>
+          <strong>4.</strong> Comment une sale blague d'un de ses amis l'a révolté et poussé à travailler davantage.<br>
+          <strong>5.</strong> Comment son activité de cabine téléphonique et de vente de cartes de recharge l'a aidé à adopter une bonne gestion financière.<br>
+          <strong>6.</strong> Comment un ami voulut jouer sur son honnêteté mais il évita une deuxième erreur semblable à celle de la tontine.<br>
+          <strong>7.</strong> Comment toutes ces situations l'ont poussé à reprendre l'école en cours du soir après 12 ans d'abandon.<br>
+          <strong>8.</strong> Comment il a rencontré les notions d'entrepreneuriat qui correspondaient déjà à ses pratiques.<br>
+          <strong>9.</strong> Sa rencontre avec une ONG qui reflétait aussi ses idéaux de soutien aux nécessiteux.<br>
+          <strong>10.</strong> Comment il organisait ses réunions mensuelles pour faire adhérer ses projets humanitaires.<br>
+          <strong>11.</strong> Sa lettre ouverte pour former un groupe WhatsApp des jeunes entrepreneurs endettés.<br>
+          <strong>12.</strong> Sa relation et ses regards sur les microfinances.<br>
+          <strong>13.</strong> Ses mésaventures avec ses locataires d'ateliers.<br>
+          <strong>14.</strong> Sa formation dans d'autres activités génératrices de revenus en période de crise (Covid-19).<br>
+          <strong>15.</strong> Ses projets locaux et internationaux remportés grâce à sa détermination.<br>
+          <strong>16.</strong> Son auto-formation en création de sites internet.<br>
+          <strong>17.</strong> Sa déception de ne pas trouver ses proches ou amis comme investisseurs.
+        </p>
+      </div>
 
-  <p>
-    Donc dans sa biographie il a parlé de :  
-    1. L’environnement familial, l'abandon qu’il a senti depuis son enfance, les effets relatifs que cela a eu sur toute sa vie. <br>
-    2. Comment à la recherche d'ajouter une activité supplémentaire, il a été enroulé par un monsieur cupide dans un début de microfinance tontine ; ce qui mit injustement une énorme dette sur sa tête très jeune. <br>
-    3. Comment pour redresser sa vie il a fait violence sur lui-même en s’imposant un emploi du temps strict. <br>
-    4. Comment une sale blague d'un de ses amis l’a révolté et poussé à travailler davantage. <br>
-    5. Comment son activité de cabine téléphonique et de vente de cartes de recharge l’a aidé à adopter une bonne gestion financière. <br>
-    6. Comment un ami voulut jouer sur son honnêteté mais il évita une deuxième erreur semblable à celle de la tontine. <br>
-    7. Comment toutes ces situations l'ont poussé à reprendre l'école en cours du soir après 12 ans d’abandon. <br>
-    8. Comment il a rencontré les notions d'entrepreneuriat qui correspondaient déjà à ses pratiques. <br>
-    9. Sa rencontre avec une ONG qui reflétait aussi ses idéaux de soutien aux nécessiteux. <br>
-    10. Comment il organisait ses réunions mensuelles pour faire adhérer ses projets humanitaires. <br>
-    11. Sa lettre ouverte pour former un groupe WhatsApp des jeunes entrepreneurs endettés. <br>
-    12. Sa relation et ses regards sur les microfinances. <br>
-    13. Ses mésaventures avec ses locataires d’ateliers. <br>
-    14. Sa formation dans d'autres activités génératrices de revenus en période de crise (Covid19). <br>
-    15. Ses projets locaux et internationaux remportés grâce à sa détermination. <br>
-    16. Son auto-formation en création de sites internet. <br>
-    17. Sa déception de ne pas trouver ses proches ou amis comme investisseurs. <br>
-  </p>
+      <p>Le chemin n'a pas été facile depuis 1997 jusqu'à nos jours en ce 2025 lorsque cette histoire est racontée. Mais il peut être fier d'avoir maintenu le cap malgré les hauts et les bas sur son chemin. Et aujourd'hui il peut être compté parmi les entrepreneurs de son pays qui évoluent avec de grandes ambitions.</p>
 
-  <p>
-    Merci beaucoup Vous aurez un <strong>4 box</strong> pour laisser vos commentaires
-    sur les histoires qui vont vous impacter.
-  </p>
+      <div class="comment-note">
+        💬 Un espace de commentaires sera bientôt disponible pour partager vos réactions sur ces histoires qui vous ont impacté.
+      </div>
 
-</div>
+    </div><!-- fin .article-text -->
 
+  </div><!-- fin .main-body -->
+
+  <!-- Footer -->
+  <footer>
+    <p>Total d'actions sur le site : <strong>{{ total_global_users }}</strong></p>
+    <p>📍 AGOE CAMPS GP — LOMÉ, TOGO &nbsp;·&nbsp; 📞 +228 90121764 &nbsp;·&nbsp; ✉️ creationjames@gmail.com</p>
+  </footer>
 
   <!-- Modal Audio -->
-  <div id="audioModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative mx-4">
-      
-      <h2 class="text-xl font-bold mb-4">Audio - Français </h2>
-       <audio controls class="w-full mt-2">
-   <source src="{% static 'audio/artisanat/Audio_3_artisanat.mp3' %}" type="audio/mpeg">
-</audio>
-        <h2 class="text-xl font-bold mb-4">Audio - Anglais </h2>
-          <audio controls class="w-full">
-            <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
-            Votre navigateur ne supporte pas la lecture audio.
-        </audio>
-      <button onclick="closeAudioModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+  <div id="audioModal" class="audio-modal-backdrop">
+    <div class="audio-modal-box">
+      <button class="modal-close-btn" onclick="closeAudioModal()" aria-label="Fermer">&times;</button>
+
+      <h3>🎧 Audio — Français</h3>
+      <audio controls>
+        <source src="{% static 'audio/artisanat/Audio_3_artisanat.mp3' %}" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
+
+      <h3>🎧 Audio — Anglais</h3>
+      <audio controls>
+        <source src="{% static 'audios/info_stage.mp3' %}" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script>
     function openAudioModal() {
-      document.getElementById('audioModal').classList.remove('hidden');
-      document.getElementById('audioModal').classList.add('flex');
+      document.getElementById('audioModal').classList.add('open');
     }
     function closeAudioModal() {
-      document.getElementById('audioModal').classList.remove('flex');
-      document.getElementById('audioModal').classList.add('hidden');
+      document.getElementById('audioModal').classList.remove('open');
     }
+    // Fermer en cliquant sur le fond
+    document.getElementById('audioModal').addEventListener('click', function(e) {
+      if (e.target === this) closeAudioModal();
+    });
   </script>
 
 </body>

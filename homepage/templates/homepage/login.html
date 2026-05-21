@@ -4,161 +4,341 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion à l'application</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         html, body {
             height: 100%;
-            overflow-x: hidden;
+            font-family: 'Sora', sans-serif;
         }
 
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background: linear-gradient(135deg, #005fcc 0%, #0078ff 55%, #1a91ff 100%);
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .container {
+        /* Cercles décoratifs d'arrière-plan */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
             flex: 1;
-        }
-
-        .nav-pills {
-            background-color: #007bff;
-            border-radius: 50px;
-            padding: 10px;
-            flex-wrap: wrap;
-             max-width: 800px;
-            margin: 0 auto 30px auto; /* centré horizontalement */
-        }
-
-        .nav-link {
-            color: white;
-            margin: 10px 20px;
-            padding: 20px 50px;
-            border-radius: 50px;
-            transition: 0.3s;
-            text-align: center;
-            border-radius: 50px;
-        }
-
-        .nav-link:hover {
-            background-color: white;
-            color: #007bff;
-            border: 1px solid #007bff;
-            border-radius: 50px;
-        }
-
-        .nav-pills .nav-link.active {
-            background-color: white;
-            color: #007bff;
-            border-radius: 50px;
-        }
-
-        .tab-content {
-            margin-top: 20px;
-        }
-
-       .account-box {
-    background-color: #ffffff;
-    border: 1px solid black;
-    border-radius: 15px;
-    padding: 70px;
-    text-align: center;
-    max-width: 700px;
-    margin: 80px auto 90px auto; /* marge en haut pour descendre + centré horizontalement */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-/* Animation de rotation style “page qui tourne” */
-.page-flip::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 9999;
-    transform-origin: left center;
-    animation: flipPage 0.8s ease-in-out forwards;
-}
-
-@keyframes flipPage {
-    0% {
-        transform: rotateY(0deg);
-    }
-    100% {
-        transform: rotateY(-90deg);
-    }
-}
-
-
-        .account-buttons {
             display: flex;
-            justify-content: center;
-            gap: 150px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            padding: 56px 20px 40px;
+            position: relative;
+            z-index: 1;
         }
 
-        .account-buttons a {
-            padding: 10px 20px;
-            border: 1px solid #007bff;
-            border-radius: 10px;
-            background-color: white;
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 500;
-            box-shadow: 0 4px 8px rgba(0, 143, 275, 0.2);
-            transition: all 0.3s ease;
-            white-space: nowrap;
-
-        }
-
-        .account-buttons a:hover {
-            background-color: #007bff;
-            color: white;
-            box-shadow: 0 8px 15px rgba(0, 143, 275, 0.4);
-        }
-
-        footer {
-            background-color: black;
-            padding: 20px 0;
+        .page-title {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            margin-bottom: 8px;
             text-align: center;
-            color: white;
+        }
+
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 36px;
+            text-align: center;
+        }
+
+        /* ===== TABS ===== */
+        .tabs-bar {
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 5px;
+            margin-bottom: 36px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: #0078ff;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== CARD ===== */
+        .card-area {
             width: 100%;
+            max-width: 500px;
+        }
+
+        .account-card {
+            display: none;
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 40px 36px 34px;
+            box-shadow: 0 24px 64px rgba(0, 50, 130, 0.28);
+            animation: cardIn 0.3s ease forwards;
+        }
+
+        .account-card.active {
+            display: block;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Icône en haut de la carte */
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: #e6f2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 26px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #999999;
+            font-weight: 300;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Badge Projet demunie */
+        .badge-mlg {
+            display: inline-block;
+            font-size: 10px;
+            background: #e6f2ff;
+            color: #0078ff;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+        }
+
+        /* ===== BOUTONS ===== */
+        .card-actions {
+            display: flex;
+            gap: 14px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: #0078ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 13px;
+            padding: 14px 0;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            background: #005fcc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 120, 255, 0.38);
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: transparent;
+            color: #0078ff;
+            border: 1.5px solid #b8d8ff;
+            border-radius: 13px;
+            padding: 14px 0;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+            letter-spacing: 0.2px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: #e6f2ff;
+            border-color: #0078ff;
+            transform: translateY(-2px);
+            color: #0078ff;
+            text-decoration: none;
+        }
+
+        /* Séparateur + note bas de carte */
+        .divider {
+            height: 1px;
+            background: #f2f2f2;
+            margin: 24px 0 16px;
+        }
+
+        .card-footer-note {
+            font-size: 11.5px;
+            color: #c0c0c0;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 22px 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         footer p {
             margin-bottom: 5px;
-            font-size: 0.9rem;
+            font-size: 12px;
+            font-weight: 300;
         }
 
-        @media (max-width: 768px) {
-            .nav-link {
-                margin: 5px 10px;
-                padding: 8px 12px;
-                font-size: 0.9rem;
-            }
-
-            .account-box {
-                padding: 30px 15px;
-            }
-
-            .account-buttons a {
-                padding: 8px 15px;
-                font-size: 0.9rem;
-            }
+        footer p strong {
+            color: #ffffff;
+            font-weight: 600;
         }
 
-        @media (max-width: 576px) {
-            .nav-pills {
+        footer .stat {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        /* ===== ANIMATION PAGE FLIP ===== */
+        .page-flip::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            transform-origin: left center;
+            animation: flipPage 0.8s ease-in-out forwards;
+        }
+
+        @keyframes flipPage {
+            0%   { transform: rotateY(0deg); }
+            100% { transform: rotateY(-90deg); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 20px;
+            }
+
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .account-card {
+                padding: 28px 22px 26px;
+            }
+
+            .card-actions {
                 flex-direction: column;
-                align-items: center;
             }
 
-            .nav-link {
+            .btn-primary,
+            .btn-secondary {
                 width: 100%;
-                text-align: center;
             }
         }
     </style>
@@ -166,96 +346,107 @@
 
 <body>
 
-<div class="container">
-    <h1 class="text-center my-4" style="font-size: 2em;">Sélectionnez votre compte</h1>
+<div class="main-content">
 
-    <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="marchand-tab" data-toggle="pill" href="#marchand" role="tab">Marchand</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="association-tab" data-toggle="pill" href="#association" role="tab">Association</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="mlg-tab" data-toggle="pill" href="#mlg" role="tab">MLG</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pp-tab" data-toggle="pill" href="#pp" role="tab">PP</a>
-        </li>
-    </ul>
+    <h1 class="page-title">Sélectionnez votre compte</h1>
+    <p class="page-subtitle">Choisissez le type d'espace pour continuer</p>
 
-    <div class="tab-content" id="pills-tabContent">
+    <!-- Barre d'onglets -->
+    <div class="tabs-bar">
+        <button class="tab-btn active" onclick="switchTab('marchand', this)">Marchand</button>
+        <button class="tab-btn" onclick="switchTab('association', this)">Association</button>
+        <button class="tab-btn" onclick="switchTab('mlg', this)">Projet demunie</button>
+        <button class="tab-btn" onclick="switchTab('pp', this)">PP</button>
+    </div>
+
+    <!-- Cartes -->
+    <div class="card-area">
+
         <!-- Marchand -->
-        <div class="tab-pane fade show active" id="marchand" role="tabpanel">
-            <div class="account-box">
-                <h3>Marchand</h3>
-                <div class="account-buttons">
-                    <a href="#" class="fancy-link" target="_blank">Se connecter</a>
-                    <a href="#" class="fancy-link">S'inscrire</a>
-                </div>
+        <div class="account-card active" id="tab-marchand">
+            <div class="card-icon">🏪</div>
+            <p class="card-title">Espace Marchand</p>
+            <p class="card-desc">Gérez vos produits, commandes et transactions en toute simplicité.</p>
+            <div class="card-actions">
+                <a href="{% url 'ecommerce:ecommerce_login' %}" class="btn-primary fancy-link" target="_blank">Se connecter</a>
+                <a href="{% url 'ecommerce:ecommerce_signup' %}" class="btn-secondary fancy-link" target="_blank">S'inscrire</a>
             </div>
+            <div class="divider"></div>
+            <p class="card-footer-note">Accès réservé aux marchands partenaires</p>
         </div>
 
         <!-- Association -->
-        <div class="tab-pane fade" id="association" role="tabpanel">
-            <div class="account-box">
-                <h3>Association</h3>
-                <div class="account-buttons">
-                    <a href="{% url 'association:accueil' %}" class="fancy-link" target="_blank">Se connecter</a>
-                    <a href="#" class="fancy-link">S'inscrire</a>
-                </div>
+        <div class="account-card" id="tab-association">
+            <div class="card-icon">🤝</div>
+            <p class="card-title">Espace Association</p>
+            <p class="card-desc">Accédez à votre tableau de bord et gérez vos activités associatives.</p>
+            <div class="card-actions">
+                <a href="{% url 'association:association_login' %}" class="btn-primary fancy-link" target="_blank">Se connecter</a>
+                <a href="{% url 'association:association_signup' %}" class="btn-secondary fancy-link" target="_blank">S'inscrire</a>
             </div>
+            <div class="divider"></div>
+            <p class="card-footer-note">Accès réservé aux associations enregistrées</p>
         </div>
 
-        <!-- MLG -->
-        <div class="tab-pane fade" id="mlg" role="tabpanel">
-            <div class="account-box">
-                <h3>MLG</h3>
-                <h5>(MULTI-LEVEL-GIFT)</h5>
-                <div class="account-buttons">
-                    <a href="{% url 'authentication:user_login' %}" class="fancy-link" target="_blank">Se connecter</a>
-                    <a href="{% url 'authentication:user_signup' %}" class="fancy-link" target="_blank">S'inscrire</a>
-                </div>
+        <!-- Projet demunie -->
+        <div class="account-card" id="tab-mlg">
+            <span class="badge-mlg">MULTI-LEVEL-GIFT</span>
+            <div class="card-icon">🎁</div>
+            <p class="card-title">Espace Projet demunie</p>
+            <p class="card-desc">Rejoignez le réseau Multi-Level-Gift et développez votre activité de parrainage.</p>
+            <div class="card-actions">
+                <a href="{% url 'authentication:user_login' %}" class="btn-primary fancy-link" target="_blank">Se connecter</a>
+                <a href="{% url 'authentication:user_signup' %}" class="btn-secondary fancy-link" target="_blank">S'inscrire</a>
             </div>
+            <div class="divider"></div>
+            <p class="card-footer-note">Programme de parrainage et récompenses</p>
         </div>
 
         <!-- PP -->
-        <div class="tab-pane fade" id="pp" role="tabpanel">
-            <div class="account-box">
-                <h3>PP</h3>
-                <div class="account-buttons">
-                    <a href="#" class="fancy-link" target="_blank">Se connecter</a>
-                    <a href="#" class="fancy-link" target="_blank">S'inscrire</a>
-                </div>
+        <div class="account-card" id="tab-pp">
+            <div class="card-icon">💳</div>
+            <p class="card-title">Espace PP</p>
+            <p class="card-desc">Accédez à votre espace personnel PP en toute sécurité.</p>
+            <div class="card-actions">
+                <a href="{% url 'parti:login' %}" class="btn-primary fancy-link" target="_blank">Se connecter</a>
+                <a href="{% url 'parti:parti_signup' %}" class="btn-secondary fancy-link" target="_blank">S'inscrire</a>
             </div>
+            <div class="divider"></div>
+            <p class="card-footer-note">Accès sécurisé à votre compte PP</p>
         </div>
+
     </div>
 </div>
 
+<!-- Footer -->
 <footer>
-    <div class="container">
-        <p>Total d'action sur le site : <strong>{{ total_global_users }}</strong></p>
-        <p>Adresse : AGOE CAMPS GP LOME-TOGO</p>
-        <p>Téléphone : +228 90121764</p>
-        <p>Email : creationjames@gmail.com</p>
-    </div>
+    <p class="stat">Total d'actions sur le site : <strong>{{ total_global_users }}</strong></p>
+    <p>📍 AGOE CAMPS GP — LOMÉ, TOGO</p>
+    <p>📞 +228 90121764 &nbsp;&nbsp;·&nbsp;&nbsp; ✉️ creationjames@gmail.com</p>
 </footer>
+
 <script>
+    // Changement d'onglet
+    function switchTab(name, btn) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.account-card').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    // Animation page flip au clic sur les liens
     document.querySelectorAll('.fancy-link').forEach(link => {
         link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return; // Ne pas animer les liens vides
             e.preventDefault();
             document.body.classList.add('page-flip');
-
             setTimeout(() => {
-                window.location.href = this.href;
-            }, 800); // le temps de l'animation
+                window.location.href = href;
+            }, 800);
         });
     });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

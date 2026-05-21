@@ -1,648 +1,923 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Biographie</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biographie Et Bibliographie</title>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
-{% load static %}
-
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-center mb-8">Biographie Et Bibliographie </h1>
-
-    <div class="space-y-6">
-
-      <!-- Section I à VIII -->
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">I. Identité</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal1')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal1')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">II. Parcours Académique</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal2')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal2')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">III. Activités</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal3')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal3')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">IV.Vision et Objectif </h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal4')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal4')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">V.Personnalité et Moralité</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal5')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal5')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">VI. Engagement et Serment</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal6')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal6')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">VII. Bénéfices et Transparence</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal7')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal7')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="text-xl font-semibold">VIII. Héritage et Legs</h2>
-          <div class="space-x-2">
-            <button onclick="toggleModal('textModal8')" class="border border-blue-600 text-blue-600 px-4 py-1 rounded hover:bg-blue-50">Texte</button>
-            <button onclick="toggleModal('audioModal8')" class="border border-green-600 text-green-600 px-4 py-1 rounded hover:bg-green-50">Audio</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- MODALS TEXTE COMPLETS -->
-<div id="textModal1" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Identité</h3>
-    <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    Avant de parler des engagements et le serment qui vont lier la structure <strong>Création James</strong> et le leader <strong>James l'Amour</strong> à son public, il est de bon ton que vous lisiez la définition de ces deux thèmes :
-  </p>
-
-  <p>
-    <strong>L'engagement</strong> et <strong>le serment</strong> sont deux concepts puissants qui définissent la profondeur des convictions et la force des promesses d'une personne.
-  </p>
-
-  <p>
-    L’engagement est une promesse, une résolution ferme de faire ou de ne pas faire quelque chose. Il peut être envers une personne, une cause, une idée, ou même envers soi-même. 
-    C’est une décision consciente qui implique souvent un investissement de temps, d’énergie, et parfois de ressources. 
-    Un engagement peut être tacite, comme l’engagement d’un parent envers son enfant, ou explicite, comme l’engagement d’un employé envers son entreprise.
-  </p>
-
-  <p>
-    Le serment, quant à lui, est une forme d’engagement plus solennelle et souvent plus formelle. 
-    Il s’agit d’une déclaration publique ou privée, souvent faite en invoquant une autorité supérieure (Dieu, la justice, la vérité), 
-    qui atteste de la véracité de ce qui est dit ou de la fermeté de l’intention. 
-    Le serment ajoute une dimension sacrée ou légale à la promesse, impliquant des conséquences morales ou juridiques en cas de manquement.
-  </p>
-
-  <p>
-    Ces deux notions reflètent la fiabilité et l’intégrité d’un individu, montrant sa capacité à tenir parole et à se dédier à ses engagements, même face à l’adversité.
-  </p>
-
-  <p>
-    Dans cette partie <strong>Engagement et Serment</strong>, vous trouverez dans la section <em>Texte</em> : 
-    les documents officiels des autorités compétentes qui accréditent la mise en place de notre structure dans son pays d’origine et dans les pays où elle pourra s’installer plus tard. 
-    Vous trouverez également des engagements verbaux et écrits venant du premier responsable ou promoteur de cette structure qui est <strong>M. James</strong> ; 
-    ainsi que sa prestation de serment en bonne et due foi, face au monde qui va le suivre dans cette aventure. 
-    Car pour James, prendre des engagements ou un serment public renforce la sérénité et la crédibilité de celui qui le fait et de la cause qu’il défend.
-  </p>
-
-  <p>
-    Une partie de ces engagements concernera aussi tous les membres, partisans, adhérents ou partenaires, de près ou de loin, 
-    afin de s’engager et d’œuvrer dans une transparence et une honnêteté absolues pour la réussite de cet objectif commun à tous.
-  </p>
-
-  <p>
-    C’est pour cela que vous verrez des petites cases à cocher sur ce site à la fin de certaines informations que vous aurez remplies vous concernant ; 
-    vous et votre vie passée et présente. Vous les cocherez en toute bonne foi, comme un serment que vous prêtez, attestant que toutes les informations fournies sont avérées.
-  </p>
-
-  <p>
-    Pour lutter contre la fraude, vos dossiers ou documents que vous allez nous envoyer sur ce site, pour bénéficier d’un emploi ou d’autres avantages, 
-    seront laissés au vu de tous les membres afin que ceux qui vous connaissent mieux puissent contester si vous avez introduit de faux diplômes ou de fausses informations. 
-    Vos casiers judiciaires seront également demandés ; toutefois, vos contacts et lieux d’habitation pourront être cachés au public pour des raisons de sécurité.
-  </p>
-
-  <p>
-    Nous avons aussi une partie dédiée aux <strong>Torpilleurs</strong> : ceux qui, animés par de mauvaises intentions, chercheraient volontairement à saboter nos efforts et à nous nuire. 
-    Leurs noms et leurs photos seront dévoilés sur ce site, accompagnés des faits qui leur sont reprochés, afin de décourager toute personne de mauvaise foi. <strong>La suite dans la partie audio</strong>
-  </p>
-</div>
-
-
-
-
-    <button onclick="toggleModal('textModal1')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<div id="textModal2" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Parcours Académique</h3>
-   <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    <strong>Leader James l'Amour</strong> a fait plus l'école de la vie que l'école académique.
-  </p>
-
-  <p>
-    Puisque tout ce que la vie active lui a appris... aucune école au monde, aucune université ni aucun professeur ne pourrait l’enseigner. 
-    Mais la vie lui a montré des leçons pratiques et non théoriques ; 
-    elle lui a fait traverser des épreuves palpables et aujourd'hui, il en est un maître, un leader. 
-    Écouter ses histoires de bravoure, de témérité, de résilience et de réussites peut instruire d’autres personnes.
-  </p>
-
-  <p>
-    Mais comme, malheureusement, la considération et l’intelligence d’un homme se mesurent de nos jours par rapport à ses diplômes académiques, 
-    Leader James l’Amour n’est pas du reste.
-  </p>
-
-  <p>
-    En bref, <strong>Leader James l'Amour</strong> a eu son <em>Baccalauréat littéraire A4 Grand Format</em> en Juin 2015. 
-    Grand format parce que l’âge qu’il avait avant de l’avoir lui permettait de comprendre déjà assez de choses, 
-    et non simplement de les bûcher et d’aller coller. 
-    L’école de la vie l’avait déjà assez formé et l’avait prédisposé à développer de grandes capacités et à accomplir beaucoup de choses.
-  </p>
-
-  <p>
-    Après cela, il renforça ses capacités grâce à des formations en entrepreneuriat, en gestion d’entreprise et en leadership, 
-    dans les nombreuses structures qu’il a côtoyées. 
-    Mais avant et après tout cela, il est avant tout un <strong>maître tisserand</strong>, un <strong>entrepreneur</strong> et un <strong>leader</strong>.
-    <strong>La suite dans la partie audio</strong>
-  </p>
-</div>
-
-    <button onclick="toggleModal('textModal2')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<div id="textModal3" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Activité</h3>
-   <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    <strong>Le leader James l'Amour</strong> est le directeur général de sa structure <strong>CREATION JAMES</strong> et de son association <strong>CP2ACJ</strong>, ainsi que l’administrateur principal de ce site et de tous les programmes qui s’y trouvent.
-  </p>
-
-  <p>
-    Les activités de James et de sa structure sont nombreuses, mais on peut les regrouper en trois grands volets : 
-    <strong>l'artisanat</strong>, <strong>l'entrepreneuriat</strong> et <strong>le leadership</strong>.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">1. L'Artisanat</h3>
-  <p>
-    - <em>Le Macramé</em> : fabrication à la main de sacs en nylon, lits-picot, filets pour cages, filets pour clôturer les terrains synthétiques, pochettes.<br>
-    - <em>Le Tricotage</em> : tapis, chapeaux, chaussettes, pulls (bébé et adulte), pagnes traditionnels, perlages et autres objets d’art tissés.<br>
-    - <em>La Haute Couture</em> : atelier Homme, Dame et Enfant dirigé par l’épouse de M. James, entrepreneuse et diplômée d’une Haute école de couture. 
-      Le leader James lui-même aime coudre et a confectionné de petits habits à la main.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">2. L'Entrepreneuriat</h3>
-  <p>
-    Formations sur la création et gestion d’entreprises, la rédaction de projets, les NTIC (Word, Excel, programmation en JavaScript, PHP, Python, etc.), 
-    ainsi que les activités liées à un centre informatique (photocopie, impression, plastification, transferts de crédit, cyber, wifi-zone).
-  </p>
-  <p>
-    Vente de services digitaux, de produits artisanaux (en ligne, en boutique, dans les foires, ou par carnivals de promotion). 
-    Ces activités constituent notre façon d’entreprendre et nous offrons des stages et formations à la jeunesse dans ce domaine.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">3. Le Leadership</h3>
-  <p>
-    Nous accompagnons nos apprenants, étudiants, stagiaires et employés par des formations en leadership et développement personnel. 
-    Celles-ci leur permettent de développer un mental solide pour affronter les défis professionnels, familiaux et sociaux.
-  </p>
-  <p>
-    Ces formations sont accessibles en partie pour les apprenants, mais en totalité pour les membres de l’association CP2ACJ et sa branche MLG. 
-    Elles enseignent humilité, considération, esprit d’équipe et permettent de bâtir un grand réseau d’affaires fructueuses, 
-    car <em>l’homme n’est rien sans l’homme</em>.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">4. Autres Compétences</h3>
-  <p>
-    En interne, M. James se débrouille aussi en <em>électricité</em> (héritée de son père), <em>menuiserie</em>, <em>maçonnerie</em>, 
-    <em>peinture</em>, <em>soudure</em>, <em>cordonnerie</em> et autres petits métiers. 
-    Il possède ses propres outils (pince, rabot, scie, perceuse, machine à souder, etc.).
-  </p>
-  <p>
-    Ces savoir-faire en bricolage sont partagés gratuitement avec les jeunes en formation dans le centre principal, 
-    combiné à sa maison familiale. Ces jeunes apprennent non seulement un métier, mais aussi des valeurs de vie familiale et de leadership. 
-    Ainsi, ils deviennent polyvalents et capables de résoudre de nombreux problèmes de la vie quotidienne.
-  </p>
-
-  <p>
-    <strong>Conclusion :</strong> pour éviter les dépenses excessives et devenir autonome, 
-    suivez très tôt nos diverses formations dans nos centres. 
-    Contactez-nous via l’adresse mail disponible sur ce site pour trouver le centre de formation le plus proche de vous.
-<strong>La suite dans la partie audio</strong>
-  
-</div>
-
-</p>
-    <button onclick="toggleModal('textModal3')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-
-
-<div id="textModal4" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Vision et Objectif</h3>
-    <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    <strong>La vision et l’objectif</strong> de la structure <strong>Création James</strong> est d’apporter nos pierres à la construction de nos nations,
-    en accompagnant nos gouvernements dans leurs efforts d’avoir une jeunesse consciente qui comprenne les enjeux socio-politiques de leur pays
-    et le démontre par leurs actes civiques allant dans le sens de la Paix et du Développement de nos diverses nations.
-  </p>
-
-  <p>
-    Avec nos membres partisans actifs, volontaires, expérimentés ou non...
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">1. Fomenter les mentalités positives</h3>
-  <p>
-    En fomentant les mentalités d'avant, qui étaient de finir d'abord ses études et d'écrire « j'ai l'honneur » pour forcément gagner sa vie derrière un bureau.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">2. Dévirussage des mentalités négatives</h3>
-  <p>
-    En dévirussant les mentalités contagieuses des futurs pères, mères et parents — amis, frères, sœurs, parents et entourage — afin qu’ils ne transmettent plus les mêmes pensées et attitudes rétrogradées à leurs générations futures, qui retardent l'Afrique, surtout l'Afrique francophone.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">3. Mobiliser et montrer l’exemple</h3>
-  <p>
-    Mobiliser, motiver, assister, montrer et démontrer par nos réussites aux tiers-mondes les chemins de la réussite, de l'autonomie et de l'indépendance financière que l’on obtient en entreprenant ou en menant une vie associative.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">4. Redonner envie et moyens</h3>
-  <p>
-    Redonner la chance, l'envie, la motivation, la détermination et les moyens à tous ceux qui ont été déçus ou découragés par la vie entrepreneuriale ou associative, ou ceux pour qui cela ne marche pas, faute de moyens ou de comportements de leurs collaborateurs.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">5. Transformer la jeunesse inconsciente</h3>
-  <p>
-    Étant donné que notre cible est la jeunesse inconsciente, souvent absorbée par les réseaux sociaux, nous transformons et outillons nos suiveurs pour qu'ils servent de ponts ou de relais de nos objectifs, en diffusant nos informations et formations dans leurs milieux respectifs.
-  </p>
-
-  <h3 class="text-lg font-semibold mt-4">6. Accompagnement et soutien</h3>
-  <p>
-    Accompagner et soutenir <strong>membres, entreprises, associations</strong> de la structure ou non dans leurs organisations, réunions, conférences et manifestations publiques, pour qu’elles aillent dans le même sens que nos objectifs.<strong>La suite dans la partie audio</strong>
-  </p>
-</div>
-
-    <button onclick="toggleModal('textModal4')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-<div id="textModal5" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Personnalité et Moralité</h3>
-    <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    <strong>La personnalité</strong> et la <strong>moralité</strong> d'une personne sont deux facettes intrinsèquement liées qui façonnent son comportement, ses interactions et sa perception du monde.
-  </p>
-
-  <p>
-    La personnalité peut être vue comme l'ensemble des traits psychologiques durables qui caractérisent un individu. 
-    Elle englobe ses schémas de pensée, ses émotions, ses réactions et ses manières d'interagir avec autrui. 
-    Une personnalité peut être décrite par des caractéristiques telles que l'extraversion ou l'introversion, la fiabilité, l'ouverture d'esprit, la gentillesse ou encore l'anxiété. 
-    C'est la manière unique dont une personne aborde la vie et les défis qu'elle rencontre.
-  </p>
-
-  <p>
-    La moralité, quant à elle, fait référence à l'ensemble des principes, valeurs et croyances qui guident le jugement d'une personne sur ce qui est bien ou mal, juste ou injuste. 
-    Elle est souvent influencée par l'éducation, la culture, la religion et les expériences personnelles. 
-    Une personne moralement forte agit en accord avec ses principes éthiques, même lorsque cela est difficile, et fait preuve d'intégrité, d'honnêteté et de respect envers les autres.
-  </p>
-
-  <p>
-    Ensemble, la personnalité et la moralité créent le <strong>caractère</strong> d'une personne, déterminant non seulement comment elle se voit, mais aussi comment elle est perçue par la société. 
-    Une personnalité bien équilibrée, associée à une forte boussole morale, conduit généralement à des relations saines et à une contribution positive à la communauté.<strong>La suite dans la partie audio</strong>
-  </p>
-</div>
-
-    <button onclick="toggleModal('textModal5')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<div id="textModal6" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Engagement et Serment</h3>
-    <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    Avant de parler des <strong>engagements</strong> et du <strong>serment</strong> qui vont lier la structure <strong>CREATION JAMES</strong> et le leader <strong>James l'Amour</strong> à son public, il est de bon ton que vous lisiez la définition de ces deux thèmes :
-  </p>
-
-  <p>
-    L'engagement et le serment sont deux concepts puissants qui définissent la profondeur des convictions et la force des promesses d'une personne.
-  </p>
-
-  <p>
-    <strong>L'engagement</strong> est une promesse, une résolution ferme de faire ou de ne pas faire quelque chose. 
-    Il peut être envers une personne, une cause, une idée, ou même envers soi-même. 
-    C'est une décision consciente qui implique souvent un investissement de temps, d'énergie, et parfois de ressources. 
-    Un engagement peut être tacite, comme l'engagement d'un parent envers son enfant, ou explicite, comme l'engagement d'un employé envers son entreprise.
-  </p>
-
-  <p>
-    <strong>Le serment</strong>, quant à lui, est une forme d'engagement plus solennelle et souvent plus formelle. 
-    Il s'agit d'une déclaration publique ou privée, souvent faite en invoquant une autorité supérieure (Dieu, la justice, la vérité), 
-    qui atteste de la véracité de ce qui est dit ou de la fermeté de l'intention. 
-    Le serment ajoute une dimension sacrée ou légale à la promesse, impliquant des conséquences morales ou juridiques en cas de manquement.
-  </p>
-
-  <p>
-    Ces deux notions reflètent la fiabilité et l'intégrité d'un individu, montrant sa capacité à tenir parole et à se dédier à ses engagements, même face à l'adversité.
-  </p>
-
-  <p>
-    Dans cette partie <strong>Engagement et Serment</strong>, vous trouverez les documents officiels des autorités compétentes qui accréditent la mise en place de notre structure dans son pays d’origine et dans les pays dans lesquels elle pourra s'installer par la suite. 
-    Vous trouverez aussi des engagements verbaux et écrits venant du premier responsable ou promoteur de cette structure, M. James, ainsi que sa prestation de serment en bonne et due forme envers le monde qui va le suivre dans cette aventure. 
-    Car pour James, prendre des engagements ou un serment public renforce la sérénité et la crédibilité de celui qui le fait et la raison pour laquelle il le fait.
-  </p>
-
-  <p>
-    Une partie de ses engagements concernera également tous les membres, partisans, adhérents ou partenaires, de s'engager et d’œuvrer dans une transparence et une honnêteté absolue pour la réussite de cet objectif, qui est notre bien commun à tous.
-  </p>
-
-  <p>
-    Pour cela, vous verrez des petites cases à cocher sur ce site à la fin de certaines informations que vous aurez remplies vous concernant, votre passé et votre présent. 
-    Vous les cocherez en bonne et due foi, comme un serment que vous prêtez, attestant que toutes les informations fournies sont véridiques.
-  </p>
-
-  <p>
-    Pour lutter contre la fraude, vos dossiers ou documents envoyés sur ce site pour bénéficier d’un emploi ou d'autres avantages seront accessibles aux membres afin que ceux qui vous connaissent puissent contester toute information fausse, comme de faux diplômes. 
-    Vos casiers judiciaires aussi pourront être consultés, tandis que vos contacts et lieux d'habitation resteront cachés pour des raisons de sécurité.
-  </p>
-
-  <p>
-    Nous avons également une section pour les <strong>Torpilleurs</strong>, c’est-à-dire ceux animés par de mauvaises intentions et voulant saboter nos efforts. 
-    Leurs noms et photos seront dévoilés sur ce site avec les faits qui leur sont reprochés, afin de décourager toute personne de mauvaise foi.<strong>La suite dans la partie audio</strong>
-  </p>
-</div>
-
-
-       
-    <button onclick="toggleModal('textModal6')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<div id="textModal7" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Bénéfices et Transparence</h3>
-   <div class="space-y-4 text-justify leading-relaxed">
-  <p>
-    Le fondateur de ce projet, <strong>le leader James l'Amour</strong>, reconnaît qu'il y a un grand avantage à être transparent et ouvert, en partageant ses idéaux clairs avec son entourage par rapport à ses hauts et ses bas, son économie, ses bénéfices, ses expériences et ses projets de vie. Il applique très souvent cette transparence dans sa vie quotidienne.
-  </p>
-
-  <p>
-    Cependant, il reçoit également des critiques et des avertissements sur les dangers potentiels de cette attitude, notamment de la part de ses proches, et surtout de sa femme, qui, selon lui, a le droit de sermonner son conjoint pour protéger la famille.
-  </p>
-
-  <p>
-    M. James souhaite conserver cette attitude de transparence et l’appliquer à sa grande structure en tant que fondateur et manager. Mais existe-t-il un danger en le faisant ? Pour y répondre, découvrons d’abord un petit résumé sur deux thèmes clés : les bénéfices et la transparence.
-  </p>
-
-  <p>
-    <strong>Les bénéfices</strong> se concentrent sur les avantages, gains ou résultats positifs obtenus suite à une action, une décision ou un investissement, que ce soit sur le plan financier, social, personnel ou organisationnel. Ils peuvent être directs (profit financier) ou indirects (amélioration de réputation ou satisfaction client).
-  </p>
-
-  <p>
-    <strong>La transparence</strong> fait référence à la clarté, à l'ouverture et à l'honnêteté dans la communication et les opérations. Elle implique de rendre l'information accessible, compréhensible et vérifiable pour toutes les parties prenantes. Une transparence accrue favorise la confiance, réduit les malentendus et renforce la crédibilité.
-  </p>
-
-  <p>
-    Ensemble, des bénéfices clairs et une transparence accrue contribuent à établir des relations solides et durables. L'interaction entre ces deux thèmes est cruciale : des bénéfices obtenus de manière transparente renforcent la crédibilité et la confiance, tandis que le manque de transparence peut soulever des doutes.
-  </p>
-
-  <p>
-    Selon cette définition, tout porte à croire qu’il y a un énorme avantage à être transparent dans la vie. Mais qu’en est-il des inconvénients et ennuis qui suscitent la méfiance ? Parmi eux :
-  </p>
-
-  <ol class="list-decimal list-inside space-y-2">
-    <li>
-      Quand on est transparent et qu'on montre tout ce qu'on fait et gagne, on peut attirer des jaloux, des ennemis, ou recevoir des sollicitations de la famille proche ou lointaine, ou même d’inconnus.
-    </li>
-    <li>
-      En tant que chef d’entreprise, la transparence totale peut entraîner le sentiment d’injustice face aux taxes et impôts. Les collecteurs ne sont pas toujours transparents eux-mêmes, et même en cas de crise ou faillite, ils restent souvent dans une bonne condition de vie, ce qui peut frustrer les entrepreneurs. Beaucoup se demandent alors à quel degré il faut être transparent.
-    </li>
-  </ol>
-
-  <p>
-    Ces deux inquiétudes sont humainement légitimes. Cependant, concernant <strong>le leader James l'Amour</strong> et son projet, il est dans l'obligation, selon son identité, son parcours, sa personnalité, sa moralité et le serment qu'il a prêté, d’être totalement transparent envers toute sa communauté.<strong>La suite dans la partie audio</strong>
-  </p>
-</div>
-
-    <button onclick="toggleModal('textModal7')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<div id="textModal8" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 max-h-[80vh] overflow-y-auto">
-    <h3 class="text-xl font-bold mb-4">Texte – Héritage et Legs</h3>
-    <p></p>
-    <button onclick="toggleModal('textModal8')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<!-- MODALS AUDIO COMPLETS -->
-<!-- Audio Modals avec FR & EN -->
-
-<!-- Modal Audio 1 – Identité -->
-<div id="audioModal1" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4 ">
-    <h3 class="text-xl font-bold mb-4">Audio – Identité</h3>
-    <div>
-     <p class="font-semibold">Français :</p>
-<audio controls class="w-full">
-   <source src="{% static 'audio/bibliographie/Audio_4_identity.mp3' %}" type="audio/mpeg">
-</audio>
-
-
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/identite_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal1')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<!-- Modal Audio 2 – Parcours Académique -->
-<div id="audioModal2" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Parcours Académique</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-         <source src="{% static 'audio/bibliographie/Audio_5_Parcours_Academique.mp3' %}" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/parcours_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal2')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<!-- Modal Audio 3 – Activité -->
-<div id="audioModal3" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Activité</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/activite_fr.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/activite_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal3')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-
-<!-- Modal Audio 4 – Vision et Objectif -->
-<div id="audioModal4" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Vision et Objectif</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/vision_fr.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/vision_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal4')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-<!-- Modal Audio 5 – Personnalité -->
-<div id="audioModal5" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Personnalité</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/personnalite_fr.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/personnalite_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal5')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<!-- Modal Audio 6 – Engagement et Serment -->
-<div id="audioModal6" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Engagement et Serment</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/engagement_fr.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/engagement_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal6')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<!-- Modal Audio 7 – Bénéfices et Transparence -->
-<div id="audioModal7" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Bénéfices et Transparence</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/benefices_fr.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/benefices_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal7')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-<!-- Modal Audio 8 – Héritage et Legs -->
-<div id="audioModal8" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white rounded-lg w-full max-w-lg p-6 space-y-4">
-    <h3 class="text-xl font-bold mb-4">Audio – Héritage et Legs</h3>
-    <div>
-      <p class="font-semibold">Français :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/heritage_fr.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <div>
-      <p class="font-semibold">Anglais :</p>
-      <audio controls class="w-full">
-        <source src="/static/audio/heritage_en.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-    <button onclick="toggleModal('audioModal8')" class="mt-4 border border-red-500 text-red-500 px-4 py-1 rounded hover:bg-red-50">Fermer</button>
-  </div>
-</div>
-
-  
-  <script>
-    function toggleModal(id) {
-      const modal = document.getElementById(id);
-      modal.classList.toggle('hidden');
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(160deg, #0d1b3e 0%, #1a3a8c 55%, #1a56db 100%);
+      min-height: 100vh;
+      padding: 48px 16px 80px;
+      position: relative;
+      overflow-x: hidden;
     }
-  </script>
+
+    /* Déco fond */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 70%);
+      top: -200px; right: -180px;
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,86,219,.15) 0%, transparent 70%);
+      bottom: -100px; left: -120px;
+      pointer-events: none;
+    }
+
+    .page-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .breadcrumb a {
+      color: rgba(255,255,255,.55);
+      font-size: .82rem;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .breadcrumb a:hover { color: #fff; }
+    .breadcrumb span { color: rgba(255,255,255,.3); font-size: .8rem; }
+    .breadcrumb .current { color: #f5a623; font-size: .82rem; font-weight: 600; }
+
+    /* ── En-tête page ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.20);
+      color: rgba(255,255,255,.75);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .page-title span { color: #f5a623; }
+    .page-subtitle {
+      color: rgba(255,255,255,.55);
+      font-size: .92rem;
+    }
+    .title-underline {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, #f5a623, transparent);
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+
+    /* ── Liste des sections ── */
+    .sections-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ── Carte section ── */
+    .section-card {
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: background .25s, border-color .25s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, #f5a623, #1a56db);
+      border-radius: 16px 0 0 16px;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .section-card:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.25);
+      transform: translateX(4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    }
+    .section-card:hover::before { opacity: 1; }
+
+    /* Numéro + titre */
+    .section-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 0;
+    }
+    .section-num {
+      width: 40px; height: 40px;
+      flex-shrink: 0;
+      background: rgba(245,166,35,.15);
+      border: 1px solid rgba(245,166,35,.30);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .78rem;
+      color: #f5a623;
+      letter-spacing: .5px;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Boutons Texte / Audio */
+    .section-btns {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Bouton Texte — glassmorphism bleu */
+    .btn-texte {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: .80rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, box-shadow .2s, transform .15s;
+      letter-spacing: .2px;
+    }
+    .btn-texte:hover {
+      background: rgba(255,255,255,.20);
+      border-color: rgba(255,255,255,.55);
+      box-shadow: 0 3px 12px rgba(255,255,255,.08);
+      transform: translateY(-1px);
+    }
+    .btn-texte:active { transform: scale(.96); }
+
+    /* Bouton Audio — glassmorphism doré */
+    .btn-audio {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,166,35,.12);
+      border: 1px solid rgba(245,166,35,.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #f5a623;
+      font-family: 'Outfit', sans-serif;
+      font-size: .80rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, box-shadow .2s, transform .15s;
+      letter-spacing: .2px;
+    }
+    .btn-audio:hover {
+      background: rgba(245,166,35,.25);
+      border-color: rgba(245,166,35,.70);
+      box-shadow: 0 3px 14px rgba(245,166,35,.20);
+      transform: translateY(-1px);
+    }
+    .btn-audio:active { transform: scale(.96); }
+
+    /* Icônes SVG dans boutons */
+    .btn-texte svg, .btn-audio svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════
+       MODALS
+    ══════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    /* Modal Texte — blanc */
+    .modal-text-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 40px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 82vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      animation: modalIn .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Modal Audio — navy */
+    .modal-audio-box {
+      background: linear-gradient(160deg, #0f2354 0%, #1a3a8c 100%);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 20px;
+      padding: 36px 40px;
+      width: 100%;
+      max-width: 520px;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4);
+      animation: modalIn .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Barre verte en haut du modal texte */
+    .modal-text-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1a56db, #f5a623);
+      border-radius: 20px 20px 0 0;
+    }
+
+    /* Bouton fermer */
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: none;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .modal-close-dark {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+    .modal-close-dark:hover { background: #fee2e2; color: #dc2626; }
+
+    .modal-close-light {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.20) !important;
+      color: rgba(255,255,255,.65);
+    }
+    .modal-close-light:hover { background: rgba(220,38,38,.25); color: #fff; }
+
+    /* Titre modal */
+    .modal-title-dark {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: #1e3a5f;
+      margin-bottom: 6px;
+      padding-right: 40px;
+    }
+    .modal-title-light {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 20px;
+      padding-right: 40px;
+    }
+
+    /* Ligne sous titre modal texte */
+    .modal-title-line {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, #1a56db, transparent);
+      border-radius: 1px;
+      margin-bottom: 20px;
+    }
+
+    /* Contenu texte modal */
+    .modal-body {
+      color: #374151;
+      font-size: .92rem;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    .modal-body p { margin-bottom: 12px; }
+    .modal-body p:last-child { margin-bottom: 0; }
+    .modal-body strong { color: #1e3a5f; }
+    .modal-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a56db;
+      margin: 16px 0 6px;
+    }
+    .modal-body ol { padding-left: 20px; margin-top: 8px; }
+    .modal-body ol li { margin-bottom: 8px; }
+    .modal-body em { color: #4b5563; }
+
+    /* Bouton fermer en bas modal texte */
+    .btn-close-bottom {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      background: transparent;
+      border: 1px solid #fca5a5;
+      color: #dc2626;
+      font-family: 'Outfit', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-close-bottom:hover { background: #fee2e2; }
+
+    /* Audio modal labels */
+    .audio-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f5a623;
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .audio-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #f5a623;
+    }
+    .audio-block { margin-bottom: 20px; }
+    .audio-block:last-of-type { margin-bottom: 0; }
+    .audio-divider { height: 1px; background: rgba(255,255,255,.10); margin: 16px 0; }
+
+    audio { width: 100%; border-radius: 8px; outline: none; }
+
+    /* Scrollbar modal texte */
+    .modal-text-box::-webkit-scrollbar { width: 5px; }
+    .modal-text-box::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .modal-text-box::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 10px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .section-card { flex-direction: column; align-items: flex-start; padding: 18px 20px; }
+      .section-btns { width: 100%; justify-content: flex-end; }
+      .modal-text-box, .modal-audio-box { padding: 28px 20px; }
+      .section-title { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="/">Accueil</a>
+    <span>›</span>
+    <a href="#">Catégories</a>
+    <span>›</span>
+    <span class="current">Biographie &amp; Bibliographie</span>
+  </nav>
+
+  <!-- En-tête -->
+  <div class="page-header">
+    <div class="page-badge">
+      <svg viewBox="0 0 16 16" fill="currentColor" width="9" height="9"><circle cx="8" cy="8" r="4"/></svg>
+      Fondateur — Création James
+    </div>
+    <h1 class="page-title">Biographie &amp; <span>Bibliographie</span></h1>
+    <p class="page-subtitle">Découvrez le parcours, la vision et les engagements du Leader James l'Amour</p>
+    <div class="title-underline"></div>
+  </div>
+
+  <!-- Liste des sections -->
+  <div class="sections-list">
+
+    {% for section in sections_data %}
+    <!-- Section dynamique — ou statique ci-dessous -->
+    {% endfor %}
+
+    <!-- I. Identité -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">I</div>
+        <span class="section-title">Identité</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal1')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal1')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- II. Parcours Académique -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">II</div>
+        <span class="section-title">Parcours Académique</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal2')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal2')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- III. Activités -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">III</div>
+        <span class="section-title">Activités</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal3')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal3')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- IV. Vision et Objectif -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">IV</div>
+        <span class="section-title">Vision et Objectif</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal4')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal4')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- V. Personnalité et Moralité -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">V</div>
+        <span class="section-title">Personnalité et Moralité</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal5')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal5')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- VI. Engagement et Serment -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">VI</div>
+        <span class="section-title">Engagement et Serment</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal6')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal6')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- VII. Bénéfices et Transparence -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">VII</div>
+        <span class="section-title">Bénéfices et Transparence</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal7')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal7')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+    <!-- VIII. Héritage et Legs -->
+    <div class="section-card">
+      <div class="section-left">
+        <div class="section-num">VIII</div>
+        <span class="section-title">Héritage et Legs</span>
+      </div>
+      <div class="section-btns">
+        <button class="btn-texte" onclick="openModal('textModal8')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12h6M9 16h6M9 8h3M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+          Texte
+        </button>
+        <button class="btn-audio" onclick="openModal('audioModal8')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+          Audio
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /sections-list -->
+</div><!-- /page-wrapper -->
+
+
+<!-- ══════════════════════════════════════════
+     MODALS TEXTE
+══════════════════════════════════════════ -->
+
+<!-- textModal1 — Identité -->
+<div id="textModal1" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal1')">✕</button>
+    <h3 class="modal-title-dark">I. Identité</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p>Avant de parler des engagements et le serment qui vont lier la structure <strong>Création James</strong> et le leader <strong>James l'Amour</strong> à son public, il est de bon ton que vous lisiez la définition de ces deux thèmes :</p>
+      <p><strong>L'engagement</strong> et <strong>le serment</strong> sont deux concepts puissants qui définissent la profondeur des convictions et la force des promesses d'une personne.</p>
+      <p>L'engagement est une promesse, une résolution ferme de faire ou de ne pas faire quelque chose. Il peut être envers une personne, une cause, une idée, ou même envers soi-même. C'est une décision consciente qui implique souvent un investissement de temps, d'énergie, et parfois de ressources.</p>
+      <p>Le serment, quant à lui, est une forme d'engagement plus solennelle et souvent plus formelle. Il s'agit d'une déclaration publique ou privée, souvent faite en invoquant une autorité supérieure (Dieu, la justice, la vérité), qui atteste de la véracité de ce qui est dit ou de la fermeté de l'intention.</p>
+      <p>Ces deux notions reflètent la fiabilité et l'intégrité d'un individu, montrant sa capacité à tenir parole et à se dédier à ses engagements, même face à l'adversité.</p>
+      <p>Dans cette partie <strong>Engagement et Serment</strong>, vous trouverez les documents officiels des autorités compétentes qui accréditent la mise en place de notre structure. Vous trouverez également des engagements verbaux et écrits venant du premier responsable <strong>M. James</strong>, ainsi que sa prestation de serment.</p>
+      <p>Pour lutter contre la fraude, vos dossiers seront laissés au vu de tous les membres afin que ceux qui vous connaissent mieux puissent contester si vous avez introduit de faux diplômes ou de fausses informations.</p>
+      <p>Nous avons aussi une partie dédiée aux <strong>Torpilleurs</strong> : ceux qui, animés par de mauvaises intentions, chercheraient volontairement à saboter nos efforts. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal1')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal2 — Parcours Académique -->
+<div id="textModal2" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal2')">✕</button>
+    <h3 class="modal-title-dark">II. Parcours Académique</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p><strong>Leader James l'Amour</strong> a fait plus l'école de la vie que l'école académique.</p>
+      <p>Puisque tout ce que la vie active lui a appris... aucune école au monde, aucune université ni aucun professeur ne pourrait l'enseigner. Mais la vie lui a montré des leçons pratiques et non théoriques ; elle lui a fait traverser des épreuves palpables et aujourd'hui, il en est un maître, un leader.</p>
+      <p>En bref, <strong>Leader James l'Amour</strong> a eu son <em>Baccalauréat littéraire A4 Grand Format</em> en Juin 2015. L'école de la vie l'avait déjà assez formé et l'avait prédisposé à développer de grandes capacités et à accomplir beaucoup de choses.</p>
+      <p>Après cela, il renforça ses capacités grâce à des formations en entrepreneuriat, en gestion d'entreprise et en leadership, dans les nombreuses structures qu'il a côtoyées. Mais avant et après tout cela, il est avant tout un <strong>maître tisserand</strong>, un <strong>entrepreneur</strong> et un <strong>leader</strong>. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal2')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal3 — Activités -->
+<div id="textModal3" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal3')">✕</button>
+    <h3 class="modal-title-dark">III. Activités</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p><strong>Le leader James l'Amour</strong> est le directeur général de sa structure <strong>CREATION JAMES</strong> et de son association <strong>CP2ACJ</strong>.</p>
+      <h3>1. L'Artisanat</h3>
+      <p><em>Le Macramé</em> : fabrication à la main de sacs en nylon, lits-picot, filets pour cages, pochettes.<br/><em>Le Tricotage</em> : tapis, chapeaux, chaussettes, pulls, pagnes traditionnels, perlages.<br/><em>La Haute Couture</em> : atelier Homme, Dame et Enfant dirigé par l'épouse de M. James.</p>
+      <h3>2. L'Entrepreneuriat</h3>
+      <p>Formations sur la création et gestion d'entreprises, la rédaction de projets, les NTIC (Word, Excel, programmation en JavaScript, PHP, Python, etc.), ainsi que les activités liées à un centre informatique.</p>
+      <h3>3. Le Leadership</h3>
+      <p>Formations en leadership et développement personnel, accessibles aux membres de l'association CP2ACJ et sa branche Projet demunie. Elles enseignent humilité, esprit d'équipe et permettent de bâtir un grand réseau d'affaires.</p>
+      <h3>4. Autres Compétences</h3>
+      <p>En interne, M. James se débrouille aussi en <em>électricité</em>, <em>menuiserie</em>, <em>maçonnerie</em>, <em>peinture</em>, <em>soudure</em> et autres petits métiers. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal3')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal4 — Vision et Objectif -->
+<div id="textModal4" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal4')">✕</button>
+    <h3 class="modal-title-dark">IV. Vision et Objectif</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p><strong>La vision et l'objectif</strong> de la structure <strong>Création James</strong> est d'apporter nos pierres à la construction de nos nations, en accompagnant nos gouvernements dans leurs efforts d'avoir une jeunesse consciente.</p>
+      <h3>1. Fomenter les mentalités positives</h3>
+      <p>En fomentant les mentalités d'avant, qui étaient de finir d'abord ses études et d'écrire « j'ai l'honneur » pour forcément gagner sa vie derrière un bureau.</p>
+      <h3>2. Dévirussage des mentalités négatives</h3>
+      <p>En dévirussant les mentalités contagieuses des futurs pères, mères et parents afin qu'ils ne transmettent plus les mêmes pensées rétrogradées à leurs générations futures.</p>
+      <h3>3. Mobiliser et montrer l'exemple</h3>
+      <p>Mobiliser, motiver, assister, montrer et démontrer par nos réussites aux tiers-mondes les chemins de la réussite, de l'autonomie et de l'indépendance financière.</p>
+      <h3>4. Redonner envie et moyens</h3>
+      <p>Redonner la chance, l'envie, la motivation, la détermination et les moyens à tous ceux qui ont été déçus ou découragés par la vie entrepreneuriale ou associative.</p>
+      <h3>5. Transformer la jeunesse inconsciente</h3>
+      <p>Nous transformons et outillons nos suiveurs pour qu'ils servent de ponts ou de relais de nos objectifs, en diffusant nos informations dans leurs milieux respectifs.</p>
+      <h3>6. Accompagnement et soutien</h3>
+      <p>Accompagner et soutenir <strong>membres, entreprises, associations</strong> dans leurs organisations, réunions, conférences et manifestations publiques. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal4')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal5 — Personnalité et Moralité -->
+<div id="textModal5" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal5')">✕</button>
+    <h3 class="modal-title-dark">V. Personnalité et Moralité</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p><strong>La personnalité</strong> et la <strong>moralité</strong> d'une personne sont deux facettes intrinsèquement liées qui façonnent son comportement, ses interactions et sa perception du monde.</p>
+      <p>La personnalité peut être vue comme l'ensemble des traits psychologiques durables qui caractérisent un individu. Elle englobe ses schémas de pensée, ses émotions, ses réactions et ses manières d'interagir avec autrui.</p>
+      <p>La moralité, quant à elle, fait référence à l'ensemble des principes, valeurs et croyances qui guident le jugement d'une personne sur ce qui est bien ou mal, juste ou injuste. Elle est souvent influencée par l'éducation, la culture, la religion et les expériences personnelles.</p>
+      <p>Ensemble, la personnalité et la moralité créent le <strong>caractère</strong> d'une personne. Une personnalité bien équilibrée, associée à une forte boussole morale, conduit généralement à des relations saines et à une contribution positive à la communauté. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal5')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal6 — Engagement et Serment -->
+<div id="textModal6" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal6')">✕</button>
+    <h3 class="modal-title-dark">VI. Engagement et Serment</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p>Avant de parler des <strong>engagements</strong> et du <strong>serment</strong> qui vont lier la structure <strong>CREATION JAMES</strong> et le leader <strong>James l'Amour</strong> à son public, il est de bon ton que vous lisiez la définition de ces deux thèmes.</p>
+      <p><strong>L'engagement</strong> est une promesse, une résolution ferme de faire ou de ne pas faire quelque chose. C'est une décision consciente qui implique souvent un investissement de temps, d'énergie, et parfois de ressources.</p>
+      <p><strong>Le serment</strong> est une forme d'engagement plus solennelle et souvent plus formelle, souvent faite en invoquant une autorité supérieure (Dieu, la justice, la vérité), qui atteste de la véracité de ce qui est dit.</p>
+      <p>Dans cette partie, vous trouverez les documents officiels des autorités compétentes, les engagements verbaux et écrits de <strong>M. James</strong>, ainsi que sa prestation de serment en bonne et due forme.</p>
+      <p>Nous avons également une section pour les <strong>Torpilleurs</strong> : leurs noms et photos seront dévoilés sur ce site avec les faits qui leur sont reprochés, afin de décourager toute personne de mauvaise foi. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal6')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal7 — Bénéfices et Transparence -->
+<div id="textModal7" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal7')">✕</button>
+    <h3 class="modal-title-dark">VII. Bénéfices et Transparence</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p>Le fondateur, <strong>le leader James l'Amour</strong>, reconnaît qu'il y a un grand avantage à être transparent et ouvert, en partageant ses idéaux clairs avec son entourage par rapport à ses hauts et ses bas, son économie, ses bénéfices et ses projets de vie.</p>
+      <p><strong>Les bénéfices</strong> se concentrent sur les avantages, gains ou résultats positifs obtenus suite à une action, une décision ou un investissement, que ce soit sur le plan financier, social, personnel ou organisationnel.</p>
+      <p><strong>La transparence</strong> fait référence à la clarté, à l'ouverture et à l'honnêteté dans la communication et les opérations. Une transparence accrue favorise la confiance, réduit les malentendus et renforce la crédibilité.</p>
+      <ol>
+        <li>Quand on est transparent et qu'on montre tout ce qu'on fait et gagne, on peut attirer des jaloux, des ennemis, ou recevoir des sollicitations de la famille proche ou lointaine.</li>
+        <li>En tant que chef d'entreprise, la transparence totale peut entraîner le sentiment d'injustice face aux taxes et impôts.</li>
+      </ol>
+      <p>Concernant <strong>le leader James l'Amour</strong>, il est dans l'obligation d'être totalement transparent envers toute sa communauté. <strong>La suite dans la partie audio.</strong></p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal7')">✕ Fermer</button>
+  </div>
+</div>
+
+<!-- textModal8 — Héritage et Legs -->
+<div id="textModal8" class="modal-overlay">
+  <div class="modal-text-box">
+    <button class="modal-close modal-close-dark" onclick="closeModal('textModal8')">✕</button>
+    <h3 class="modal-title-dark">VIII. Héritage et Legs</h3>
+    <div class="modal-title-line"></div>
+    <div class="modal-body">
+      <p>Contenu à venir...</p>
+    </div>
+    <button class="btn-close-bottom" onclick="closeModal('textModal8')">✕ Fermer</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     MODALS AUDIO
+══════════════════════════════════════════ -->
+
+<!-- audioModal1 — Identité -->
+<div id="audioModal1" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal1')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Identité</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/bibliographie/Audio_4_identity.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/identite_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal2 — Parcours Académique -->
+<div id="audioModal2" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal2')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Parcours Académique</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/bibliographie/Audio_5_Parcours_Academique.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/parcours_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal3 — Activités -->
+<div id="audioModal3" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal3')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Activités</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/activite_fr.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/activite_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal4 — Vision et Objectif -->
+<div id="audioModal4" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal4')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Vision et Objectif</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/vision_fr.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/vision_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal5 — Personnalité -->
+<div id="audioModal5" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal5')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Personnalité et Moralité</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/personnalite_fr.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/personnalite_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal6 — Engagement et Serment -->
+<div id="audioModal6" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal6')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Engagement et Serment</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/engagement_fr.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/engagement_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal7 — Bénéfices et Transparence -->
+<div id="audioModal7" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal7')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Bénéfices et Transparence</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/benefices_fr.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/benefices_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+<!-- audioModal8 — Héritage et Legs -->
+<div id="audioModal8" class="modal-overlay">
+  <div class="modal-audio-box">
+    <button class="modal-close modal-close-light" onclick="closeModal('audioModal8')">✕</button>
+    <h3 class="modal-title-light">🎧 Audio — Héritage et Legs</h3>
+    <div class="audio-block">
+      <div class="audio-label">Français</div>
+      <audio controls><source src="{% static 'audio/heritage_fr.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+    <div class="audio-divider"></div>
+    <div class="audio-block">
+      <div class="audio-label">Anglais</div>
+      <audio controls><source src="{% static 'audio/heritage_en.mp3' %}" type="audio/mpeg"></audio>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Fermer en cliquant sur l'overlay
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) closeModal(this.id);
+    });
+  });
+  // Fermer avec Échap
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+</script>
 
 </body>
 </html>

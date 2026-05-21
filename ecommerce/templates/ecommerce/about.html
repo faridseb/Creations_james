@@ -5,134 +5,348 @@
   <meta charset="utf-8" />
   <title>À propos de nous</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- CSS -->
   <link href="{% static 'css/tailwindstyle.css' %}" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    /* Fade-up animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .fade-up-delay-1 { animation-delay: 0.15s; }
+    .fade-up-delay-2 { animation-delay: 0.3s; }
+    .fade-up-delay-3 { animation-delay: 0.45s; }
+    .fade-up-delay-4 { animation-delay: 0.6s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero diagonal background */
+    .hero-bg {
+      background: linear-gradient(135deg, #fff 60%, #f3f4f6 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: rgba(209,213,219,0.25);
+      z-index: 0;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(209,213,219,0.15);
+      z-index: 0;
+    }
+    .hero-bg > * { position: relative; z-index: 1; }
+
+    /* Floating image effect */
+    .float-img {
+      animation: floatY 4s ease-in-out infinite;
+      filter: drop-shadow(0 24px 32px rgba(0,0,0,0.13));
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    /* Feature card */
+    .feature-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+    .feature-icon {
+      background: #1f2937;
+      border-radius: 12px;
+      padding: 0.75rem;
+      flex-shrink: 0;
+    }
+    .feature-icon img { width: 28px; height: 28px; filter: invert(1); }
+
+    /* Section divider */
+    .section-label {
+      display: inline-block;
+      background: #1f2937;
+      color: #facc15;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      background: #1f2937;
+      color: #fff;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #facc15;
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.82rem; color: #9ca3af; margin-top: 0.25rem; }
+
+    /* CTA buttons */
+    .btn-primary {
+      display: inline-block;
+      background: #1f2937;
+      color: #fff;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #111827; transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      border: 2px solid #1f2937;
+      color: #1f2937;
+      padding: 0.7rem 1.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { background: #1f2937; color: #fff; transform: translateY(-2px); }
+
+    /* Navbar link underline effect */
+    .nav-link {
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: #facc15;
+      transition: width 0.25s;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Why section image */
+    .why-img-wrap {
+      position: relative;
+    }
+    .why-img-wrap::before {
+      content: '';
+      position: absolute;
+      top: -16px; left: -16px;
+      width: 100%; height: 100%;
+      border: 3px solid #facc15;
+      border-radius: 16px;
+      z-index: 0;
+    }
+    .why-img-wrap img {
+      position: relative; z-index: 1;
+      border-radius: 12px;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-50 text-gray-900">
 
 <!-- NAVBAR -->
-<nav class="bg-gray-900 text-white">
-  <div class="container mx-auto flex items-center justify-between flex-wrap p-4">
-    <!-- Logo -->
-    <div class="flex items-center space-x-4">
-      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-16 h-16 md:w-24 md:h-24 object-cover" />
-      <a href="{% url 'ecommerce:product_list' %}" class="text-xl md:text-2xl font-bold hover:text-gray-300">Creationjames</a>
+<nav class="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
+  <div class="container mx-auto flex items-center justify-between flex-wrap px-4 py-3">
+    <div class="flex items-center space-x-3">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-12 h-12 md:w-16 md:h-16 object-cover ring-2 ring-yellow-400" />
+      <a href="{% url 'ecommerce:product_list' %}" class="text-xl md:text-2xl font-bold tracking-tight hover:text-gray-300" style="font-family:'Playfair Display',serif;">Creationjames</a>
     </div>
 
-    <!-- Hamburger bouton (mobile) -->
     <button id="menu-btn" class="md:hidden focus:outline-none">
       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
 
-    <!-- Menu desktop -->
-    <div class="hidden md:flex md:items-center space-x-6">
-      <a href="{% url 'ecommerce:product_list' %}" class="hover:text-gray-300">Accueil</a>
-      <a href="{% url 'ecommerce:shop' %}" class="hover:text-gray-300 font-semibold">Boutique</a>
-      <a href="{% url 'ecommerce:about' %}" class="text-yellow-400">À propos de nous</a>
-      <a href="{% url 'ecommerce:services' %}" class="hover:text-gray-300">Services</a>
-      <a href="{% url 'ecommerce:blog' %}" class="hover:text-gray-300">Blog</a>
-      <a href="{% url 'ecommerce:contact' %}" class="hover:text-gray-300">Contactez-nous</a>
-
-      <a href="#" class="hover:text-gray-300 ml-4">
-        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
-      </a>
-      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
-        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
-      </a>
+    <div class="hidden md:flex md:items-center space-x-7 text-sm font-medium">
+      <a href="{% url 'ecommerce:product_list' %}" class="nav-link hover:text-gray-300">Accueil</a>
+      <a href="{% url 'ecommerce:shop' %}" class="nav-link hover:text-gray-300">Boutique</a>
+      <a href="{% url 'ecommerce:about' %}" class="text-yellow-400 font-semibold">À propos de nous</a>
+      <a href="{% url 'ecommerce:services' %}" class="nav-link hover:text-gray-300">Services</a>
+      <a href="{% url 'ecommerce:blog' %}" class="nav-link hover:text-gray-300">Blog</a>
+      <a href="{% url 'ecommerce:contact' %}" class="nav-link hover:text-gray-300">Contactez-nous</a>
+      <div class="flex items-center space-x-4 ml-2 border-l border-gray-700 pl-4">
+        <a href="#" class="hover:text-gray-300 transition"><img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-5 h-5 opacity-80 hover:opacity-100" /></a>
+        <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300 transition"><img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-5 h-5 opacity-80 hover:opacity-100" /></a>
+      </div>
     </div>
   </div>
 
-  <!-- Menu mobile -->
-  <div id="menu" class="hidden md:hidden bg-gray-800">
-    <a href="{% url 'ecommerce:product_list' %}" class="block px-4 py-2 hover:bg-gray-700">Accueil</a>
-    <a href="{% url 'ecommerce:shop' %}" class="block px-4 py-2 hover:bg-gray-700">Boutique</a>
-    <a href="{% url 'ecommerce:about' %}" class="block px-4 py-2 bg-yellow-400 text-gray-900 font-semibold ">À propos de nous</a>
-    <a href="{% url 'ecommerce:services' %}" class="block px-4 py-2 hover:bg-gray-700">Services</a>
-    <a href="{% url 'ecommerce:blog' %}" class="block px-4 py-2 hover:bg-gray-700">Blog</a>
-    <a href="{% url 'ecommerce:contact' %}" class="block px-4 py-2 hover:bg-gray-700">Contactez-nous</a>
-    <div class="flex space-x-6 px-4 py-2 border-t border-gray-700">
-      <a href="#" class="hover:text-gray-300">
-        <img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" />
-      </a>
-      <a href="{% url 'ecommerce:cart' %}" class="hover:text-gray-300">
-        <img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" />
-      </a>
+  <div id="menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+    <a href="{% url 'ecommerce:product_list' %}" class="block px-5 py-3 hover:bg-gray-700 text-sm">Accueil</a>
+    <a href="{% url 'ecommerce:shop' %}" class="block px-5 py-3 hover:bg-gray-700 text-sm">Boutique</a>
+    <a href="{% url 'ecommerce:about' %}" class="block px-5 py-3 bg-yellow-400 text-gray-900 font-semibold text-sm">À propos de nous</a>
+    <a href="{% url 'ecommerce:services' %}" class="block px-5 py-3 hover:bg-gray-700 text-sm">Services</a>
+    <a href="{% url 'ecommerce:blog' %}" class="block px-5 py-3 hover:bg-gray-700 text-sm">Blog</a>
+    <a href="{% url 'ecommerce:contact' %}" class="block px-5 py-3 hover:bg-gray-700 text-sm">Contactez-nous</a>
+    <div class="flex space-x-6 px-5 py-3 border-t border-gray-700">
+      <a href="#"><img src="{% static 'images/user.svg' %}" alt="Utilisateur" class="w-6 h-6" /></a>
+      <a href="{% url 'ecommerce:cart' %}"><img src="{% static 'images/cart.svg' %}" alt="Panier" class="w-6 h-6" /></a>
     </div>
   </div>
 </nav>
-<!-- FIN NAVBAR -->
 
-<!-- SECTION HERO -->
-<section class="hero bg-white py-12">
-  <div class="container mx-auto px-4">
-    <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
-      <div class="lg:w-5/12">
-        <h1 class="text-4xl font-bold mb-4">À propos de nous</h1>
-        <p class="mb-6 text-gray-700">Nous sommes une entreprise artisanale qui offre des produits locaux pour le design de votre intérieur comme extérieur.</p>
-        <div class="space-x-4">
-          <a href="{% url 'ecommerce:shop' %}" class="inline-block bg-gray-700 text-white py-2 px-5 rounded hover:bg-gray-800 transition">Achetez maintenant</a>
-          <a href="{% url 'ecommerce:shop' %}" class="inline-block border border-gray-700 text-gray-700 py-2 px-5 rounded hover:bg-gray-100 transition">Explorer</a>
+<!-- HERO -->
+<section class="hero-bg py-20">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
+      <div class="lg:w-1/2 fade-up">
+        <span class="section-label">Notre histoire</span>
+        <h1 class="text-5xl lg:text-6xl font-black leading-tight mb-5">À propos<br><span class="text-gray-500">de nous</span></h1>
+        <p class="text-gray-600 text-lg leading-relaxed mb-8 max-w-md">Nous sommes une entreprise artisanale qui offre des produits locaux pour le design de votre intérieur comme extérieur. Chaque pièce est conçue avec passion et savoir-faire.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="{% url 'ecommerce:shop' %}" class="btn-primary">Achetez maintenant</a>
+          <a href="{% url 'ecommerce:shop' %}" class="btn-outline">Explorer</a>
         </div>
       </div>
-      <div class="lg:w-4/12">
-        <img src="{% static 'images/table.png' %}" alt="Canapé" class="w-full" />
+      <div class="lg:w-5/12 fade-up fade-up-delay-2 flex justify-center">
+        <img src="{% static 'images/table.png' %}" alt="Produit vedette" class="float-img w-full max-w-sm" />
       </div>
     </div>
   </div>
 </section>
 
-<!-- POURQUOI NOUS CHOISIR -->
-<section class="py-16 bg-gray-100">
+<!-- STATS STRIP -->
+<div class="stats-strip">
   <div class="container mx-auto px-4">
-    <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
-      <div class="lg:w-6/12">
-        <h2 class="text-3xl font-semibold mb-4">Pourquoi nous choisir</h2>
-        <p class="mb-10 text-gray-700">Nous vous offrons des produits locaux de qualité avec un service exceptionnel.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div class="flex items-center space-x-4">
-            <img src="{% static 'images/truck.svg' %}" alt="Livraison" class="w-12 h-12" />
-            <h3 class="text-xl font-medium">Livraison rapide et gratuite</h3>
+    <div class="flex flex-wrap justify-around">
+      <div class="stat-item fade-up fade-up-delay-1">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Clients satisfaits</div>
+      </div>
+      <div class="stat-item fade-up fade-up-delay-2">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Produits artisanaux</div>
+      </div>
+      <div class="stat-item fade-up fade-up-delay-3">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Note moyenne</div>
+      </div>
+      <div class="stat-item fade-up fade-up-delay-4">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Ans d'expérience</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POURQUOI NOUS CHOISIR -->
+<section class="py-20 bg-gray-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-14">
+      <div class="lg:w-1/2 fade-up">
+        <span class="section-label">Nos avantages</span>
+        <h2 class="text-4xl font-black mb-4 leading-tight">Pourquoi nous<br><span class="text-gray-500">choisir ?</span></h2>
+        <p class="text-gray-600 mb-10 text-lg leading-relaxed max-w-md">Nous vous offrons des produits locaux de qualité avec un service exceptionnel, du premier contact à la livraison.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="feature-card fade-up fade-up-delay-1">
+            <div class="feature-icon"><img src="{% static 'images/truck.svg' %}" alt="Livraison" /></div>
+            <div>
+              <h3 class="font-semibold text-gray-900">Livraison rapide</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Gratuite dès votre commande</p>
+            </div>
           </div>
-          <div class="flex items-center space-x-4">
-            <img src="{% static 'images/bag.svg' %}" alt="Shopping" class="w-12 h-12" />
-            <h3 class="text-xl font-medium">Achat facile</h3>
+          <div class="feature-card fade-up fade-up-delay-2">
+            <div class="feature-icon"><img src="{% static 'images/bag.svg' %}" alt="Shopping" /></div>
+            <div>
+              <h3 class="font-semibold text-gray-900">Achat facile</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Commandez en quelques clics</p>
+            </div>
           </div>
-          <div class="flex items-center space-x-4">
-            <img src="{% static 'images/support.svg' %}" alt="Support" class="w-12 h-12" />
-            <h3 class="text-xl font-medium">Support 24/7</h3>
+          <div class="feature-card fade-up fade-up-delay-3">
+            <div class="feature-icon"><img src="{% static 'images/support.svg' %}" alt="Support" /></div>
+            <div>
+              <h3 class="font-semibold text-gray-900">Support 24/7</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Toujours disponibles pour vous</p>
+            </div>
           </div>
-          <div class="flex items-center space-x-4">
-            <img src="{% static 'images/return.svg' %}" alt="Retours" class="w-12 h-12" />
-            <h3 class="text-xl font-medium">Retours sans tracas</h3>
+          <div class="feature-card fade-up fade-up-delay-4">
+            <div class="feature-icon"><img src="{% static 'images/return.svg' %}" alt="Retours" /></div>
+            <div>
+              <h3 class="font-semibold text-gray-900">Retours sans tracas</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Remboursement garanti</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="lg:w-5/12">
-        <img src="{% static 'images/filet.png' %}" alt="Image" class="w-full" />
+      <div class="lg:w-5/12 fade-up fade-up-delay-2 flex justify-center">
+        <div class="why-img-wrap">
+          <img src="{% static 'images/filet.png' %}" alt="Image produit" class="w-full max-w-sm float-img" />
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-gray-900 text-gray-300 py-6 mt-12">
-  <div class="container mx-auto text-center">
-    &copy; 2025 Creationjames. Tous droits réservés.
+<footer class="bg-gray-900 text-gray-400 py-8 mt-0">
+  <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <img src="{% static 'images/default.jpg' %}" alt="Logo" class="rounded-full w-10 h-10 object-cover ring-2 ring-yellow-400" />
+      <span class="text-white font-bold" style="font-family:'Playfair Display',serif;">Creationjames</span>
+    </div>
+    <p class="text-sm">&copy; 2025 Creationjames. Tous droits réservés.</p>
+    <div class="flex gap-5 text-sm">
+      <a href="{% url 'ecommerce:about' %}" class="hover:text-white transition">À propos</a>
+      <a href="{% url 'ecommerce:contact' %}" class="hover:text-white transition">Contact</a>
+      <a href="{% url 'ecommerce:shop' %}" class="hover:text-white transition">Boutique</a>
+    </div>
   </div>
 </footer>
 
-<!-- SCRIPT HAMBURGER -->
 <script>
   const menuBtn = document.getElementById('menu-btn');
   const menu = document.getElementById('menu');
-  menuBtn.addEventListener('click', () => {
-    menu.classList.toggle('hidden');
+  menuBtn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+  // Scroll-triggered fade-up for elements below the fold
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animationPlayState = 'running';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-up').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
   });
 </script>
 
